@@ -1,3 +1,5 @@
+---
+
 # For more information: https://laravel.com/docs/sail
 version: '3'
 services:
@@ -68,7 +70,7 @@ services:
         networks:
             - sail
         healthcheck:
-            test: ["CMD", "wget", "--no-verbose", "--spider",  "http://localhost:7700/health"]
+            test: ["CMD", "wget", "--no-verbose", "--spider", "http://localhost:7700/health"]
             retries: 3
             timeout: 5s
     mailhog:
