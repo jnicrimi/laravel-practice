@@ -149,7 +149,7 @@ return [
      */
 
     'collectors' => [
-        'phpinfo'         => true,  // Php version
+        'phpinfo'         => false,  // Php version
         'messages'        => true,  // Messages
         'time'            => true,  // Time Datalogger
         'memory'          => true,  // Memory usage
@@ -205,7 +205,7 @@ return [
         ],
         'views' => [
             'timeline' => false,  // Add the views to the timeline (Experimental)
-            'data' => false,    //Note: Can slow down the application, because the data can be quite large..
+            'data' => true,    //Note: Can slow down the application, because the data can be quite large..
         ],
         'route' => [
             'label' => true,  // show complete route on bar
