@@ -1,0 +1,10 @@
+---
+
+extends: default
+
+rules:
+  line-length: disable
+  truthy: disable
+ignore: |
+  node_modules
+  vendor

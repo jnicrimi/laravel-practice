@@ -2,7 +2,8 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "prepare": "husky install"
     },
     "devDependencies": {
         "axios": "^0.27",
@@ -10,5 +11,9 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "vite": "^3.0.0"
+   },
+    "lint-staged": {
+        "*.md": "markdownlint .",
+        "*.{yaml,yml,yamllint}": "yamllint ."
     }
 }
