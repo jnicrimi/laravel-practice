@@ -4,5 +4,12 @@ includes:
 parameters:
     paths:
         - app
-    level: 5
+        - bootstrap
+        - config
+        - database
+        - lang
+        - resources/views
+        - routes
+        - tests
+    level: 6
     checkMissingIterableValueType: false
