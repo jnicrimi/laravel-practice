@@ -1,4 +1,4 @@
-up:
+sail-up:
 	./vendor/bin/sail up -d
-stop:
+sail-stop:
 	./vendor/bin/sail stop
