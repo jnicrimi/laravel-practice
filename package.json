@@ -15,6 +15,6 @@
     "lint-staged": {
         "*.md": "markdownlint .",
         "*.{yaml,yml,yamllint}": "yamllint .",
-        "*.php": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff"
+        "*.php": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff"
     }
 }
