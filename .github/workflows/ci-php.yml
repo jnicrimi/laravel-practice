@@ -1,0 +1,71 @@
+---
+
+name: CI PHP
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    outputs:
+      done: ${{ steps.set-output.outputs.message }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Composer
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse --configuration phpstan.neon
+      - name: Set output
+        id: set-output
+        if: ${{ always() }}
+        run: echo "::set-output name=message::${{ (job.status == 'success' && ':white_check_mark:') || ':no_entry:' }} PHPStan"
+  php-cs-fixer:
+    runs-on: ubuntu-latest
+    outputs:
+      done: ${{ steps.set-output.outputs.message }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Composer
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+        working-directory: tools/php-cs-fixer
+      - name: PHP CS Fixer
+        run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
+      - name: Set output
+        id: set-output
+        if: ${{ always() }}
+        run: echo "::set-output name=message::${{ (job.status == 'success' && ':white_check_mark:') || ':no_entry:' }} PHP CS Fixer"
+  notification-success:
+    runs-on: ubuntu-latest
+    needs: [phpstan, php-cs-fixer]
+    if: ${{ success() }}
+    steps:
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.ACTIONS_BOT_SLACK_WEBHOOK_URL }}
+          SLACK_TITLE: "Jobs"
+          SLACK_MESSAGE: "${{ needs.phpstan.outputs.done }}\n\n${{ needs.php-cs-fixer.outputs.done }}"
+  notification-failure:
+    runs-on: ubuntu-latest
+    needs: [phpstan, php-cs-fixer]
+    if: ${{ failure() }}
+    steps:
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.ACTIONS_BOT_SLACK_WEBHOOK_URL }}
+          SLACK_TITLE: "Jobs"
+          SLACK_MESSAGE: "${{ needs.phpstan.outputs.done }}\n\n${{ needs.php-cs-fixer.outputs.done }}"
+          SLACK_COLOR: danger
