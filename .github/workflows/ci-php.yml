@@ -1,6 +1,6 @@
 ---
 
-name: CI PHP
+name: CI PHP Test
 on:
   pull_request:
     types: [opened, reopened, synchronize]
