@@ -13,7 +13,7 @@
     "vite": "^3.0.0"
   },
   "lint-staged": {
-    "*.md": "markdownlint .",
+    "*.md": "markdownlint . --ignore README.md --ignore node_modules --ignore tools --ignore vendor",
     "*.{yaml,yml,yamllint}": "yamllint .",
     "*.php": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff"
   }
