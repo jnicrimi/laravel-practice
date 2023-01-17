@@ -52,20 +52,45 @@ jobs:
     if: ${{ success() }}
     steps:
       - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "text": "GitHub Action build result: :white_check_mark: *success*\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n\n${{ needs.phpstan.outputs.done }}\n\n${{ needs.php-cs-fixer.outputs.done }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "GitHub Action build result: :white_check_mark: *success*\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n\n${{ needs.phpstan.outputs.done }}\n\n${{ needs.php-cs-fixer.outputs.done }}"
+                  }
+                }
+              ]
+            }
         env:
-          SLACK_WEBHOOK: ${{ secrets.ACTIONS_BOT_SLACK_WEBHOOK_URL }}
-          SLACK_TITLE: "Jobs"
-          SLACK_MESSAGE: "${{ needs.phpstan.outputs.done }}\n\n${{ needs.php-cs-fixer.outputs.done }}"
+          SLACK_WEBHOOK_URL: ${{ secrets.ACTIONS_BOT_SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
   notification-failure:
     runs-on: ubuntu-latest
     needs: [phpstan, php-cs-fixer]
     if: ${{ failure() }}
     steps:
       - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "text": "GitHub Action build result: :no_entry: *failure*\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n\n${{ needs.phpstan.outputs.done }}\n\n${{ needs.php-cs-fixer.outputs.done }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "GitHub Action build result: :no_entry: *failure*\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n\n${{ needs.phpstan.outputs.done }}\n\n${{ needs.php-cs-fixer.outputs.done }}"
+                  }
+                }
+              ]
+            }
         env:
-          SLACK_WEBHOOK: ${{ secrets.ACTIONS_BOT_SLACK_WEBHOOK_URL }}
-          SLACK_TITLE: "Jobs"
-          SLACK_MESSAGE: "${{ needs.phpstan.outputs.done }}\n\n${{ needs.php-cs-fixer.outputs.done }}"
-          SLACK_COLOR: danger
+          SLACK_WEBHOOK_URL: ${{ secrets.ACTIONS_BOT_SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

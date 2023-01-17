@@ -15,6 +15,6 @@
   "lint-staged": {
     "*.md": "markdownlint . --ignore README.md --ignore node_modules --ignore tools --ignore vendor",
     "*.{yaml,yml,yamllint}": "yamllint .",
-    "*.php": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff"
+    "*.php": "PHP_CS_FIXER_IGNORE_ENV=1 tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff"
   }
 }
