@@ -6,24 +6,25 @@ namespace Packages\Infrastructure\Comic;
 
 use App\Models\Comic as ComicModel;
 use Packages\Domain\Comic\Comic;
+use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 
 class ComicRepository implements ComicRepositoryInterface
 {
     /**
-     * @param Comic $comic
+     * @param ComicId $comicId
      *
      * @return Comic|null
      */
-    public function find(Comic $comic): ?Comic
+    public function find(ComicId $comicId): ?Comic
     {
-        $comicModel = ComicModel::find($comic->getId());
+        $comicModel = ComicModel::find($comicId->getValue());
         if ($comicModel === null) {
             return null;
         }
 
         $comicEntity = new Comic(
-            $comicModel->id,
+            new ComicId($comicModel->id),
             $comicModel->key,
             $comicModel->name
         );

@@ -7,11 +7,11 @@ namespace Packages\Domain\Comic;
 interface ComicRepositoryInterface
 {
     /**
-     * @param Comic $comic
+     * @param ComicId $comicId
      *
      * @return Comic|null
      */
-    public function find(Comic $comic): ?Comic;
+    public function find(ComicId $comicId): ?Comic;
 
     /**
      * @param Comic $comic
