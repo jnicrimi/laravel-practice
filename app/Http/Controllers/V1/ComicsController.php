@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use Packages\UseCase\Comic\Show\ComicShowUseCaseInterface;
 use Packages\UseCase\Comic\Show\ComicShowRequest;
+use Packages\UseCase\Comic\Show\ComicShowUseCaseInterface;
 
 class ComicsController extends Controller
 {
