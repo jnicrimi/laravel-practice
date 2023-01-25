@@ -14,8 +14,8 @@ sail-shell:
 sail-mysql:
 	./vendor/bin/sail mysql
 
-.PHONY: phpstan-analyse
-phpstan-analyse:
+.PHONY: phpstan
+phpstan:
 	vendor/bin/phpstan analyse --configuration phpstan.neon --memory-limit=-1
 
 .PHONY: cs
