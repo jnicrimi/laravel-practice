@@ -82,6 +82,7 @@ return $config->setRiskyAllowed(true)
         'not_operator_with_successor_space' => true,
         'nullable_type_declaration_for_default_null_value' => true,
         'object_operator_without_whitespace' => true,
+        'ordered_imports' => true,
         'ordered_interfaces' => true,
         'ordered_traits' => true,
         'php_unit_construct' => true,
