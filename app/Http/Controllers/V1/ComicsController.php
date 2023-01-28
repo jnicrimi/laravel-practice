@@ -5,14 +5,21 @@ declare(strict_types=1);
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
 use Packages\UseCase\Comic\Show\ComicShowRequest;
 use Packages\UseCase\Comic\Show\ComicShowUseCaseInterface;
 
 class ComicsController extends Controller
 {
-    public function index(): array
+    /**
+     * @param ComicIndexUseCaseInterface $interactor
+     *
+     * @return array
+     */
+    public function index(ComicIndexUseCaseInterface $interactor): array
     {
-        // @TODO develop.
+        $response = $interactor->handle();
+
         return [];
     }
 
