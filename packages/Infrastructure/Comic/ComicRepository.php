@@ -8,6 +8,7 @@ use App\Models\Comic as ComicModel;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicRepositoryInterface;
+use Packages\Domain\Comic\Comics;
 
 class ComicRepository implements ComicRepositoryInterface
 {
@@ -30,6 +31,24 @@ class ComicRepository implements ComicRepositoryInterface
         );
 
         return $comicEntity;
+    }
+
+    /**
+     * @return Comics
+     */
+    public function all(): Comics
+    {
+        $comicModels = ComicModel::all();
+        $comicEntities = [];
+        foreach ($comicModels as $comicModel) {
+            $comicEntities[] = new Comic(
+                new ComicId($comicModel->id),
+                $comicModel->key,
+                $comicModel->name
+            );
+        }
+
+        return new Comics($comicEntities);
     }
 
     /**

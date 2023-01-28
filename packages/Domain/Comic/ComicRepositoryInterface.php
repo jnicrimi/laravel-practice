@@ -14,6 +14,11 @@ interface ComicRepositoryInterface
     public function find(ComicId $comicId): ?Comic;
 
     /**
+     * @return Comics
+     */
+    public function all(): Comics;
+
+    /**
      * @param Comic $comic
      *
      * @return void
