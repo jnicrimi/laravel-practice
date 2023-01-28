@@ -15,16 +15,16 @@ class ComicShowInteractor implements ComicShowUseCaseInterface
     /**
      * @var ComicRepositoryInterface
      */
-    private $repository;
+    private $comicRepository;
 
     /**
      * Constructor
      *
-     * @param ComicRepositoryInterface $repository
+     * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(ComicRepositoryInterface $repository)
+    public function __construct(ComicRepositoryInterface $comicRepository)
     {
-        $this->repository = $repository;
+        $this->comicRepository = $comicRepository;
     }
 
     /**
@@ -35,7 +35,7 @@ class ComicShowInteractor implements ComicShowUseCaseInterface
     public function handle(ComicShowRequest $request): ComicShowResponse
     {
         $comicId = new ComicId($request->getComicId());
-        $comicEntity = $this->repository->find($comicId);
+        $comicEntity = $this->comicRepository->find($comicId);
         $response = new ComicShowResponse(
             $comicEntity->getId()->getValue(),
             $comicEntity->getKey(),
