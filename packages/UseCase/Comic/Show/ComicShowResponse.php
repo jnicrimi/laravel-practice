@@ -25,6 +25,8 @@ class ComicShowResponse
      * Constructor
      *
      * @param int $comicId
+     * @param string $name
+     * @param string $key
      */
     public function __construct(
         int $comicId,
