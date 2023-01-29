@@ -20,7 +20,7 @@ class ComicsController extends Controller
     {
         $response = $interactor->handle();
 
-        return [];
+        return $response->build();
     }
 
     /**
