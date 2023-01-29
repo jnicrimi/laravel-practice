@@ -9,6 +9,8 @@ use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Domain\Comic\Comics;
+use Packages\Domain\Comic\ComicStatus;
+use Packages\Domain\Comic\ComicStatusCase;
 
 class ComicRepository implements ComicRepositoryInterface
 {
@@ -24,11 +26,14 @@ class ComicRepository implements ComicRepositoryInterface
             return null;
         }
 
+        $comicId = new ComicId($comicModel->id);
+        $comicStatusCase = ComicStatusCase::from($comicModel->status);
+        $comicStatus = new ComicStatus($comicStatusCase);
         $comicEntity = new Comic(
-            new ComicId($comicModel->id),
+            $comicId,
             $comicModel->key,
             $comicModel->name,
-            $comicModel->status
+            $comicStatus
         );
 
         return $comicEntity;
@@ -42,11 +47,14 @@ class ComicRepository implements ComicRepositoryInterface
         $comicModels = ComicModel::all();
         $comicEntities = [];
         foreach ($comicModels as $comicModel) {
+            $comicId = new ComicId($comicModel->id);
+            $comicStatusCase = ComicStatusCase::from($comicModel->status);
+            $comicStatus = new ComicStatus($comicStatusCase);
             $comicEntities[] = new Comic(
-                new ComicId($comicModel->id),
+                $comicId,
                 $comicModel->key,
                 $comicModel->name,
-                $comicModel->status
+                $comicStatus
             );
         }
 
@@ -63,7 +71,7 @@ class ComicRepository implements ComicRepositoryInterface
         $comicModel = new ComicModel();
         $comicModel->key = $comic->getKey();
         $comicModel->name = $comic->getName();
-        $comicModel->status = $comic->getStatus();
+        $comicModel->status = $comic->getStatus()->getValue()->value;
         $comicModel->save();
     }
 }
