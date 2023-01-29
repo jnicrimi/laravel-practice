@@ -27,7 +27,8 @@ class ComicRepository implements ComicRepositoryInterface
         $comicEntity = new Comic(
             new ComicId($comicModel->id),
             $comicModel->key,
-            $comicModel->name
+            $comicModel->name,
+            $comicModel->status
         );
 
         return $comicEntity;
@@ -44,7 +45,8 @@ class ComicRepository implements ComicRepositoryInterface
             $comicEntities[] = new Comic(
                 new ComicId($comicModel->id),
                 $comicModel->key,
-                $comicModel->name
+                $comicModel->name,
+                $comicModel->status
             );
         }
 
@@ -61,6 +63,7 @@ class ComicRepository implements ComicRepositoryInterface
         $comicModel = new ComicModel();
         $comicModel->key = $comic->getKey();
         $comicModel->name = $comic->getName();
+        $comicModel->status = $comic->getStatus();
         $comicModel->save();
     }
 }
