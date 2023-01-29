@@ -22,7 +22,7 @@ class Comic
     private $name;
 
     /**
-     * @var string
+     * @var ComicStatus
      */
     private $status;
 
@@ -32,13 +32,13 @@ class Comic
      * @param ComicId $id
      * @param string $key
      * @param string $name
-     * @param string $status
+     * @param ComicStatus $status
      */
     public function __construct(
         ComicId $id,
         string $key,
         string $name,
-        string $status
+        ComicStatus $status
     ) {
         $this->id = $id;
         $this->key = $key;
@@ -71,9 +71,9 @@ class Comic
     }
 
     /**
-     * @return string
+     * @return ComicStatus
      */
-    public function getStatus(): string
+    public function getStatus(): ComicStatus
     {
         return $this->status;
     }
