@@ -42,6 +42,7 @@ class ComicShowResponse
             'id' => $this->comic->getId()->getValue(),
             'key' => $this->comic->getKey(),
             'name' => $this->comic->getName(),
+            'status' => $this->comic->getStatus(),
         ];
     }
 }
