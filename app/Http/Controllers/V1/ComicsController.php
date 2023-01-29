@@ -34,10 +34,6 @@ class ComicsController extends Controller
         $comicRequest = new ComicShowRequest($comicId);
         $response = $interactor->handle($comicRequest);
 
-        return [
-            'comicId' => $response->getComicId(),
-            'key' => $response->getKey(),
-            'name' => $response->getName(),
-        ];
+        return $response->build();
     }
 }
