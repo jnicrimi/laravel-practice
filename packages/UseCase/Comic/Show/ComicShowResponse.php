@@ -4,61 +4,44 @@ declare(strict_types=1);
 
 namespace Packages\UseCase\Comic\Show;
 
+use Packages\Domain\Comic\Comic;
+
 class ComicShowResponse
 {
     /**
-     * @var int
+     * @var Comic
      */
-    private $comicId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $key;
+    private $comic;
 
     /**
      * Constructor
      *
-     * @param int $comicId
-     * @param string $name
-     * @param string $key
+     * @param Comic
      */
-    public function __construct(
-        int $comicId,
-        string $name,
-        string $key
-    ) {
-        $this->comicId = $comicId;
-        $this->name = $name;
-        $this->key = $key;
+    public function __construct(Comic $comic)
+    {
+        $this->comic = $comic;
     }
 
     /**
-     * @return int
+     * @return array
      */
-    public function getComicId(): int
+    public function build(): array
     {
-        return $this->comicId;
+        return [
+            'comic' => $this->buildComic(),
+        ];
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getName(): string
+    private function buildComic(): array
     {
-        return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getKey(): string
-    {
-        return $this->key;
+        return [
+            'id' => $this->comic->getId()->getValue(),
+            'key' => $this->comic->getKey(),
+            'name' => $this->comic->getName(),
+        ];
     }
 }
