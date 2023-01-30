@@ -18,6 +18,11 @@ class Comics implements \IteratorAggregate
      */
     public function __construct(array $comics)
     {
+        foreach ($comics as $comic) {
+            if (! $comic instanceof Comic) {
+                throw new \InvalidArgumentException('Invalid comic entity');
+            }
+        }
         $this->comics = $comics;
     }
 
