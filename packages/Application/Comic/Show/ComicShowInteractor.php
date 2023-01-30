@@ -36,8 +36,7 @@ class ComicShowInteractor implements ComicShowUseCaseInterface
     {
         $comicId = new ComicId($request->getComicId());
         $comicEntity = $this->comicRepository->find($comicId);
-        $response = new ComicShowResponse($comicEntity);
 
-        return $response;
+        return new ComicShowResponse($comicEntity);
     }
 }

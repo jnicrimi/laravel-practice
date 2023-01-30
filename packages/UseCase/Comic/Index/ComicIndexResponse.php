@@ -15,6 +15,8 @@ class ComicIndexResponse
 
     /**
      * Constructor
+     *
+     * @param Comics $comics
      */
     public function __construct(Comics $comics)
     {

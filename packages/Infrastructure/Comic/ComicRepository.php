@@ -19,9 +19,9 @@ class ComicRepository implements ComicRepositoryInterface
      *
      * @return Comic|null
      */
-    public function find(ComicId $comicId): ?Comic
+    public function find(ComicId $comicIdCondition): ?Comic
     {
-        $comicModel = ComicModel::find($comicId->getValue());
+        $comicModel = ComicModel::find($comicIdCondition->getValue());
         if ($comicModel === null) {
             return null;
         }
@@ -29,14 +29,13 @@ class ComicRepository implements ComicRepositoryInterface
         $comicId = new ComicId($comicModel->id);
         $comicStatusCase = ComicStatusCase::from($comicModel->status);
         $comicStatus = new ComicStatus($comicStatusCase);
-        $comicEntity = new Comic(
+
+        return new Comic(
             $comicId,
             $comicModel->key,
             $comicModel->name,
             $comicStatus
         );
-
-        return $comicEntity;
     }
 
     /**

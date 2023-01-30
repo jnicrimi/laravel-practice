@@ -31,8 +31,7 @@ class ComicIndexInteractor implements ComicIndexUseCaseInterface
     public function handle(): ComicIndexResponse
     {
         $comicEntities = $this->comicRepository->all();
-        $response = new ComicIndexResponse($comicEntities);
 
-        return $response;
+        return new ComicIndexResponse($comicEntities);
     }
 }
