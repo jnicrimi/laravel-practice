@@ -4,33 +4,15 @@ declare(strict_types=1);
 
 namespace Packages\Domain\Comic;
 
-class Comics implements \IteratorAggregate
+use Packages\Domain\AbstractEntities;
+
+class Comics extends AbstractEntities
 {
     /**
-     * @var array
+     * @return string
      */
-    private $comics;
-
-    /**
-     * Constructor
-     *
-     * @param array $comics
-     */
-    public function __construct(array $comics)
+    protected function getEntityClass(): string
     {
-        foreach ($comics as $comic) {
-            if (! $comic instanceof Comic) {
-                throw new \InvalidArgumentException('Invalid comic entity');
-            }
-        }
-        $this->comics = $comics;
-    }
-
-    /**
-     * @return \Traversable
-     */
-    public function getIterator(): \Traversable
-    {
-        return new \ArrayIterator($this->comics);
+        return Comic::class;
     }
 }
