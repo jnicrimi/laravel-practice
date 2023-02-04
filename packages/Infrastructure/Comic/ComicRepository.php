@@ -38,12 +38,12 @@ class ComicRepository implements ComicRepositoryInterface, EloquentRepositoryInt
     public function all(): Comics
     {
         $comicModels = ComicModel::all();
-        $comicEntities = [];
+        $comics = new Comics();
         foreach ($comicModels as $comicModel) {
-            $comicEntities[] = $this->modelToEntity($comicModel);
+            $comics[] = $this->modelToEntity($comicModel);
         }
 
-        return new Comics($comicEntities);
+        return $comics;
     }
 
     /**
