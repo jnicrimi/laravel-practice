@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace Packages\Infrastructure\Comic;
 
 use App\Models\Comic as ComicModel;
+use Illuminate\Database\Eloquent\Model;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Domain\Comic\Comics;
 use Packages\Domain\Comic\ComicStatus;
 use Packages\Domain\Comic\ComicStatusCase;
+use Packages\Domain\EntityInterface;
+use Packages\Infrastructure\EloquentRepositoryInterface;
 
-class ComicRepository implements ComicRepositoryInterface
+class ComicRepository implements ComicRepositoryInterface, EloquentRepositoryInterface
 {
     /**
      * @param ComicId $comicId
@@ -26,16 +29,7 @@ class ComicRepository implements ComicRepositoryInterface
             return null;
         }
 
-        $comicId = new ComicId($comicModel->id);
-        $comicStatusCase = ComicStatusCase::from($comicModel->status);
-        $comicStatus = new ComicStatus($comicStatusCase);
-
-        return new Comic(
-            $comicId,
-            $comicModel->key,
-            $comicModel->name,
-            $comicStatus
-        );
+        return $this->modelToEntity($comicModel);
     }
 
     /**
@@ -46,15 +40,7 @@ class ComicRepository implements ComicRepositoryInterface
         $comicModels = ComicModel::all();
         $comicEntities = [];
         foreach ($comicModels as $comicModel) {
-            $comicId = new ComicId($comicModel->id);
-            $comicStatusCase = ComicStatusCase::from($comicModel->status);
-            $comicStatus = new ComicStatus($comicStatusCase);
-            $comicEntities[] = new Comic(
-                $comicId,
-                $comicModel->key,
-                $comicModel->name,
-                $comicStatus
-            );
+            $comicEntities[] = $this->modelToEntity($comicModel);
         }
 
         return new Comics($comicEntities);
@@ -72,5 +58,24 @@ class ComicRepository implements ComicRepositoryInterface
         $comicModel->name = $comic->getName();
         $comicModel->status = $comic->getStatus()->getValue()->value;
         $comicModel->save();
+    }
+
+    /**
+     * @param Model $model
+     *
+     * @return EntityInterface
+     */
+    public function modelToEntity(Model $model): EntityInterface
+    {
+        $comicId = new ComicId($model->id);
+        $comicStatusCase = ComicStatusCase::from($model->status);
+        $comicStatus = new ComicStatus($comicStatusCase);
+
+        return new Comic(
+            $comicId,
+            $model->key,
+            $model->name,
+            $comicStatus
+        );
     }
 }
