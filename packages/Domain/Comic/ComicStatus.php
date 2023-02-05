@@ -4,28 +4,15 @@ declare(strict_types=1);
 
 namespace Packages\Domain\Comic;
 
-class ComicStatus
+use Packages\Domain\AbstractValueObject;
+
+class ComicStatus extends AbstractValueObject
 {
     /**
-     * @var ComicStatusCase
+     * @return bool
      */
-    private $value;
-
-    /**
-     * Constructor
-     *
-     * @param ComicStatusCase $value
-     */
-    public function __construct(ComicStatusCase $value)
+    protected function validate(): bool
     {
-        $this->value = $value;
-    }
-
-    /**
-     * @return ComicStatusCase
-     */
-    public function getValue(): ComicStatusCase
-    {
-        return $this->value;
+        return $this->value::class === ComicStatusCase::class;
     }
 }

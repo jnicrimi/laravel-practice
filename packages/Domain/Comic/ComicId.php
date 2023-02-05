@@ -4,28 +4,15 @@ declare(strict_types=1);
 
 namespace Packages\Domain\Comic;
 
-class ComicId
+use Packages\Domain\AbstractValueObject;
+
+class ComicId extends AbstractValueObject
 {
     /**
-     * @var int
+     * @return bool
      */
-    private $value;
-
-    /**
-     * Constructor
-     *
-     * @param int $value
-     */
-    public function __construct(int $value)
+    protected function validate(): bool
     {
-        $this->value = $value;
-    }
-
-    /**
-     * @return int
-     */
-    public function getValue(): int
-    {
-        return $this->value;
+        return $this->isUnsignedInt();
     }
 }
