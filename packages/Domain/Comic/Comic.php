@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Packages\Domain\Comic;
 
-use Packages\Domain\EntityInterface;
-
-class Comic implements EntityInterface
+class Comic
 {
     /**
      * @var ComicId

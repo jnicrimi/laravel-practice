@@ -16,7 +16,7 @@ class ComicShowResponse
     /**
      * Constructor
      *
-     * @param Comic
+     * @param Comic $comic
      */
     public function __construct(Comic $comic)
     {
