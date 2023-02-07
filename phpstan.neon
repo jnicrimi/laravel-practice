@@ -8,8 +8,10 @@ parameters:
         - config
         - database
         - lang
+        - packages
         - resources/views
         - routes
         - tests
     level: 6
     checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false

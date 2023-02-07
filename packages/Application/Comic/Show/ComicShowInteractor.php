@@ -28,7 +28,7 @@ class ComicShowInteractor implements ComicShowUseCaseInterface
     }
 
     /**
-     * @param ComicShowRequest
+     * @param ComicShowRequest $request
      *
      * @return ComicShowResponse
      */
