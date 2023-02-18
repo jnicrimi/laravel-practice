@@ -73,7 +73,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Workflow*\n<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}|${{ github.workflow }} (${{ github.ref_name }}) #${{github.run_number}}>\n\n${{ needs.phpstan.outputs.done }}\n\n${{ needs.php-cs-fixer.outputs.done }}"
+                    "text": "*Workflow*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.workflow }} (${{ github.ref_name }}) #${{github.run_number}}>\n\n${{ needs.phpstan.outputs.done }}\n\n${{ needs.php-cs-fixer.outputs.done }}"
                   }
                 }
               ]
@@ -107,7 +107,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Workflow*\n<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}|${{ github.workflow }} (${{ github.ref_name }}) #${{github.run_number}}>\n\n${{ needs.phpstan.outputs.done }}\n\n${{ needs.php-cs-fixer.outputs.done }}"
+                    "text": "*Workflow*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.workflow }} (${{ github.ref_name }}) #${{github.run_number}}>\n\n${{ needs.phpstan.outputs.done }}\n\n${{ needs.php-cs-fixer.outputs.done }}"
                   }
                 }
               ]
