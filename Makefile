@@ -25,3 +25,7 @@ cs:
 .PHONY: cs-fix
 cs-fix:
 	PHP_CS_FIXER_IGNORE_ENV=1 tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
+
+.PHONY: clear-cache
+clear-cache:
+	vendor/bin/envoy run clear-cache
