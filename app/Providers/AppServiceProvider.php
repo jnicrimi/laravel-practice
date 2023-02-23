@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Packages\Application\Comic\Index\ComicIndexInteractor;
 use Packages\Application\Comic\Show\ComicShowInteractor;
@@ -33,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Model::shouldBeStrict(! $this->app->isProduction());
     }
 }
