@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Packages\Domain\Comic;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicStatus;
@@ -12,6 +13,8 @@ use PHPUnit\Framework\TestCase;
 
 class ComicTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @var Comic
      */
