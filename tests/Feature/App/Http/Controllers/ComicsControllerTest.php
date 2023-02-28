@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Feature\App\Http\Controllers;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class ComicsControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @return void
      */
