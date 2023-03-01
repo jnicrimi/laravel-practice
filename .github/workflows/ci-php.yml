@@ -31,6 +31,8 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
       - name: Composer dump autoload
         run: composer dump-autoload
+      - name: Generate key
+        run: php artisan key:generate
       - name: PHPStan
         run: vendor/bin/phpstan analyse --configuration phpstan.neon
       - name: Set output
