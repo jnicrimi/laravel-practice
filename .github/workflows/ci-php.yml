@@ -16,8 +16,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Cache vendor
         id: cache-vendor
         uses: actions/cache@v3
@@ -31,6 +29,8 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
       - name: Composer dump autoload
         run: composer dump-autoload
+      - name: Decrypt .env
+        run: php artisan env:decrypt --key=${{ secrets.ENV_CI_DECRYPT_KEY }} --force --env=ci --filename=.env
       - name: Generate key
         run: php artisan key:generate
       - name: Change directory permissions
