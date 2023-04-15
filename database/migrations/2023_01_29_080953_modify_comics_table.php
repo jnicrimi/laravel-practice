@@ -15,7 +15,7 @@ return new class () extends Migration {
     public function up()
     {
         Schema::table('comics', function (Blueprint $table) {
-            $table->enum('status', ['publish', 'draft', 'private'])
+            $table->enum('status', ['published', 'draft', 'closed'])
                 ->default('draft')
                 ->after('name');
         });
