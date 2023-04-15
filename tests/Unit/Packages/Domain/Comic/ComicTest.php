@@ -44,7 +44,7 @@ class ComicTest extends TestCase
             new ComicId($this->id),
             $this->key,
             $this->name,
-            new ComicStatus(ComicStatusCase::PUBLISH)
+            new ComicStatus(ComicStatusCase::PUBLISHED)
         );
     }
 

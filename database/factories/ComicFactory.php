@@ -26,9 +26,9 @@ class ComicFactory extends Factory
     public function definition()
     {
         $comicStatusCases = [
-            ComicStatusCase::PUBLISH->value,
+            ComicStatusCase::PUBLISHED->value,
             ComicStatusCase::DRAFT->value,
-            ComicStatusCase::PRIVATE->value,
+            ComicStatusCase::CLOSED->value,
         ];
 
         return [

@@ -6,7 +6,7 @@ namespace Packages\Domain\Comic;
 
 enum ComicStatusCase: string
 {
-    case PUBLISH = 'publish';
+    case PUBLISHED = 'published';
     case DRAFT = 'draft';
-    case PRIVATE = 'private';
+    case CLOSED = 'closed';
 }
