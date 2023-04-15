@@ -6,7 +6,7 @@ namespace Database\Factories;
 
 use App\Models\Comic;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Packages\Domain\Comic\ComicStatusCase;
+use Packages\Domain\Comic\ComicStatusCase\ComicStatusCaseEnum;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Comic>
@@ -26,9 +26,9 @@ class ComicFactory extends Factory
     public function definition()
     {
         $comicStatusCases = [
-            ComicStatusCase::PUBLISHED->value,
-            ComicStatusCase::DRAFT->value,
-            ComicStatusCase::CLOSED->value,
+            ComicStatusCaseEnum::PUBLISHED->value,
+            ComicStatusCaseEnum::DRAFT->value,
+            ComicStatusCaseEnum::CLOSED->value,
         ];
 
         return [

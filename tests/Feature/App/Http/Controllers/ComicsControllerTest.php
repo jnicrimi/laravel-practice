@@ -13,6 +13,11 @@ class ComicsControllerTest extends TestCase
     use RefreshDatabase;
 
     /**
+     * @var bool
+     */
+    protected $seed = true;
+
+    /**
      * @return void
      */
     public function testIndex()

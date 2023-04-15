@@ -44,7 +44,7 @@ class ComicIndexResponse
                 'id' => $comic->getId()->getValue(),
                 'key' => $comic->getKey(),
                 'name' => $comic->getName(),
-                'status' => $comic->getStatus()->getValue()->value,
+                'status' => $comic->getStatus()->getValue()->getComicStatusCaseEnum()->description(),
             ];
         }
 

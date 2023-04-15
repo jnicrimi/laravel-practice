@@ -8,7 +8,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicStatus;
-use Packages\Domain\Comic\ComicStatusCase;
+use Packages\Domain\Comic\ComicStatusCase\ComicStatusCaseEnum;
+use Packages\Domain\Comic\ComicStatusCase\ComicStatusCaseFactory;
 use PHPUnit\Framework\TestCase;
 
 class ComicTest extends TestCase
@@ -40,11 +41,13 @@ class ComicTest extends TestCase
      */
     public function setUp(): void
     {
+        $comicStatusCase = ComicStatusCaseFactory::create(ComicStatusCaseEnum::PUBLISHED);
+        $comicStatus = new ComicStatus($comicStatusCase);
         $this->comic = new Comic(
             new ComicId($this->id),
             $this->key,
             $this->name,
-            new ComicStatus(ComicStatusCase::PUBLISHED)
+            $comicStatus
         );
     }
 
