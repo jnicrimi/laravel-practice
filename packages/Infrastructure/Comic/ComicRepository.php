@@ -10,8 +10,6 @@ use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Domain\Comic\Comics;
 use Packages\Domain\Comic\ComicStatus;
-use Packages\Domain\Comic\ComicStatusCase\ComicStatusCaseEnum;
-use Packages\Domain\Comic\ComicStatusCase\ComicStatusCaseFactory;
 
 class ComicRepository implements ComicRepositoryInterface
 {
@@ -54,7 +52,7 @@ class ComicRepository implements ComicRepositoryInterface
         $comicModel = new ComicModel();
         $comicModel->key = $comic->getKey();
         $comicModel->name = $comic->getName();
-        $comicModel->status = $comic->getStatus()->getValue()->value;
+        $comicModel->status = $comic->getStatus()->value;
         $comicModel->save();
     }
 
@@ -66,9 +64,7 @@ class ComicRepository implements ComicRepositoryInterface
     public function modelToEntity(ComicModel $model): Comic
     {
         $comicId = new ComicId($model->id);
-        $comicStatusCaseEnum = ComicStatusCaseEnum::from($model->status);
-        $comicStatusCase = ComicStatusCaseFactory::create($comicStatusCaseEnum);
-        $comicStatus = new ComicStatus($comicStatusCase);
+        $comicStatus = ComicStatus::from($model->status);
 
         return new Comic(
             $comicId,
