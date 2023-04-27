@@ -37,6 +37,13 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
+                    "text": "<@U01C4AD5CP7>"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
                     "text": "*Pull request opened*\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
                   }
                 },
