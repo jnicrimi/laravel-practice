@@ -4,6 +4,8 @@ name: CI PHP
 on:
   pull_request:
     types: [opened, reopened, synchronize]
+env:
+  SLACK_ID: <@U01C4AD5CP7>
 run-name: ${{ github.workflow }} (${{ github.ref_name }})
 jobs:
   phpstan:
@@ -131,7 +133,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<@U01C4AD5CP7>"
+                    "text": "${{ env.SLACK_ID }}"
                   }
                 },
                 {
@@ -172,7 +174,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<@U01C4AD5CP7>"
+                    "text": "${{ env.SLACK_ID }}"
                   }
                 },
                 {
