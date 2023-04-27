@@ -8,7 +8,7 @@ run-name: ${{ github.workflow }} (${{ github.ref_name }})
 jobs:
   set-assignees:
     runs-on: ubuntu-latest
-    if: ${{ toJSON(github.event.pull_request.assignees) == '[]' }}
+    if: ${{ toJSON(github.event.pull_request.assignees) == '[]' && github.actor != 'dependabot[bot]' }}
     steps:
       - name: Set assignees
         uses: actions/github-script@v6
@@ -21,25 +21,9 @@ jobs:
               repo: context.repo.repo,
               assignees: `${{ github.actor }}`
             });
-  set-reviewers:
-    runs-on: ubuntu-latest
-    if: ${{ toJSON(github.event.pull_request.requested_reviewers) == '[]' && github.actor == 'dependabot[bot]' }}
-    steps:
-      - name: Set reviewers
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const reviewers = ['jnicrimi'];
-            github.rest.pulls.requestReviewers({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number,
-              reviewers
-            });
   notification:
     runs-on: ubuntu-latest
-    needs: [set-assignees, set-reviewers]
+    needs: [set-assignees]
     if: ${{ always() }}
     steps:
       - name: Slack Notification
