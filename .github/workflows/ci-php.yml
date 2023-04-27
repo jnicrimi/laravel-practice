@@ -8,6 +8,7 @@ run-name: ${{ github.workflow }} (${{ github.ref_name }})
 jobs:
   phpstan:
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     outputs:
       done: ${{ steps.set-output.outputs.message }}
     steps:
@@ -43,6 +44,7 @@ jobs:
         run: echo "message=${{ (job.status == 'success' && ':white_check_mark:') || ':no_entry:' }} PHPStan" >> $GITHUB_OUTPUT
   php-cs-fixer:
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     outputs:
       done: ${{ steps.set-output.outputs.message }}
     steps:
@@ -62,6 +64,7 @@ jobs:
         run: echo "message=${{ (job.status == 'success' && ':white_check_mark:') || ':no_entry:' }} PHP CS Fixer" >> $GITHUB_OUTPUT
   phpunit:
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     outputs:
       done: ${{ steps.set-output.outputs.message }}
     services:
