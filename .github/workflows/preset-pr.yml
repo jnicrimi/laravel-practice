@@ -4,6 +4,8 @@ name: Preset PR
 on:
   pull_request:
     types: [opened, reopened]
+env:
+  SLACK_ID: <@U01C4AD5CP7>
 run-name: ${{ github.workflow }} (${{ github.ref_name }})
 jobs:
   set-assignees:
@@ -37,7 +39,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<@U01C4AD5CP7>"
+                    "text": "${{ env.SLACK_ID }}"
                   }
                 },
                 {
