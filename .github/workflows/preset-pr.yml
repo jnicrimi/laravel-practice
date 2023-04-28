@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [opened, reopened]
 env:
-  SLACK_ID: <@U01C4AD5CP7>
+  SLACK_ID: ${{ secrets.SLACK_ID }}
 run-name: ${{ github.workflow }} (${{ github.ref_name }})
 jobs:
   set-assignees:
@@ -52,5 +52,5 @@ jobs:
               ]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.ACTIONS_BOT_SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
