@@ -16,3 +16,5 @@ updates:
       interval: 'daily'
     assignees:
       - 'jnicrimi'
+    reviewers:
+      - 'jnicrimi'
