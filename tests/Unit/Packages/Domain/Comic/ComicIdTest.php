@@ -7,7 +7,7 @@ namespace Tests\Unit\Packages\Domain\Comic;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use InvalidArgumentException;
 use Packages\Domain\Comic\ComicId;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class ComicIdTest extends TestCase
 {

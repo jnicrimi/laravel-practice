@@ -6,7 +6,7 @@ namespace Tests\Unit\Packages\Domain;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Domain\AbstractValueObject;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class AbstractValueObjectTest extends TestCase
 {
