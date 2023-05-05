@@ -10,7 +10,7 @@ use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\Comics;
 use Packages\Domain\Comic\ComicStatus;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class ComicsTest extends TestCase
 {

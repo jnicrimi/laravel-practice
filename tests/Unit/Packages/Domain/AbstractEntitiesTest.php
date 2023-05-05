@@ -8,7 +8,7 @@ use ArrayIterator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use InvalidArgumentException;
 use Packages\Domain\AbstractEntities;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class AbstractEntitiesTest extends TestCase
 {
