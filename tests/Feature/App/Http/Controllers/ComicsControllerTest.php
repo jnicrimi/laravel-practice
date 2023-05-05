@@ -37,6 +37,7 @@ class ComicsControllerTest extends TestCase
      */
     public function testShow(int $comicId, int $expected)
     {
+        $this->seed();
         $response = $this->get(route('api.v1.comics.show', ['comicId' => $comicId]));
 
         $response->assertStatus($expected);
