@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Packages\Application\Comic\Index;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Application\Comic\Index\ComicIndexInteractor;
 use Packages\UseCase\Comic\Index\ComicIndexResponse;
 use Tests\TestCase;
 
 class ComicIndexInteractorTest extends TestCase
 {
+    use RefreshDatabase;
+
+    /**
+     * @var bool
+     */
+    protected $seed = true;
+
     /**
      * @var ComicIndexInteractor
      */
