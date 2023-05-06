@@ -7,7 +7,7 @@ namespace Packages\Domain\Comic;
 class Comic
 {
     /**
-     * @var ComicId
+     * @var ComicId|null
      */
     private $id;
 
@@ -29,13 +29,13 @@ class Comic
     /**
      * Constructor
      *
-     * @param ComicId $id
+     * @param ComicId|null $id
      * @param string $key
      * @param string $name
      * @param ComicStatus $status
      */
     public function __construct(
-        ComicId $id,
+        ?ComicId $id,
         string $key,
         string $name,
         ComicStatus $status
@@ -47,9 +47,9 @@ class Comic
     }
 
     /**
-     * @return ComicId
+     * @return ComicId|null
      */
-    public function getId(): ComicId
+    public function getId(): ?ComicId
     {
         return $this->id;
     }

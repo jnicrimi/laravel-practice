@@ -14,13 +14,13 @@ use Packages\Domain\Comic\ComicStatus;
 class ComicRepository implements ComicRepositoryInterface
 {
     /**
-     * @param ComicId $comicIdCondition
+     * @param ComicId $comicId
      *
      * @return Comic|null
      */
-    public function find(ComicId $comicIdCondition): ?Comic
+    public function find(ComicId $comicId): ?Comic
     {
-        $comicModel = ComicModel::find($comicIdCondition->getValue());
+        $comicModel = ComicModel::find($comicId->getValue());
         if ($comicModel === null) {
             return null;
         }
