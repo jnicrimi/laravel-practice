@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Packages\Application\Comic\Index\ComicIndexInteractor;
 use Packages\Application\Comic\Show\ComicShowInteractor;
 use Packages\Domain\Comic\ComicRepositoryInterface;
-use Packages\Infrastructure\Comic\ComicRepository;
+use Packages\Infrastructure\Repository\Comic\ComicRepository;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
 use Packages\UseCase\Comic\Show\ComicShowUseCaseInterface;
 
