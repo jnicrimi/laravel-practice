@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Packages\Domain\Comic;
 
-class Comic
+use Packages\Domain\AbstractEntity;
+use Packages\Domain\EntityInterface;
+
+class Comic extends AbstractEntity implements EntityInterface
 {
     /**
      * @var ComicId|null
@@ -76,5 +79,18 @@ class Comic
     public function getStatus(): ComicStatus
     {
         return $this->status;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId() ? $this->getId()->getValue() : null,
+            'key' => $this->getKey(),
+            'name' => $this->getName(),
+            'status' => $this->getStatus()->value,
+        ];
     }
 }

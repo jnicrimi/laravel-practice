@@ -78,4 +78,17 @@ class ComicTest extends TestCase
     {
         $this->assertInstanceOf(ComicStatus::class, $this->comic->getStatus());
     }
+
+    /**
+     * @return void
+     */
+    public function testToArray()
+    {
+        $this->assertSame([
+            'id' => $this->id,
+            'key' => $this->key,
+            'name' => $this->name,
+            'status' => ComicStatus::PUBLISHED->value,
+        ], $this->comic->toArray());
+    }
 }

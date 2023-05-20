@@ -11,7 +11,7 @@ use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\Comics;
 use Packages\Domain\Comic\ComicStatus;
-use Packages\Infrastructure\Comic\ComicRepository;
+use Packages\Infrastructure\Repository\Comic\ComicRepository;
 use Tests\TestCase;
 
 class ComicRepositoryTest extends TestCase
@@ -67,18 +67,16 @@ class ComicRepositoryTest extends TestCase
     }
 
     /**
-     * @doesNotPerformAssertions
+     * @dataProvider  provideSave
+     *
+     * @param array $attributes
      *
      * @return void
      */
-    public function testSave(): void
+    public function testSave($attributes): void
     {
-        $comic = $this->createEntity([
-            'key' => 'key',
-            'name' => 'name',
-            'status' => ComicStatus::PUBLISHED,
-        ]);
-        $this->repository->save($comic);
+        $comic = $this->repository->save($this->createEntity($attributes));
+        $this->assertInstanceOf(Comic::class, $comic);
     }
 
     /**
@@ -92,6 +90,31 @@ class ComicRepositoryTest extends TestCase
     }
 
     /**
+     * @return array
+     */
+    public function provideSave(): array
+    {
+        return [
+            [
+                [
+                    'id' => null,
+                    'key' => 'key',
+                    'name' => 'name',
+                    'status' => ComicStatus::PUBLISHED->value,
+                ],
+            ],
+            [
+                [
+                    'id' => 1,
+                    'key' => 'key',
+                    'name' => 'name',
+                    'status' => ComicStatus::DRAFT->value,
+                ],
+            ],
+        ];
+    }
+
+    /**
      * @param array $attributes
      *
      * @return Comic
@@ -99,10 +122,10 @@ class ComicRepositoryTest extends TestCase
     private function createEntity(array $attributes): Comic
     {
         return new Comic(
-            null,
+            Arr::get($attributes, 'id') ? new ComicId(Arr::get($attributes, 'id')) : null,
             Arr::get($attributes, 'key'),
             Arr::get($attributes, 'name'),
-            Arr::get($attributes, 'status'),
+            ComicStatus::from(Arr::get($attributes, 'status'))
         );
     }
 }
