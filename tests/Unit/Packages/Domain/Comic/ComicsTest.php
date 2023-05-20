@@ -26,13 +26,13 @@ class ComicsTest extends TestCase
             'id' => 1,
             'key' => 'key_1',
             'name' => 'name_1',
-            'status' => ComicStatus::PUBLISHED,
+            'status' => ComicStatus::PUBLISHED->value,
         ]);
         $comics[] = $this->createEntity([
             'id' => 2,
             'key' => 'key_2',
             'name' => 'name_2',
-            'status' => ComicStatus::CLOSED,
+            'status' => ComicStatus::CLOSED->value,
         ]);
         $this->assertInstanceOf(Comics::class, $comics);
     }
@@ -45,10 +45,10 @@ class ComicsTest extends TestCase
     private function createEntity(array $attributes): Comic
     {
         return new Comic(
-            new ComicId(Arr::get($attributes, 'id')),
+            Arr::get($attributes, 'id') ? new ComicId(Arr::get($attributes, 'id')) : null,
             Arr::get($attributes, 'key'),
             Arr::get($attributes, 'name'),
-            Arr::get($attributes, 'status')
+            ComicStatus::from(Arr::get($attributes, 'status'))
         );
     }
 }
