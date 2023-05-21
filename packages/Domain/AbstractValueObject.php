@@ -6,7 +6,7 @@ namespace Packages\Domain;
 
 use InvalidArgumentException;
 
-abstract class AbstractValueObject
+abstract class AbstractValueObject implements ValueObjectInterface
 {
     /**
      * @var mixed
@@ -32,6 +32,16 @@ abstract class AbstractValueObject
     public function getValue(): mixed
     {
         return $this->value;
+    }
+
+    /**
+     * @param ValueObjectInterface $valueObject
+     *
+     * @return bool
+     */
+    public function equals(ValueObjectInterface $valueObject): bool
+    {
+        return $this->value === $valueObject->getValue() && static::class === $valueObject::class;
     }
 
     /**
