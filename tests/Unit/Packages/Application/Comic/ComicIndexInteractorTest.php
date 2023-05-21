@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Packages\Application\Comic\Index;
+namespace Tests\Unit\Packages\Application\Comic;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Packages\Application\Comic\Index\ComicIndexInteractor;
+use Packages\Application\Comic\ComicIndexInteractor;
 use Packages\UseCase\Comic\Index\ComicIndexResponse;
 use Tests\TestCase;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Packages\Application\Comic\Show;
+namespace Packages\Application\Comic;
 
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicRepositoryInterface;

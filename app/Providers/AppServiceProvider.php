@@ -6,8 +6,8 @@ namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
-use Packages\Application\Comic\Index\ComicIndexInteractor;
-use Packages\Application\Comic\Show\ComicShowInteractor;
+use Packages\Application\Comic\ComicIndexInteractor;
+use Packages\Application\Comic\ComicShowInteractor;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Infrastructure\Repository\Comic\ComicRepository;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;

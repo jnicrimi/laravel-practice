@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Packages\Application\Comic\Index;
+namespace Packages\Application\Comic;
 
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\UseCase\Comic\Index\ComicIndexResponse;
