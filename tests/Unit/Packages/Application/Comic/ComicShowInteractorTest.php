@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Packages\Application\Comic\Index;
+namespace Tests\Unit\Packages\Application\Comic;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Packages\Application\Comic\Show\ComicShowInteractor;
+use Packages\Application\Comic\ComicShowInteractor;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
 use Packages\UseCase\Comic\Show\ComicShowRequest;
 use Packages\UseCase\Comic\Show\ComicShowResponse;
