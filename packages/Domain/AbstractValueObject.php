@@ -17,6 +17,8 @@ abstract class AbstractValueObject implements ValueObjectInterface
      * Constructor
      *
      * @param mixed $value
+     *
+     * @throws InvalidArgumentException
      */
     public function __construct(mixed $value)
     {
@@ -50,6 +52,27 @@ abstract class AbstractValueObject implements ValueObjectInterface
     final protected function isUnsignedInt(): bool
     {
         return is_int($this->value) && $this->value >= 0;
+    }
+
+    /**
+     * @param int $min
+     * @param int $max
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return bool
+     */
+    final protected function isWithinRange(int $min, int $max): bool
+    {
+        if (is_int($this->value)) {
+            return $this->value >= $min && $this->value <= $max;
+        } elseif (is_string($this->value)) {
+            return mb_strlen($this->value) >= $min && mb_strlen($this->value) <= $max;
+        } elseif (is_array($this->value)) {
+            return count($this->value) >= $min && count($this->value) <= $max;
+        }
+
+        throw new InvalidArgumentException();
     }
 
     /**
