@@ -42,8 +42,8 @@ class ComicIndexResponse
         foreach ($this->comics as $comic) {
             $comics[] = [
                 'id' => $comic->getId()->getValue(),
-                'key' => $comic->getKey(),
-                'name' => $comic->getName(),
+                'key' => $comic->getKey()->getValue(),
+                'name' => $comic->getName()->getValue(),
                 'status' => $comic->getStatus()->description(),
             ];
         }

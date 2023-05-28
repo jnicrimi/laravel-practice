@@ -40,8 +40,8 @@ class ComicShowResponse
     {
         return [
             'id' => $this->comic->getId()->getValue(),
-            'key' => $this->comic->getKey(),
-            'name' => $this->comic->getName(),
+            'key' => $this->comic->getKey()->getValue(),
+            'name' => $this->comic->getName()->getValue(),
             'status' => $this->comic->getStatus()->description(),
         ];
     }
