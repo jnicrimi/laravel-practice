@@ -15,12 +15,12 @@ class Comic extends AbstractEntity implements EntityInterface
     private $id;
 
     /**
-     * @var string
+     * @var ComicKey
      */
     private $key;
 
     /**
-     * @var string
+     * @var ComicName
      */
     private $name;
 
@@ -33,14 +33,14 @@ class Comic extends AbstractEntity implements EntityInterface
      * Constructor
      *
      * @param ComicId|null $id
-     * @param string $key
-     * @param string $name
+     * @param ComicKey $key
+     * @param ComicName $name
      * @param ComicStatus $status
      */
     public function __construct(
         ?ComicId $id,
-        string $key,
-        string $name,
+        ComicKey $key,
+        ComicName $name,
         ComicStatus $status
     ) {
         $this->id = $id;
@@ -58,17 +58,17 @@ class Comic extends AbstractEntity implements EntityInterface
     }
 
     /**
-     * @return string
+     * @return ComicKey
      */
-    public function getKey(): string
+    public function getKey(): ComicKey
     {
         return $this->key;
     }
 
     /**
-     * @return string
+     * @return ComicName
      */
-    public function getName(): string
+    public function getName(): ComicName
     {
         return $this->name;
     }
@@ -88,8 +88,8 @@ class Comic extends AbstractEntity implements EntityInterface
     {
         return [
             'id' => $this->getId() ? $this->getId()->getValue() : null,
-            'key' => $this->getKey(),
-            'name' => $this->getName(),
+            'key' => $this->getKey()->getValue(),
+            'name' => $this->getName()->getValue(),
             'status' => $this->getStatus()->value,
         ];
     }

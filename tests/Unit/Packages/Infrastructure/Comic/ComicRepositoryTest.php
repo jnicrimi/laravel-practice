@@ -9,6 +9,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
+use Packages\Domain\Comic\ComicKey;
+use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\Comics;
 use Packages\Domain\Comic\ComicStatus;
 use Packages\Infrastructure\Repository\Comic\ComicRepository;
@@ -123,8 +125,8 @@ class ComicRepositoryTest extends TestCase
     {
         return new Comic(
             Arr::get($attributes, 'id') ? new ComicId(Arr::get($attributes, 'id')) : null,
-            Arr::get($attributes, 'key'),
-            Arr::get($attributes, 'name'),
+            new ComicKey(Arr::get($attributes, 'key')),
+            new ComicName(Arr::get($attributes, 'name')),
             ComicStatus::from(Arr::get($attributes, 'status'))
         );
     }

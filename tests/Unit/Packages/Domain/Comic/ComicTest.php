@@ -7,6 +7,8 @@ namespace Tests\Unit\Packages\Domain\Comic;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
+use Packages\Domain\Comic\ComicKey;
+use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicStatus;
 use Tests\TestCase;
 
@@ -41,8 +43,8 @@ class ComicTest extends TestCase
     {
         $this->comic = new Comic(
             new ComicId($this->id),
-            $this->key,
-            $this->name,
+            new ComicKey($this->key),
+            new ComicName($this->name),
             ComicStatus::PUBLISHED
         );
     }
@@ -60,7 +62,7 @@ class ComicTest extends TestCase
      */
     public function testGetKey()
     {
-        $this->assertSame($this->key, $this->comic->getKey());
+        $this->assertInstanceOf(ComicKey::class, $this->comic->getKey());
     }
 
     /**
@@ -68,7 +70,7 @@ class ComicTest extends TestCase
      */
     public function testGetName()
     {
-        $this->assertSame($this->name, $this->comic->getName());
+        $this->assertInstanceOf(ComicName::class, $this->comic->getName());
     }
 
     /**
