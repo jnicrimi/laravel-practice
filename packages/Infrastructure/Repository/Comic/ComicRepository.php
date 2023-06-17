@@ -32,15 +32,16 @@ class ComicRepository extends AbstractRepository implements ComicRepositoryInter
         return $this->modelToEntity($comicModel);
     }
 
-    /**
-     * @return Comics
-     */
-    public function all(): Comics
+    public function paginate(int $perPage): Comics
     {
-        $comicModels = ComicModel::all();
+        $comicModels = ComicModel::paginate($perPage);
         $comics = new Comics();
         foreach ($comicModels as $comicModel) {
             $comics[] = $this->modelToEntity($comicModel);
+        }
+        if ($comicModels->isNotEmpty()) {
+            $pagination = $this->lengthAwarePaginatorToPagination($comicModels);
+            $comics->setPagination($pagination);
         }
 
         return $comics;

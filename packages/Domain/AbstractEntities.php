@@ -19,6 +19,11 @@ abstract class AbstractEntities implements ArrayAccess, Countable, IteratorAggre
     protected $items = [];
 
     /**
+     * @var Pagination
+     */
+    protected $pagination;
+
+    /**
      * @param mixed $offset
      *
      * @return bool
@@ -73,6 +78,26 @@ abstract class AbstractEntities implements ArrayAccess, Countable, IteratorAggre
     public function count(): int
     {
         return count($this->items);
+    }
+
+    /**
+     * @param Pagination $pagination
+     *
+     * @return self
+     */
+    public function setPagination(Pagination $pagination): self
+    {
+        $this->pagination = $pagination;
+
+        return $this;
+    }
+
+    /**
+     * @return Pagination
+     */
+    public function getPagination(): Pagination
+    {
+        return $this->pagination;
     }
 
     /**
