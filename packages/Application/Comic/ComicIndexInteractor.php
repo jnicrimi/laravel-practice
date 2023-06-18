@@ -11,6 +11,11 @@ use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
 class ComicIndexInteractor implements ComicIndexUseCaseInterface
 {
     /**
+     * @var int
+     */
+    private const PER_PAGE = 5;
+
+    /**
      * @var ComicRepositoryInterface
      */
     private $comicRepository;
@@ -30,7 +35,7 @@ class ComicIndexInteractor implements ComicIndexUseCaseInterface
      */
     public function handle(): ComicIndexResponse
     {
-        $comicEntities = $this->comicRepository->all();
+        $comicEntities = $this->comicRepository->paginate(self::PER_PAGE);
 
         return new ComicIndexResponse($comicEntities);
     }

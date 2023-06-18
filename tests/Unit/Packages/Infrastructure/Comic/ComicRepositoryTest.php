@@ -62,9 +62,9 @@ class ComicRepositoryTest extends TestCase
     /**
      * @return void
      */
-    public function testAll(): void
+    public function testPaginate(): void
     {
-        $comics = $this->repository->all();
+        $comics = $this->repository->paginate(5);
         $this->assertInstanceOf(Comics::class, $comics);
     }
 

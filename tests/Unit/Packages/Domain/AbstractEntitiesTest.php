@@ -8,6 +8,7 @@ use ArrayIterator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use InvalidArgumentException;
 use Packages\Domain\AbstractEntities;
+use Packages\Domain\Pagination;
 use Tests\TestCase;
 
 class AbstractEntitiesTest extends TestCase
@@ -87,6 +88,30 @@ class AbstractEntitiesTest extends TestCase
     }
 
     /**
+     * @doesNotPerformAssertions
+     *
+     * @return void
+     */
+    public function testSetPagination()
+    {
+        $pagination = $this->createPagination();
+        $entities = $this->createEntities();
+        $entities->setPagination($pagination);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetPagination()
+    {
+        $pagination = $this->createPagination();
+        $entities = $this->createEntities();
+        $entities->setPagination($pagination);
+        $pagination = $entities->getPagination();
+        $this->assertInstanceOf(Pagination::class, $pagination);
+    }
+
+    /**
      * @return void
      */
     public function testGetIterator()
@@ -162,5 +187,27 @@ class AbstractEntitiesTest extends TestCase
                 return 'entities';
             }
         };
+    }
+
+    /**
+     * @return Pagination
+     */
+    private function createPagination(): Pagination
+    {
+        $perPage = 5;
+        $currentPage = 1;
+        $lastPage = 2;
+        $total = 10;
+        $firstItem = 1;
+        $lastItem = 5;
+
+        return new Pagination(
+            $perPage,
+            $currentPage,
+            $lastPage,
+            $total,
+            $firstItem,
+            $lastItem
+        );
     }
 }
