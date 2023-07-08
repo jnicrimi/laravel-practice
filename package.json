@@ -9,7 +9,9 @@
     "@commitlint/cli": "^17.6.6",
     "@commitlint/config-conventional": "^17.6.6",
     "axios": "^1.4",
+    "husky": "^8.0.3",
     "laravel-vite-plugin": "^0.7.4",
+    "lint-staged": "^13.2.3",
     "lodash": "^4.17.19",
     "postcss": "^8.4.25",
     "vite": "^4.4.1"
