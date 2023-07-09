@@ -17,7 +17,7 @@
     "vite": "^4.4.1"
   },
   "lint-staged": {
-    "*.md": "markdownlint . --ignore README.md --ignore node_modules --ignore tools --ignore vendor",
+    "**/*.md": "markdownlint --ignore README.md --ignore node_modules --ignore tools --ignore vendor .",
     "**/*.{yaml,yml,yamllint}": "yamllint --strict ."
   }
 }
