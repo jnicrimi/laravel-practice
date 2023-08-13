@@ -32,8 +32,8 @@ class ComicFactory extends Factory
         ];
 
         return [
-            'key' => $this->faker->md5(),
-            'name' => $this->faker->name(),
+            'key' => $this->faker->uuid(),
+            'name' => $this->faker->md5(),
             'status' => current($this->faker->shuffle($comicStatusCases)),
         ];
     }
