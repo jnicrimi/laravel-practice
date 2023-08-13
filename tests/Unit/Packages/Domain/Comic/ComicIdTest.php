@@ -14,20 +14,53 @@ class ComicIdTest extends TestCase
     use RefreshDatabase;
 
     /**
+     * @dataProvider provideCreateInstanceSucceeded
+     *
+     * @param int $id
+     *
      * @return void
      */
-    public function testCreateInstanceSucceeded()
+    public function testCreateInstanceSucceeded(int $id)
     {
-        $comicId = new ComicId(1);
+        $comicId = new ComicId($id);
         $this->assertInstanceOf(ComicId::class, $comicId);
     }
 
     /**
+     * @dataProvider provideCreateInstanceFailed
+     *
+     * @param mixed $id
+     *
      * @return void
      */
-    public function testCreateInstanceFailed()
+    public function testCreateInstanceFailed($id)
     {
         $this->expectException(InvalidArgumentException::class);
-        new ComicId(0);
+        new ComicId($id);
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideCreateInstanceSucceeded(): array
+    {
+        return [
+            [1],
+            [PHP_INT_MAX],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideCreateInstanceFailed(): array
+    {
+        return [
+            [0],
+            [-1],
+            ['1'],
+            ['a'],
+            [null],
+        ];
     }
 }
