@@ -29,11 +29,11 @@ class ComicNameTest extends TestCase
     /**
      * @dataProvider provideCreateInstanceFailed
      *
-     * @param string $name
+     * @param mixed $name
      *
      * @return void
      */
-    public function testCreateInstanceFailed(string $name)
+    public function testCreateInstanceFailed($name)
     {
         $this->expectException(InvalidArgumentException::class);
         new ComicName($name);
@@ -58,6 +58,9 @@ class ComicNameTest extends TestCase
         return [
             [''],
             [str_repeat('a', 256)],
+            [0],
+            [1],
+            [null],
         ];
     }
 }
