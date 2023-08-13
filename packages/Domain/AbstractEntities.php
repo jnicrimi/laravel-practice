@@ -16,7 +16,7 @@ abstract class AbstractEntities implements ArrayAccess, Countable, IteratorAggre
     /**
      * @var array
      */
-    protected $items = [];
+    protected $entities = [];
 
     /**
      * @var Pagination
@@ -30,7 +30,7 @@ abstract class AbstractEntities implements ArrayAccess, Countable, IteratorAggre
      */
     public function offsetExists(mixed $offset): bool
     {
-        return isset($this->items[$offset]);
+        return isset($this->entities[$offset]);
     }
 
     /**
@@ -40,7 +40,7 @@ abstract class AbstractEntities implements ArrayAccess, Countable, IteratorAggre
      */
     public function offsetGet(mixed $offset): mixed
     {
-        return $this->items[$offset] ?? null;
+        return $this->entities[$offset] ?? null;
     }
 
     /**
@@ -56,9 +56,9 @@ abstract class AbstractEntities implements ArrayAccess, Countable, IteratorAggre
         }
 
         if ($offset === null) {
-            $this->items[] = $value;
+            $this->entities[] = $value;
         } else {
-            $this->items[$offset] = $value;
+            $this->entities[$offset] = $value;
         }
     }
 
@@ -69,7 +69,7 @@ abstract class AbstractEntities implements ArrayAccess, Countable, IteratorAggre
      */
     public function offsetUnset(mixed $offset): void
     {
-        unset($this->items[$offset]);
+        unset($this->entities[$offset]);
     }
 
     /**
@@ -77,7 +77,7 @@ abstract class AbstractEntities implements ArrayAccess, Countable, IteratorAggre
      */
     public function count(): int
     {
-        return count($this->items);
+        return count($this->entities);
     }
 
     /**
@@ -105,7 +105,20 @@ abstract class AbstractEntities implements ArrayAccess, Countable, IteratorAggre
      */
     public function getIterator(): Traversable
     {
-        return new ArrayIterator($this->items);
+        return new ArrayIterator($this->entities);
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $entities = [];
+        foreach ($this->entities as $entity) {
+            $entities[] = $entity->toArray();
+        }
+
+        return $entities;
     }
 
     /**

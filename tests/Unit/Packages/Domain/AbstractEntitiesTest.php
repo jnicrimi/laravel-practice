@@ -176,7 +176,7 @@ class AbstractEntitiesTest extends TestCase
     private function createEntities(): AbstractEntities
     {
         return new class () extends AbstractEntities {
-            protected $items = [
+            protected $entities = [
                 'a' => 'A',
                 'b' => 'B',
                 'c' => 'C',
