@@ -30,7 +30,10 @@ class ComicsControllerTest extends TestCase
                     'id',
                     'key',
                     'name',
-                    'status',
+                    'status' => [
+                        'value',
+                        'description',
+                    ],
                 ],
             ],
         ]);
@@ -55,7 +58,10 @@ class ComicsControllerTest extends TestCase
                     'id',
                     'key',
                     'name',
-                    'status',
+                    'status' => [
+                        'value',
+                        'description',
+                    ],
                 ],
             ]);
         }

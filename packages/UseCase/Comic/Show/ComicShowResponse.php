@@ -43,7 +43,10 @@ class ComicShowResponse implements ResponseInterface
             'id' => $this->comic->getId()->getValue(),
             'key' => $this->comic->getKey()->getValue(),
             'name' => $this->comic->getName()->getValue(),
-            'status' => $this->comic->getStatus()->description(),
+            'status' => [
+                'value' => $this->comic->getStatus()->value,
+                'description' => $this->comic->getStatus()->description(),
+            ],
         ];
     }
 }

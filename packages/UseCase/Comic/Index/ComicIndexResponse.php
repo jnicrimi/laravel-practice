@@ -45,7 +45,10 @@ class ComicIndexResponse implements ResponseInterface
                 'id' => $comic->getId()->getValue(),
                 'key' => $comic->getKey()->getValue(),
                 'name' => $comic->getName()->getValue(),
-                'status' => $comic->getStatus()->description(),
+                'status' => [
+                    'value' => $comic->getStatus()->value,
+                    'description' => $comic->getStatus()->description(),
+                ],
             ];
         }
 
