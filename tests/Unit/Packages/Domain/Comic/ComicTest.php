@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Packages\Domain\Comic;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Arr;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicKey;
@@ -22,31 +23,21 @@ class ComicTest extends TestCase
     private $comic;
 
     /**
-     * @var int
+     * @var array
      */
-    private $id = 1;
-
-    /**
-     * @var string
-     */
-    private $key = 'key';
-
-    /**
-     * @var string
-     */
-    private $name = 'name';
+    private $defaultAttributes = [
+        'id' => 1,
+        'key' => 'key',
+        'name' => 'name',
+        'status' => 'published',
+    ];
 
     /**
      * @return void
      */
     public function setUp(): void
     {
-        $this->comic = new Comic(
-            new ComicId($this->id),
-            new ComicKey($this->key),
-            new ComicName($this->name),
-            ComicStatus::PUBLISHED
-        );
+        $this->comic = $this->createEntity($this->defaultAttributes);
     }
 
     /**
@@ -87,10 +78,25 @@ class ComicTest extends TestCase
     public function testToArray()
     {
         $this->assertSame([
-            'id' => $this->id,
-            'key' => $this->key,
-            'name' => $this->name,
-            'status' => ComicStatus::PUBLISHED->value,
+            'id' => Arr::get($this->defaultAttributes, 'id'),
+            'key' => Arr::get($this->defaultAttributes, 'key'),
+            'name' => Arr::get($this->defaultAttributes, 'name'),
+            'status' => ComicStatus::from(Arr::get($this->defaultAttributes, 'status'))->value,
         ], $this->comic->toArray());
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return Comic
+     */
+    private function createEntity(array $attributes): Comic
+    {
+        return new Comic(
+            Arr::get($attributes, 'id') ? new ComicId(Arr::get($attributes, 'id')) : null,
+            new ComicKey(Arr::get($attributes, 'key')),
+            new ComicName(Arr::get($attributes, 'name')),
+            ComicStatus::from(Arr::get($attributes, 'status'))
+        );
     }
 }
