@@ -54,7 +54,7 @@ class ComicRepositoryTest extends TestCase
      */
     public function testFindFailed(): void
     {
-        $comicId = new ComicId(0);
+        $comicId = new ComicId(PHP_INT_MAX);
         $comic = $this->repository->find($comicId);
         $this->assertNull($comic);
     }

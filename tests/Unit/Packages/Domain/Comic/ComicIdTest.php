@@ -28,6 +28,6 @@ class ComicIdTest extends TestCase
     public function testCreateInstanceFailed()
     {
         $this->expectException(InvalidArgumentException::class);
-        new ComicId(-1);
+        new ComicId(0);
     }
 }

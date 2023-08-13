@@ -72,7 +72,7 @@ class ComicsControllerTest extends TestCase
                 'expected' => Response::HTTP_OK,
             ],
             '存在しない comicId を指定した場合は 404 を返す' => [
-                'comicId' => 0,
+                'comicId' => PHP_INT_MAX,
                 'expected' => Response::HTTP_NOT_FOUND,
             ],
         ];
