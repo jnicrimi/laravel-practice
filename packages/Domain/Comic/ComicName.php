@@ -23,6 +23,9 @@ class ComicName extends AbstractValueObject
      */
     protected function validate(): bool
     {
+        if (! is_string($this->value)) {
+            return false;
+        }
         if (! $this->isWithinRange(self::MIN_LENGTH, self::MAX_LENGTH)) {
             return false;
         }
