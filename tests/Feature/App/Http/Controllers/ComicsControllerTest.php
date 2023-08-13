@@ -46,7 +46,7 @@ class ComicsControllerTest extends TestCase
     /**
      * @return array
      */
-    public function provideShow(): array
+    public static function provideShow(): array
     {
         return [
             '存在する comicId を指定した場合は 200 を返す' => [

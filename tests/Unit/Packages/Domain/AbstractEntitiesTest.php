@@ -124,7 +124,7 @@ class AbstractEntitiesTest extends TestCase
     /**
      * @return array
      */
-    public function provideOffsetExists(): array
+    public static function provideOffsetExists(): array
     {
         return [
             [true, 'a'],
@@ -137,7 +137,7 @@ class AbstractEntitiesTest extends TestCase
     /**
      * @return array
      */
-    public function provideOffsetGet(): array
+    public static function provideOffsetGet(): array
     {
         return [
             ['A', 'a'],
@@ -150,7 +150,7 @@ class AbstractEntitiesTest extends TestCase
     /**
      * @return array
      */
-    public function provideOffsetSet(): array
+    public static function provideOffsetSet(): array
     {
         return [
             ['d', new class () {}],
@@ -160,7 +160,7 @@ class AbstractEntitiesTest extends TestCase
     /**
      * @return array
      */
-    public function provideOffsetUnset(): array
+    public static function provideOffsetUnset(): array
     {
         return [
             [2, 'a'],
