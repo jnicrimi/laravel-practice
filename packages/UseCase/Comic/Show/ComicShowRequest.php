@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Packages\UseCase\Comic\Show;
 
-class ComicShowRequest
+use Packages\UseCase\RequestInterface;
+
+class ComicShowRequest implements RequestInterface
 {
     /**
      * @var int
