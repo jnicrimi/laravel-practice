@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Packages\UseCase\Comic\Show;
 
 use Packages\Domain\Comic\Comic;
+use Packages\UseCase\ResponseInterface;
 
-class ComicShowResponse
+class ComicShowResponse implements ResponseInterface
 {
     /**
      * @var Comic

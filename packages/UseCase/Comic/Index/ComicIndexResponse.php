@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Packages\UseCase\Comic\Index;
 
 use Packages\Domain\Comic\Comics;
+use Packages\UseCase\ResponseInterface;
 
-class ComicIndexResponse
+class ComicIndexResponse implements ResponseInterface
 {
     /**
      * @var Comics
