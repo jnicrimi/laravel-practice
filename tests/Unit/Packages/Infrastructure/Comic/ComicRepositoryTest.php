@@ -94,7 +94,7 @@ class ComicRepositoryTest extends TestCase
     /**
      * @return array
      */
-    public function provideSave(): array
+    public static function provideSave(): array
     {
         return [
             [

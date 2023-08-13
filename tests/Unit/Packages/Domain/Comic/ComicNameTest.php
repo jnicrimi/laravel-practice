@@ -42,7 +42,7 @@ class ComicNameTest extends TestCase
     /**
      * @return array
      */
-    public function provideCreateInstanceSucceeded(): array
+    public static function provideCreateInstanceSucceeded(): array
     {
         return [
             ['a'],
@@ -53,7 +53,7 @@ class ComicNameTest extends TestCase
     /**
      * @return array
      */
-    public function provideCreateInstanceFailed(): array
+    public static function provideCreateInstanceFailed(): array
     {
         return [
             [''],

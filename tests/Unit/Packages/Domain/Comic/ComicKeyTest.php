@@ -42,26 +42,26 @@ class ComicKeyTest extends TestCase
     /**
      * @return array
      */
-    public function provideCreateInstanceSucceeded(): array
+    public static function provideCreateInstanceSucceeded(): array
     {
         return [
             ['a'],
             ['-'],
-            [$this->randomKey(255)],
+            [self::randomKey(255)],
         ];
     }
 
     /**
      * @return array
      */
-    public function provideCreateInstanceFailed(): array
+    public static function provideCreateInstanceFailed(): array
     {
         return [
             [''],
             ['_'],
             ['A'],
             ['あ'],
-            [$this->randomKey(256)],
+            [self::randomKey(256)],
         ];
     }
 
@@ -70,7 +70,7 @@ class ComicKeyTest extends TestCase
      *
      * @return string
      */
-    private function randomKey(int $length): string
+    private static function randomKey(int $length): string
     {
         $str = str_repeat('0123456789abcdefghijklmnopqrstuvwxyz-', $length);
         $str = str_shuffle($str);

@@ -47,7 +47,7 @@ class AbstractValueObjectTest extends TestCase
     /**
      * @return array
      */
-    public function provideEquals(): array
+    public static function provideEquals(): array
     {
         return [
             [true, null],
