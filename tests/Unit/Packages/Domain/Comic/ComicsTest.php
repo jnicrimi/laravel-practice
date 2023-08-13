@@ -19,23 +19,31 @@ class ComicsTest extends TestCase
     use RefreshDatabase;
 
     /**
+     * @var array
+     */
+    private $defaultAttributes = [
+        'key-1' => [
+            'id' => 1,
+            'key' => 'key-1',
+            'name' => 'name-1',
+            'status' => 'published',
+        ],
+        'key-2' => [
+            'id' => 2,
+            'key' => 'key-2',
+            'name' => 'name-2',
+            'status' => 'closed',
+        ],
+    ];
+
+    /**
      * @return void
      */
     public function testCreateInstance(): void
     {
         $comics = new Comics();
-        $comics[] = $this->createEntity([
-            'id' => 1,
-            'key' => 'key-1',
-            'name' => 'name-1',
-            'status' => ComicStatus::PUBLISHED->value,
-        ]);
-        $comics[] = $this->createEntity([
-            'id' => 2,
-            'key' => 'key-2',
-            'name' => 'name-2',
-            'status' => ComicStatus::CLOSED->value,
-        ]);
+        $comics[] = $this->createEntity($this->defaultAttributes['key-1']);
+        $comics[] = $this->createEntity($this->defaultAttributes['key-2']);
         $this->assertInstanceOf(Comics::class, $comics);
     }
 
