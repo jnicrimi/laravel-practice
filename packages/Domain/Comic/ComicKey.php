@@ -23,6 +23,9 @@ class ComicKey extends AbstractValueObject
      */
     protected function validate(): bool
     {
+        if (! is_string($this->value)) {
+            return false;
+        }
         if (! $this->isValidCharacters()) {
             return false;
         }

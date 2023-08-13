@@ -29,11 +29,11 @@ class ComicKeyTest extends TestCase
     /**
      * @dataProvider provideCreateInstanceFailed
      *
-     * @param string $key
+     * @param mixed $key
      *
      * @return void
      */
-    public function testCreateInstanceFailed(string $key)
+    public function testCreateInstanceFailed($key)
     {
         $this->expectException(InvalidArgumentException::class);
         new ComicKey($key);
@@ -62,6 +62,9 @@ class ComicKeyTest extends TestCase
             ['A'],
             ['あ'],
             [self::randomKey(256)],
+            [0],
+            [1],
+            [null],
         ];
     }
 
