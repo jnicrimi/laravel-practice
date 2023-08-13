@@ -37,6 +37,8 @@ class Pagination
     private $lastItem;
 
     /**
+     * Constructor
+     *
      * @param int $perPage
      */
     public function __construct(

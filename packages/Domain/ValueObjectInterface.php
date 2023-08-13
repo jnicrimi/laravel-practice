@@ -7,6 +7,8 @@ namespace Packages\Domain;
 interface ValueObjectInterface
 {
     /**
+     * Constructor
+     *
      * @param mixed $value
      */
     public function __construct($value);
