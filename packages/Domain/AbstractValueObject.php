@@ -55,6 +55,14 @@ abstract class AbstractValueObject implements ValueObjectInterface
     }
 
     /**
+     * @return bool
+     */
+    final protected function isNaturalNumber(): bool
+    {
+        return is_int($this->value) && $this->value > 0;
+    }
+
+    /**
      * @param int $min
      * @param int $max
      *

@@ -13,6 +13,6 @@ class ComicId extends AbstractValueObject
      */
     protected function validate(): bool
     {
-        return $this->isUnsignedInt();
+        return $this->isNaturalNumber();
     }
 }

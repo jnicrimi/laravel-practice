@@ -50,7 +50,7 @@ class ComicShowInteractorTest extends TestCase
     public function testHandleFailed(): void
     {
         $this->expectException(ComicNotFoundException::class);
-        $request = new ComicShowRequest(0);
+        $request = new ComicShowRequest(PHP_INT_MAX);
         $response = $this->interactor->handle($request);
     }
 }
