@@ -23,8 +23,17 @@ class ComicsControllerTest extends TestCase
     public function testIndex()
     {
         $response = $this->get(route('api.v1.comics.index'));
-
         $response->assertStatus(Response::HTTP_OK);
+        $response->assertJsonStructure([
+            'comics' => [
+                0 => [
+                    'id',
+                    'key',
+                    'name',
+                    'status',
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -39,8 +48,17 @@ class ComicsControllerTest extends TestCase
     {
         $this->seed();
         $response = $this->get(route('api.v1.comics.show', ['comicId' => $comicId]));
-
         $response->assertStatus($expected);
+        if ($expected === Response::HTTP_OK) {
+            $response->assertJsonStructure([
+                'comic' => [
+                    'id',
+                    'key',
+                    'name',
+                    'status',
+                ],
+            ]);
+        }
     }
 
     /**
