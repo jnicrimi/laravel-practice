@@ -25,14 +25,16 @@ class ComicsControllerTest extends TestCase
         $response = $this->get(route('api.v1.comics.index'));
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonStructure([
-            'comics' => [
-                0 => [
-                    'id',
-                    'key',
-                    'name',
-                    'status' => [
-                        'value',
-                        'description',
+            'data' => [
+                'comics' => [
+                    0 => [
+                        'id',
+                        'key',
+                        'name',
+                        'status' => [
+                            'value',
+                            'description',
+                        ],
                     ],
                 ],
             ],

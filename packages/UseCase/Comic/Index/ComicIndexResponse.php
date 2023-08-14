@@ -16,12 +16,21 @@ class ComicIndexResponse implements ResponseInterface
 
     /**
      * Constructor
-     *
-     * @param Comics $comics
      */
-    public function __construct(Comics $comics)
+    public function __construct()
+    {
+    }
+
+    /**
+     * @param Comics $comics
+     *
+     * @return self
+     */
+    public function setComics(Comics $comics): self
     {
         $this->comics = $comics;
+
+        return $this;
     }
 
     /**
