@@ -48,7 +48,6 @@ class ComicStatusTest extends TestCase
      */
     public function testDescriptionSucceeded(ComicStatus $comicStatus, string $expected)
     {
-        var_dump($expected);
         $this->assertEquals($expected, $comicStatus->description());
     }
 
