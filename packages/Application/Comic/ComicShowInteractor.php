@@ -42,7 +42,9 @@ class ComicShowInteractor implements ComicShowUseCaseInterface
         if ($comicEntity === null) {
             throw new ComicNotFoundException();
         }
+        $response = new ComicShowResponse();
+        $response->setComic($comicEntity);
 
-        return new ComicShowResponse($comicEntity);
+        return $response;
     }
 }

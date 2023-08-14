@@ -56,13 +56,15 @@ class ComicsControllerTest extends TestCase
         $response->assertStatus($expected);
         if ($expected === Response::HTTP_OK) {
             $response->assertJsonStructure([
-                'comic' => [
-                    'id',
-                    'key',
-                    'name',
-                    'status' => [
-                        'value',
-                        'description',
+                'data' => [
+                    'comic' => [
+                        'id',
+                        'key',
+                        'name',
+                        'status' => [
+                            'value',
+                            'description',
+                        ],
                     ],
                 ],
             ]);

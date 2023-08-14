@@ -6,6 +6,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Comic\V1\IndexResource;
+use App\Http\Resources\Comic\V1\ShowResource;
 use Illuminate\Http\Response;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
@@ -30,9 +31,9 @@ class ComicsController extends Controller
      * @param ComicShowUseCaseInterface $interactor
      * @param int $comicId
      *
-     * @return array
+     * @return ShowResource
      */
-    public function show(ComicShowUseCaseInterface $interactor, int $comicId): array
+    public function show(ComicShowUseCaseInterface $interactor, int $comicId): ShowResource
     {
         $comicRequest = new ComicShowRequest($comicId);
 
@@ -42,6 +43,6 @@ class ComicsController extends Controller
             abort(Response::HTTP_NOT_FOUND);
         }
 
-        return $response->build();
+        return new ShowResource($response->build());
     }
 }
