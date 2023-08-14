@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Comic\V1\IndexResource;
 use Illuminate\Http\Response;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
@@ -16,13 +17,13 @@ class ComicsController extends Controller
     /**
      * @param ComicIndexUseCaseInterface $interactor
      *
-     * @return array
+     * @return IndexResource
      */
-    public function index(ComicIndexUseCaseInterface $interactor): array
+    public function index(ComicIndexUseCaseInterface $interactor): IndexResource
     {
         $response = $interactor->handle();
 
-        return $response->build();
+        return new IndexResource($response->build());
     }
 
     /**
