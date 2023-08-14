@@ -85,6 +85,14 @@ class ComicsControllerTest extends TestCase
                 'comicId' => PHP_INT_MAX,
                 'expected' => Response::HTTP_NOT_FOUND,
             ],
+            'comicId に 0 を指定した場合は 422 を返す' => [
+                'comicId' => 0,
+                'expected' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            ],
+            'comicId に負の値を指定した場合は 422 を返す' => [
+                'comicId' => -1,
+                'expected' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            ],
         ];
     }
 }

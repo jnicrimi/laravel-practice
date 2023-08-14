@@ -24,7 +24,9 @@ abstract class AbstractValueObject implements ValueObjectInterface
     {
         $this->value = $value;
         if (! $this->validate()) {
-            throw new InvalidArgumentException();
+            $message = sprintf('Invalid argument $value: %s for %s', $value, static::class);
+
+            throw new InvalidArgumentException($message);
         }
     }
 
