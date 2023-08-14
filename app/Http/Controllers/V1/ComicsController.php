@@ -7,7 +7,9 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Comic\V1\IndexResource;
 use App\Http\Resources\Comic\V1\ShowResource;
+use Exception;
 use Illuminate\Http\Response;
+use InvalidArgumentException;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
 use Packages\UseCase\Comic\Show\ComicShowRequest;
@@ -35,12 +37,15 @@ class ComicsController extends Controller
      */
     public function show(ComicShowUseCaseInterface $interactor, int $comicId): ShowResource
     {
-        $comicRequest = new ComicShowRequest($comicId);
-
         try {
+            $comicRequest = new ComicShowRequest($comicId);
             $response = $interactor->handle($comicRequest);
         } catch (ComicNotFoundException $ex) {
             abort(Response::HTTP_NOT_FOUND);
+        } catch (InvalidArgumentException $ex) {
+            abort(Response::HTTP_UNPROCESSABLE_ENTITY);
+        } catch (Exception $ex) {
+            abort(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return new ShowResource($response->build());
