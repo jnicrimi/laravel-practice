@@ -32,6 +32,11 @@ class ComicRepository extends AbstractRepository implements ComicRepositoryInter
         return $this->modelToEntity($comicModel);
     }
 
+    /**
+     * @param int $perPage
+     *
+     * @return Comics
+     */
     public function paginate(int $perPage): Comics
     {
         $comicModels = ComicModel::paginate($perPage);
