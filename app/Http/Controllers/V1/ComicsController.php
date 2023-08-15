@@ -32,19 +32,20 @@ class ComicsController extends Controller
 
     /**
      * @param ComicShowUseCaseInterface $interactor
-     * @param ShowFormRequest $request
+     * @param ShowFormRequest $formRequest
      * @param int $comicId
      *
      * @return ShowResource
      */
     public function show(
         ComicShowUseCaseInterface $interactor,
-        ShowFormRequest $request,
+        ShowFormRequest $formRequest,
         int $comicId
     ): ShowResource {
         try {
-            $comicRequest = new ComicShowRequest($comicId);
-            $response = $interactor->handle($comicRequest);
+            $request = new ComicShowRequest();
+            $request->setComicId($comicId);
+            $response = $interactor->handle($request);
         } catch (ComicNotFoundException $ex) {
             abort(Response::HTTP_NOT_FOUND);
         } catch (InvalidArgumentException $ex) {
