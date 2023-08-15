@@ -8,11 +8,9 @@ use App\Models\Comic as ComicModel;
 use Illuminate\Database\Eloquent\Model;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
-use Packages\Domain\Comic\ComicKey;
-use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Domain\Comic\Comics;
-use Packages\Domain\Comic\ComicStatus;
+use Packages\Infrastructure\EntityFactory\ComicEntityFactory;
 use Packages\Infrastructure\Repository\AbstractRepository;
 
 class ComicRepository extends AbstractRepository implements ComicRepositoryInterface
@@ -84,16 +82,14 @@ class ComicRepository extends AbstractRepository implements ComicRepositoryInter
      */
     public function modelToEntity(Model $model): Comic
     {
-        $comicId = new ComicId($model->getAttribute('id'));
-        $comicKey = new ComicKey($model->getAttribute('key'));
-        $comicName = new ComicName($model->getAttribute('name'));
-        $comicStatus = ComicStatus::from($model->getAttribute('status'));
+        $factory = new ComicEntityFactory();
+        $attributes = [
+            'id' => $model->getAttribute('id'),
+            'key' => $model->getAttribute('key'),
+            'name' => $model->getAttribute('name'),
+            'status' => $model->getAttribute('status'),
+        ];
 
-        return new Comic(
-            $comicId,
-            $comicKey,
-            $comicName,
-            $comicStatus
-        );
+        return $factory->create($attributes);
     }
 }
