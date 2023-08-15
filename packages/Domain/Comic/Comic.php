@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Packages\Domain\Comic;
 
+use Carbon\Carbon;
 use Packages\Domain\AbstractEntity;
 use Packages\Domain\EntityInterface;
 
@@ -30,23 +31,39 @@ class Comic extends AbstractEntity implements EntityInterface
     private $status;
 
     /**
+     * @var Carbon|null
+     */
+    private $createdAt;
+
+    /**
+     * @var Carbon|null
+     */
+    private $updatedAt;
+
+    /**
      * Constructor
      *
      * @param ComicId|null $id
      * @param ComicKey $key
      * @param ComicName $name
      * @param ComicStatus $status
+     * @param Carbon|null $createdAt
+     * @param Carbon|null $updatedAt
      */
     public function __construct(
         ?ComicId $id,
         ComicKey $key,
         ComicName $name,
-        ComicStatus $status
+        ComicStatus $status,
+        ?Carbon $createdAt,
+        ?Carbon $updatedAt
     ) {
         $this->id = $id;
         $this->key = $key;
         $this->name = $name;
         $this->status = $status;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -82,6 +99,22 @@ class Comic extends AbstractEntity implements EntityInterface
     }
 
     /**
+     * @return Carbon|null
+     */
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return Carbon|null
+     */
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->updatedAt;
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
@@ -91,6 +124,8 @@ class Comic extends AbstractEntity implements EntityInterface
             'key' => $this->getKey()->getValue(),
             'name' => $this->getName()->getValue(),
             'status' => $this->getStatus()->value,
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt(),
         ];
     }
 }

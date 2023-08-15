@@ -88,6 +88,8 @@ class ComicRepository extends AbstractRepository implements ComicRepositoryInter
             'key' => $model->getAttribute('key'),
             'name' => $model->getAttribute('name'),
             'status' => $model->getAttribute('status'),
+            'created_at' => $model->getAttribute('created_at'),
+            'updated_at' => $model->getAttribute('updated_at'),
         ];
 
         return $factory->create($attributes);

@@ -32,11 +32,15 @@ class ComicEntityFactory extends AbstractEntityFactory implements EntityFactoryI
         $comicKey = new ComicKey(Arr::get($attributes, 'key'));
         $comicName = new ComicName(Arr::get($attributes, 'name'));
         $comicStatus = ComicStatus::from(Arr::get($attributes, 'status'));
+        $createdAt = Arr::get($attributes, 'created_at');
+        $updatedAt = Arr::get($attributes, 'updated_at');
         $comic = new Comic(
             $comicId,
             $comicKey,
             $comicName,
-            $comicStatus
+            $comicStatus,
+            $createdAt,
+            $updatedAt
         );
 
         return $comic;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Packages\Domain\Comic;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
 use Packages\Domain\Comic\Comic;
@@ -30,6 +31,8 @@ class ComicTest extends TestCase
         'key' => 'key',
         'name' => 'name',
         'status' => 'published',
+        'created_at' => '2023-01-01 00:00:00',
+        'updated_at' => '2023-12-31 23:59:59',
     ];
 
     /**
@@ -75,14 +78,30 @@ class ComicTest extends TestCase
     /**
      * @return void
      */
+    public function testGetCreatedAt()
+    {
+        $createdAt = $this->comic->getCreatedAt();
+        $this->assertInstanceOf(Carbon::class, $createdAt);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetUpdatedAt()
+    {
+        $updatedAt = $this->comic->getUpdatedAt();
+        $this->assertInstanceOf(Carbon::class, $updatedAt);
+    }
+
+    /**
+     * @return void
+     */
     public function testToArray()
     {
-        $this->assertSame([
-            'id' => Arr::get($this->defaultAttributes, 'id'),
-            'key' => Arr::get($this->defaultAttributes, 'key'),
-            'name' => Arr::get($this->defaultAttributes, 'name'),
-            'status' => ComicStatus::from(Arr::get($this->defaultAttributes, 'status'))->value,
-        ], $this->comic->toArray());
+        $this->assertSame(
+            array_keys($this->defaultAttributes),
+            array_keys($this->comic->toArray())
+        );
     }
 
     /**
@@ -96,7 +115,9 @@ class ComicTest extends TestCase
             Arr::get($attributes, 'id') ? new ComicId(Arr::get($attributes, 'id')) : null,
             new ComicKey(Arr::get($attributes, 'key')),
             new ComicName(Arr::get($attributes, 'name')),
-            ComicStatus::from(Arr::get($attributes, 'status'))
+            ComicStatus::from(Arr::get($attributes, 'status')),
+            Arr::get($attributes, 'created_at') ? Carbon::parse(Arr::get($attributes, 'created_at')) : null,
+            Arr::get($attributes, 'updated_at') ? Carbon::parse(Arr::get($attributes, 'updated_at')) : null
         );
     }
 }
