@@ -24,9 +24,7 @@ abstract class AbstractValueObject implements ValueObjectInterface
     {
         $this->value = $value;
         if (! $this->validate()) {
-            $message = sprintf('Invalid argument $value: %s for %s', $value, static::class);
-
-            throw new InvalidArgumentException($message);
+            throw new InvalidArgumentException('Invalid argument');
         }
     }
 
@@ -74,6 +72,9 @@ abstract class AbstractValueObject implements ValueObjectInterface
      */
     final protected function isWithinRange(int $min, int $max): bool
     {
+        if ($min > $max) {
+            throw new InvalidArgumentException('Invalid range');
+        }
         if (is_int($this->value)) {
             return $this->value >= $min && $this->value <= $max;
         } elseif (is_string($this->value)) {
@@ -82,7 +83,7 @@ abstract class AbstractValueObject implements ValueObjectInterface
             return count($this->value) >= $min && count($this->value) <= $max;
         }
 
-        throw new InvalidArgumentException();
+        throw new InvalidArgumentException('Invalid argument type');
     }
 
     /**
