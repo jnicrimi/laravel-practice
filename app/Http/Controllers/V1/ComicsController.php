@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Comic\V1\ShowFormRequest;
 use App\Http\Resources\Comic\V1\IndexResource;
 use App\Http\Resources\Comic\V1\ShowResource;
 use Exception;
@@ -31,15 +32,20 @@ class ComicsController extends Controller
 
     /**
      * @param ComicShowUseCaseInterface $interactor
+     * @param ShowFormRequest $formRequest
      * @param int $comicId
      *
      * @return ShowResource
      */
-    public function show(ComicShowUseCaseInterface $interactor, int $comicId): ShowResource
-    {
+    public function show(
+        ComicShowUseCaseInterface $interactor,
+        ShowFormRequest $formRequest,
+        int $comicId
+    ): ShowResource {
         try {
-            $comicRequest = new ComicShowRequest($comicId);
-            $response = $interactor->handle($comicRequest);
+            $request = new ComicShowRequest();
+            $request->setComicId($comicId);
+            $response = $interactor->handle($request);
         } catch (ComicNotFoundException $ex) {
             abort(Response::HTTP_NOT_FOUND);
         } catch (InvalidArgumentException $ex) {

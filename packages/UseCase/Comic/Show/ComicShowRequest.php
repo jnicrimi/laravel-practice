@@ -15,12 +15,21 @@ class ComicShowRequest implements RequestInterface
 
     /**
      * Constructor
-     *
-     * @param int $comicId
      */
-    public function __construct(int $comicId)
+    public function __construct()
+    {
+    }
+
+    /**
+     * @param int $comicId
+     *
+     * @return self
+     */
+    public function setComicId(int $comicId): self
     {
         $this->comicId = $comicId;
+
+        return $this;
     }
 
     /**
