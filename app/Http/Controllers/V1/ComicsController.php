@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Comic\V1\ShowFormRequest;
 use App\Http\Resources\Comic\V1\IndexResource;
 use App\Http\Resources\Comic\V1\ShowResource;
 use Exception;
@@ -31,12 +32,16 @@ class ComicsController extends Controller
 
     /**
      * @param ComicShowUseCaseInterface $interactor
+     * @param ShowFormRequest $request
      * @param int $comicId
      *
      * @return ShowResource
      */
-    public function show(ComicShowUseCaseInterface $interactor, int $comicId): ShowResource
-    {
+    public function show(
+        ComicShowUseCaseInterface $interactor,
+        ShowFormRequest $request,
+        int $comicId
+    ): ShowResource {
         try {
             $comicRequest = new ComicShowRequest($comicId);
             $response = $interactor->handle($comicRequest);

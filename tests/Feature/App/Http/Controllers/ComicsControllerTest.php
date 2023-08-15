@@ -44,12 +44,12 @@ class ComicsControllerTest extends TestCase
     /**
      * @dataProvider provideShow
      *
-     * @param int $comicId
+     * @param mixed $comicId
      * @param int $expected
      *
      * @return void
      */
-    public function testShow(int $comicId, int $expected)
+    public function testShow(mixed $comicId, int $expected)
     {
         $this->seed();
         $response = $this->get(route('api.v1.comics.show', ['comicId' => $comicId]));
@@ -91,6 +91,10 @@ class ComicsControllerTest extends TestCase
             ],
             'comicId に負の値を指定した場合は 422 を返す' => [
                 'comicId' => -1,
+                'expected' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            ],
+            'comicId に文字列を指定した場合は 422 を返す' => [
+                'comicId' => 'a',
                 'expected' => Response::HTTP_UNPROCESSABLE_ENTITY,
             ],
         ];
