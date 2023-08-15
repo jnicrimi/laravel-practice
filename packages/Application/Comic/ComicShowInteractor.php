@@ -40,7 +40,7 @@ class ComicShowInteractor implements ComicShowUseCaseInterface
         $comicId = new ComicId($request->getComicId());
         $comicEntity = $this->comicRepository->find($comicId);
         if ($comicEntity === null) {
-            throw new ComicNotFoundException();
+            throw new ComicNotFoundException('Comic not found');
         }
         $response = new ComicShowResponse();
         $response->setComic($comicEntity);

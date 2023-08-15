@@ -52,7 +52,7 @@ abstract class AbstractEntities implements ArrayAccess, Countable, IteratorAggre
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if (get_class($value) !== $this->getEntityClass()) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException('Invalid entity');
         }
 
         if ($offset === null) {
