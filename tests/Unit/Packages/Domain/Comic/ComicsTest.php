@@ -14,6 +14,7 @@ use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\Comics;
 use Packages\Domain\Comic\ComicStatus;
 use Tests\TestCase;
+use TypeError;
 
 class ComicsTest extends TestCase
 {
@@ -44,12 +45,23 @@ class ComicsTest extends TestCase
     /**
      * @return void
      */
-    public function testCreateInstance(): void
+    public function testCreateInstanceSucceed(): void
     {
         $comics = new Comics();
         $comics[] = $this->createEntity($this->defaultAttributes['key-1']);
         $comics[] = $this->createEntity($this->defaultAttributes['key-2']);
         $this->assertInstanceOf(Comics::class, $comics);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateInstanceFailed(): void
+    {
+        $this->expectException(TypeError::class);
+        $comics = new Comics();
+        $comics[] = $this->createEntity($this->defaultAttributes['key-1']);
+        $comics[] = null;
     }
 
     /**
