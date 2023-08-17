@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Packages\Infrastructure\EntityFactory;
+namespace Packages\Infrastructure\EntityFactory\Comic;
 
 use Illuminate\Support\Arr;
 use Packages\Domain\Comic\Comic;
@@ -11,6 +11,8 @@ use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicStatus;
 use Packages\Domain\EntityInterface;
+use Packages\Infrastructure\EntityFactory\AbstractEntityFactory;
+use Packages\Infrastructure\EntityFactory\EntityFactoryInterface;
 
 class ComicEntityFactory extends AbstractEntityFactory implements EntityFactoryInterface
 {
