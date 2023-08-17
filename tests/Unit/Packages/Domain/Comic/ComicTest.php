@@ -13,6 +13,7 @@ use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicStatus;
 use Tests\TestCase;
+use TypeError;
 
 class ComicTest extends TestCase
 {
@@ -26,7 +27,7 @@ class ComicTest extends TestCase
     /**
      * @var array
      */
-    private $defaultAttributes = [
+    private static $defaultAttributes = [
         'id' => 1,
         'key' => 'key',
         'name' => 'name',
@@ -40,7 +41,47 @@ class ComicTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->comic = $this->createEntity($this->defaultAttributes);
+        $this->comic = $this->createEntity(self::$defaultAttributes);
+    }
+
+    /**
+     * @dataProvider provideCreateInstanceSucceeded
+     *
+     * @param array $arguments
+     *
+     * @return void
+     */
+    public function testCreateInstanceSucceeded(array $arguments): void
+    {
+        $comic = new Comic(
+            Arr::get($arguments, 'id'),
+            Arr::get($arguments, 'key'),
+            Arr::get($arguments, 'name'),
+            Arr::get($arguments, 'status'),
+            Arr::get($arguments, 'created_at'),
+            Arr::get($arguments, 'updated_at')
+        );
+        $this->assertInstanceOf(Comic::class, $comic);
+    }
+
+    /**
+     * @dataProvider provideCreateInstanceFailed
+     *
+     * @param array $arguments
+     *
+     * @return void
+     */
+    public function testCreateInstanceFailed(array $arguments)
+    {
+        $this->expectException(TypeError::class);
+        new Comic(
+            Arr::get($arguments, 'id'),
+            Arr::get($arguments, 'key'),
+            Arr::get($arguments, 'name'),
+            Arr::get($arguments, 'status'),
+            Arr::get($arguments, 'created_at'),
+            Arr::get($arguments, 'updated_at')
+        );
     }
 
     /**
@@ -99,9 +140,52 @@ class ComicTest extends TestCase
     public function testToArray()
     {
         $this->assertSame(
-            array_keys($this->defaultAttributes),
+            array_keys(self::$defaultAttributes),
             array_keys($this->comic->toArray())
         );
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideCreateInstanceSucceeded(): array
+    {
+        $default = [
+            'id' => new ComicId(Arr::get(self::$defaultAttributes, 'id')),
+            'name' => new ComicName(Arr::get(self::$defaultAttributes, 'name')),
+            'key' => new ComicKey(Arr::get(self::$defaultAttributes, 'key')),
+            'status' => ComicStatus::from(Arr::get(self::$defaultAttributes, 'status')),
+            'created_at' => Carbon::parse(Arr::get(self::$defaultAttributes, 'created_at')),
+            'updated_at' => Carbon::parse(Arr::get(self::$defaultAttributes, 'updated_at')),
+        ];
+
+        return [
+            [$default],
+            [array_merge($default, ['id' => null])],
+            [array_merge($default, ['created_at' => null])],
+            [array_merge($default, ['updated_at' => null])],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideCreateInstanceFailed(): array
+    {
+        $default = [
+            'id' => new ComicId(Arr::get(self::$defaultAttributes, 'id')),
+            'name' => new ComicName(Arr::get(self::$defaultAttributes, 'name')),
+            'key' => new ComicKey(Arr::get(self::$defaultAttributes, 'key')),
+            'status' => ComicStatus::from(Arr::get(self::$defaultAttributes, 'status')),
+            'created_at' => Carbon::parse(Arr::get(self::$defaultAttributes, 'created_at')),
+            'updated_at' => Carbon::parse(Arr::get(self::$defaultAttributes, 'updated_at')),
+        ];
+
+        return [
+            [array_merge($default, ['name' => null])],
+            [array_merge($default, ['key' => null])],
+            [array_merge($default, ['status' => null])],
+        ];
     }
 
     /**
