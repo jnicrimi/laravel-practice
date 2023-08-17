@@ -24,22 +24,12 @@ class ComicsTest extends TestCase
      * @var array
      */
     private $defaultAttributes = [
-        'key-1' => [
-            'id' => 1,
-            'key' => 'key-1',
-            'name' => 'name-1',
-            'status' => 'published',
-            'created_at' => '2023-01-01 00:00:00',
-            'updated_at' => '2023-12-31 23:59:59',
-        ],
-        'key-2' => [
-            'id' => 2,
-            'key' => 'key-2',
-            'name' => 'name-2',
-            'status' => 'closed',
-            'created_at' => '2023-01-01 00:00:00',
-            'updated_at' => '2023-12-31 23:59:59',
-        ],
+        'id' => 1,
+        'key' => 'key',
+        'name' => 'name',
+        'status' => 'published',
+        'created_at' => '2023-01-01 00:00:00',
+        'updated_at' => '2023-12-31 23:59:59',
     ];
 
     /**
@@ -48,8 +38,8 @@ class ComicsTest extends TestCase
     public function testCreateInstanceSucceed(): void
     {
         $comics = new Comics();
-        $comics[] = $this->createEntity($this->defaultAttributes['key-1']);
-        $comics[] = $this->createEntity($this->defaultAttributes['key-2']);
+        $comics[] = $this->createEntity($this->defaultAttributes);
+        $comics[] = $this->createEntity(array_merge($this->defaultAttributes, ['id' => 2]));
         $this->assertInstanceOf(Comics::class, $comics);
     }
 
@@ -60,7 +50,7 @@ class ComicsTest extends TestCase
     {
         $this->expectException(TypeError::class);
         $comics = new Comics();
-        $comics[] = $this->createEntity($this->defaultAttributes['key-1']);
+        $comics[] = $this->createEntity($this->defaultAttributes);
         $comics[] = null;
     }
 
