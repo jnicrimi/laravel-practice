@@ -9,7 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Packages\Domain\EntityInterface;
 use Packages\Domain\Pagination;
 
-abstract class AbstractRepository
+abstract class AbstractEloquentRepository implements EloquentRepositoryInterface
 {
     /**
      * @param Model $model
