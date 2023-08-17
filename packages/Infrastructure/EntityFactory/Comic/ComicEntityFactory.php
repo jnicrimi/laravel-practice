@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Packages\Infrastructure\EntityFactory\Comic;
 
 use Illuminate\Support\Arr;
+use InvalidArgumentException;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicKey;
@@ -20,13 +21,15 @@ class ComicEntityFactory extends AbstractEntityFactory implements EntityFactoryI
      * @param array $attributes
      * @param EntityInterface|null $entity
      *
+     * @throws InvalidArgumentException
+     *
      * @return Comic
      */
     public function create(array $attributes, ?EntityInterface $entity = null): Comic
     {
         if ($entity !== null) {
             if (isset($attributes['id'])) {
-                unset($attributes['id']);
+                throw new InvalidArgumentException('id can not override');
             }
             $attributes = array_merge($entity->toArray(), $attributes);
         }
