@@ -13,6 +13,19 @@ class ComicStatusTest extends TestCase
     use RefreshDatabase;
 
     /**
+     * @var int
+     */
+    public const CASE_COUNT = 3;
+
+    /**
+     * @return void
+     */
+    public function testCases(): void
+    {
+        $this->assertCount(self::CASE_COUNT, ComicStatus::cases());
+    }
+
+    /**
      * @dataProvider provideEqualsSucceeded
      *
      * @param ComicStatus $comicStatus
