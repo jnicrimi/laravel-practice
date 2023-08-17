@@ -25,6 +25,9 @@ class ComicEntityFactory extends AbstractEntityFactory implements EntityFactoryI
     public function create(array $attributes, ?EntityInterface $entity = null): Comic
     {
         if ($entity !== null) {
+            if (isset($attributes['id'])) {
+                unset($attributes['id']);
+            }
             $attributes = array_merge($entity->toArray(), $attributes);
         }
         $comicId = null;
