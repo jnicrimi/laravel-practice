@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Packages\Infrastructure\Comic;
+namespace Tests\Unit\Packages\Infrastructure\Repository\Comic;
 
 use App\Models\Comic as ComicModel;
 use Carbon\Carbon;
