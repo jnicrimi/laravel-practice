@@ -41,6 +41,7 @@ class ComicTest extends TestCase
      */
     public function setUp(): void
     {
+        parent::setUp();
         $this->comic = $this->createEntity(self::$defaultAttributes);
     }
 
