@@ -14,26 +14,26 @@ class ComicKeyTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @dataProvider provideCreateInstanceSucceeded
+     * @dataProvider provideCreateInstanceSuccess
      *
      * @param string $key
      *
      * @return void
      */
-    public function testCreateInstanceSucceeded(string $key)
+    public function testCreateInstanceSuccess(string $key)
     {
         $comicKey = new ComicKey($key);
         $this->assertInstanceOf(ComicKey::class, $comicKey);
     }
 
     /**
-     * @dataProvider provideCreateInstanceFailed
+     * @dataProvider provideCreateInstanceFailure
      *
      * @param mixed $key
      *
      * @return void
      */
-    public function testCreateInstanceFailed($key)
+    public function testCreateInstanceFailure($key)
     {
         $this->expectException(InvalidArgumentException::class);
         new ComicKey($key);
@@ -42,7 +42,7 @@ class ComicKeyTest extends TestCase
     /**
      * @return array
      */
-    public static function provideCreateInstanceSucceeded(): array
+    public static function provideCreateInstanceSuccess(): array
     {
         return [
             ['a'],
@@ -54,7 +54,7 @@ class ComicKeyTest extends TestCase
     /**
      * @return array
      */
-    public static function provideCreateInstanceFailed(): array
+    public static function provideCreateInstanceFailure(): array
     {
         return [
             [''],
