@@ -10,10 +10,10 @@ use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Domain\Comic\Comics;
-use Packages\Infrastructure\EntityFactory\ComicEntityFactory;
-use Packages\Infrastructure\Repository\AbstractRepository;
+use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
+use Packages\Infrastructure\Repository\AbstractEloquentRepository;
 
-class ComicRepository extends AbstractRepository implements ComicRepositoryInterface
+class ComicRepository extends AbstractEloquentRepository implements ComicRepositoryInterface
 {
     /**
      * @param ComicId $comicId

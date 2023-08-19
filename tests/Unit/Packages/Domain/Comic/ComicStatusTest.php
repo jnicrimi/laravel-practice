@@ -13,53 +13,66 @@ class ComicStatusTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @dataProvider provideEqualsSucceeded
+     * @var int
+     */
+    public const CASE_COUNT = 3;
+
+    /**
+     * @return void
+     */
+    public function testCases(): void
+    {
+        $this->assertCount(self::CASE_COUNT, ComicStatus::cases());
+    }
+
+    /**
+     * @dataProvider provideEqualsSuccess
      *
      * @param ComicStatus $comicStatus
      * @param ComicStatus $expected
      *
      * @return void
      */
-    public function testEqualsSucceeded(ComicStatus $comicStatus, $expected)
+    public function testEqualsSuccess(ComicStatus $comicStatus, $expected)
     {
         $this->assertTrue($comicStatus->equals($expected));
     }
 
     /**
-     * @dataProvider provideEqualsFailed
+     * @dataProvider provideEqualsFailure
      *
      * @param ComicStatus $comicStatus
      * @param ComicStatus $expected
      *
      * @return void
      */
-    public function testEqualsFailed(ComicStatus $comicStatus, $expected)
+    public function testEqualsFailure(ComicStatus $comicStatus, $expected)
     {
         $this->assertFalse($comicStatus->equals($expected));
     }
 
     /**
-     * @dataProvider provideDescriptionSucceeded
+     * @dataProvider provideDescriptionSuccess
      *
      * @param ComicStatus $comicStatus
      * @param string $expected
      *
      * @return void
      */
-    public function testDescriptionSucceeded(ComicStatus $comicStatus, string $expected)
+    public function testDescriptionSuccess(ComicStatus $comicStatus, string $expected)
     {
         $this->assertEquals($expected, $comicStatus->description());
     }
 
     /**
-     * @dataProvider provideDescriptionFailed
+     * @dataProvider provideDescriptionFailure
      *
      * @param ComicStatus $comicStatus
      * @param string $expected
      *
      * @return void
      */
-    public function testDescriptionFailed(ComicStatus $comicStatus, string $expected)
+    public function testDescriptionFailure(ComicStatus $comicStatus, string $expected)
     {
         $this->assertNotEquals($expected, $comicStatus->description());
     }
@@ -67,7 +80,7 @@ class ComicStatusTest extends TestCase
     /**
      * @return array
      */
-    public static function provideEqualsSucceeded(): array
+    public static function provideEqualsSuccess(): array
     {
         return [
             [ComicStatus::PUBLISHED, ComicStatus::PUBLISHED],
@@ -79,7 +92,7 @@ class ComicStatusTest extends TestCase
     /**
      * @return array
      */
-    public static function provideEqualsFailed(): array
+    public static function provideEqualsFailure(): array
     {
         return [
             [ComicStatus::PUBLISHED, ComicStatus::DRAFT],
@@ -94,7 +107,7 @@ class ComicStatusTest extends TestCase
     /**
      * @return array
      */
-    public static function provideDescriptionSucceeded(): array
+    public static function provideDescriptionSuccess(): array
     {
         return [
             [ComicStatus::PUBLISHED, '公開'],
@@ -106,7 +119,7 @@ class ComicStatusTest extends TestCase
     /**
      * @return array
      */
-    public static function provideDescriptionFailed(): array
+    public static function provideDescriptionFailure(): array
     {
         return [
             [ComicStatus::PUBLISHED, 'dummy'],

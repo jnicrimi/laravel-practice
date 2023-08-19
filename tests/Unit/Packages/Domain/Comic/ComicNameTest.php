@@ -14,26 +14,26 @@ class ComicNameTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @dataProvider provideCreateInstanceSucceeded
+     * @dataProvider provideCreateInstanceSuccess
      *
      * @param string $name
      *
      * @return void
      */
-    public function testCreateInstanceSucceeded(string $name)
+    public function testCreateInstanceSuccess(string $name)
     {
         $comicName = new ComicName($name);
         $this->assertInstanceOf(ComicName::class, $comicName);
     }
 
     /**
-     * @dataProvider provideCreateInstanceFailed
+     * @dataProvider provideCreateInstanceFailure
      *
      * @param mixed $name
      *
      * @return void
      */
-    public function testCreateInstanceFailed($name)
+    public function testCreateInstanceFailure($name)
     {
         $this->expectException(InvalidArgumentException::class);
         new ComicName($name);
@@ -42,7 +42,7 @@ class ComicNameTest extends TestCase
     /**
      * @return array
      */
-    public static function provideCreateInstanceSucceeded(): array
+    public static function provideCreateInstanceSuccess(): array
     {
         return [
             ['a'],
@@ -53,7 +53,7 @@ class ComicNameTest extends TestCase
     /**
      * @return array
      */
-    public static function provideCreateInstanceFailed(): array
+    public static function provideCreateInstanceFailure(): array
     {
         return [
             [''],
