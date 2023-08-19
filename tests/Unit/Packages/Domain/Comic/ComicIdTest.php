@@ -14,26 +14,26 @@ class ComicIdTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @dataProvider provideCreateInstanceSucceeded
+     * @dataProvider provideCreateInstanceSuccess
      *
      * @param int $id
      *
      * @return void
      */
-    public function testCreateInstanceSucceeded(int $id)
+    public function testCreateInstanceSuccess(int $id)
     {
         $comicId = new ComicId($id);
         $this->assertInstanceOf(ComicId::class, $comicId);
     }
 
     /**
-     * @dataProvider provideCreateInstanceFailed
+     * @dataProvider provideCreateInstanceFailure
      *
      * @param mixed $id
      *
      * @return void
      */
-    public function testCreateInstanceFailed($id)
+    public function testCreateInstanceFailure($id)
     {
         $this->expectException(InvalidArgumentException::class);
         new ComicId($id);
@@ -42,7 +42,7 @@ class ComicIdTest extends TestCase
     /**
      * @return array
      */
-    public static function provideCreateInstanceSucceeded(): array
+    public static function provideCreateInstanceSuccess(): array
     {
         return [
             [1],
@@ -53,7 +53,7 @@ class ComicIdTest extends TestCase
     /**
      * @return array
      */
-    public static function provideCreateInstanceFailed(): array
+    public static function provideCreateInstanceFailure(): array
     {
         return [
             [0],
