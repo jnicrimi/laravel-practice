@@ -2,15 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Packages\Infrastructure\EntityFactory;
+namespace Packages\Infrastructure\EntityFactory\Comic;
 
 use Illuminate\Support\Arr;
+use InvalidArgumentException;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicStatus;
 use Packages\Domain\EntityInterface;
+use Packages\Infrastructure\EntityFactory\AbstractEntityFactory;
+use Packages\Infrastructure\EntityFactory\EntityFactoryInterface;
 
 class ComicEntityFactory extends AbstractEntityFactory implements EntityFactoryInterface
 {
@@ -18,15 +21,20 @@ class ComicEntityFactory extends AbstractEntityFactory implements EntityFactoryI
      * @param array $attributes
      * @param EntityInterface|null $entity
      *
+     * @throws InvalidArgumentException
+     *
      * @return Comic
      */
     public function create(array $attributes, ?EntityInterface $entity = null): Comic
     {
         if ($entity !== null) {
+            if (isset($attributes['id'])) {
+                throw new InvalidArgumentException('id can not override');
+            }
             $attributes = array_merge($entity->toArray(), $attributes);
         }
         $comicId = null;
-        if (Arr::has($attributes, 'id')) {
+        if (isset($attributes['id'])) {
             $comicId = new ComicId(Arr::get($attributes, 'id'));
         }
         $comicKey = new ComicKey(Arr::get($attributes, 'key'));

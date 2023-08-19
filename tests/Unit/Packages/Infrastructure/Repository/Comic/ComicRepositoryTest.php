@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Packages\Infrastructure\Comic;
+namespace Tests\Unit\Packages\Infrastructure\Repository\Comic;
 
 use App\Models\Comic as ComicModel;
 use Carbon\Carbon;
@@ -43,7 +43,7 @@ class ComicRepositoryTest extends TestCase
     /**
      * @return void
      */
-    public function testFindSucceeded(): void
+    public function testFindSuccess(): void
     {
         $comicId = new ComicId(1);
         $comic = $this->repository->find($comicId);
@@ -53,7 +53,7 @@ class ComicRepositoryTest extends TestCase
     /**
      * @return void
      */
-    public function testFindFailed(): void
+    public function testFindFailure(): void
     {
         $comicId = new ComicId(PHP_INT_MAX);
         $comic = $this->repository->find($comicId);
@@ -70,7 +70,7 @@ class ComicRepositoryTest extends TestCase
     }
 
     /**
-     * @dataProvider  provideSave
+     * @dataProvider provideSave
      *
      * @param array $attributes
      *
