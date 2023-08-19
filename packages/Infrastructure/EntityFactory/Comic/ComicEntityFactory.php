@@ -34,7 +34,7 @@ class ComicEntityFactory extends AbstractEntityFactory implements EntityFactoryI
             $attributes = array_merge($entity->toArray(), $attributes);
         }
         $comicId = null;
-        if (Arr::has($attributes, 'id')) {
+        if (isset($attributes['id'])) {
             $comicId = new ComicId(Arr::get($attributes, 'id'));
         }
         $comicKey = new ComicKey(Arr::get($attributes, 'key'));
