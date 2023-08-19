@@ -37,7 +37,7 @@ class ComicShowInteractorTest extends TestCase
     /**
      * @return void
      */
-    public function testHandleSucceeded(): void
+    public function testHandleSuccess(): void
     {
         $request = new ComicShowRequest();
         $request->setComicId(1);
@@ -48,7 +48,7 @@ class ComicShowInteractorTest extends TestCase
     /**
      * @return void
      */
-    public function testHandleFailed(): void
+    public function testHandleFailure(): void
     {
         $this->expectException(ComicNotFoundException::class);
         $request = new ComicShowRequest();

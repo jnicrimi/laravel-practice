@@ -45,13 +45,13 @@ class ComicTest extends TestCase
     }
 
     /**
-     * @dataProvider provideCreateInstanceSucceeded
+     * @dataProvider provideCreateInstanceSuccess
      *
      * @param array $arguments
      *
      * @return void
      */
-    public function testCreateInstanceSucceeded(array $arguments): void
+    public function testCreateInstanceSuccess(array $arguments): void
     {
         $comic = new Comic(
             Arr::get($arguments, 'id'),
@@ -65,13 +65,13 @@ class ComicTest extends TestCase
     }
 
     /**
-     * @dataProvider provideCreateInstanceFailed
+     * @dataProvider provideCreateInstanceFailure
      *
      * @param array $arguments
      *
      * @return void
      */
-    public function testCreateInstanceFailed(array $arguments)
+    public function testCreateInstanceFailure(array $arguments)
     {
         $this->expectException(TypeError::class);
         new Comic(
@@ -148,7 +148,7 @@ class ComicTest extends TestCase
     /**
      * @return array
      */
-    public static function provideCreateInstanceSucceeded(): array
+    public static function provideCreateInstanceSuccess(): array
     {
         $default = [
             'id' => new ComicId(Arr::get(self::$defaultAttributes, 'id')),
@@ -170,7 +170,7 @@ class ComicTest extends TestCase
     /**
      * @return array
      */
-    public static function provideCreateInstanceFailed(): array
+    public static function provideCreateInstanceFailure(): array
     {
         $default = [
             'id' => new ComicId(Arr::get(self::$defaultAttributes, 'id')),

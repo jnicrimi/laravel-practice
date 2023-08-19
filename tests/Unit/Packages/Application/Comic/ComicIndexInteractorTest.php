@@ -35,7 +35,7 @@ class ComicIndexInteractorTest extends TestCase
     /**
      * @return void
      */
-    public function testHandleSucceeded(): void
+    public function testHandleSuccess(): void
     {
         $response = $this->interactor->handle();
         $this->assertInstanceOf(ComicIndexResponse::class, $response);

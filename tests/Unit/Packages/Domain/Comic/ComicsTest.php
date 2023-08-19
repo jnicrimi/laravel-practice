@@ -35,7 +35,7 @@ class ComicsTest extends TestCase
     /**
      * @return void
      */
-    public function testCreateInstanceSucceed(): void
+    public function testCreateInstanceSuccess(): void
     {
         $comics = new Comics();
         $comics[] = $this->createEntity($this->defaultAttributes);
@@ -46,7 +46,7 @@ class ComicsTest extends TestCase
     /**
      * @return void
      */
-    public function testCreateInstanceFailed(): void
+    public function testCreateInstanceFailure(): void
     {
         $this->expectException(TypeError::class);
         $comics = new Comics();
