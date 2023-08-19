@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Packages\Infrastructure\Repository\Comic;
 
 use App\Models\Comic as ComicModel;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
@@ -88,8 +89,8 @@ class ComicRepository extends AbstractEloquentRepository implements ComicReposit
             'key' => $model->getAttribute('key'),
             'name' => $model->getAttribute('name'),
             'status' => $model->getAttribute('status'),
-            'created_at' => $model->getAttribute('created_at'),
-            'updated_at' => $model->getAttribute('updated_at'),
+            'created_at' => Carbon::parse($model->getAttribute('created_at'))->format(Comic::DATE_FORMAT),
+            'updated_at' => Carbon::parse($model->getAttribute('updated_at')->format(Comic::DATE_FORMAT)),
         ];
 
         return $factory->create($attributes);

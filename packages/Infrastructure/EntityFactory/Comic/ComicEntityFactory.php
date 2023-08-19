@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Packages\Infrastructure\EntityFactory\Comic;
 
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use Packages\Domain\Comic\Comic;
@@ -41,7 +42,13 @@ class ComicEntityFactory extends AbstractEntityFactory implements EntityFactoryI
         $comicName = new ComicName(Arr::get($attributes, 'name'));
         $comicStatus = ComicStatus::from(Arr::get($attributes, 'status'));
         $createdAt = Arr::get($attributes, 'created_at');
+        if ($createdAt !== null) {
+            $createdAt = Carbon::parse($createdAt);
+        }
         $updatedAt = Arr::get($attributes, 'updated_at');
+        if ($updatedAt !== null) {
+            $updatedAt = Carbon::parse($updatedAt);
+        }
         $comic = new Comic(
             $comicId,
             $comicKey,

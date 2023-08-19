@@ -124,8 +124,8 @@ class Comic extends AbstractEntity implements EntityInterface
             'key' => $this->getKey()->getValue(),
             'name' => $this->getName()->getValue(),
             'status' => $this->getStatus()->value,
-            'created_at' => $this->getCreatedAt(),
-            'updated_at' => $this->getUpdatedAt(),
+            'created_at' => $this->getCreatedAt() ? $this->getCreatedAt()->format(self::DATE_FORMAT) : null,
+            'updated_at' => $this->getUpdatedAt() ? $this->getUpdatedAt()->format(self::DATE_FORMAT) : null,
         ];
     }
 }
