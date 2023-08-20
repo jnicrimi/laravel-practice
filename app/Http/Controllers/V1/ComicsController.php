@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Comic\V1\ShowFormRequest;
-use App\Http\Resources\Comic\V1\IndexResource;
-use App\Http\Resources\Comic\V1\ShowResource;
+use App\Http\Requests\V1\Comic\ShowFormRequest;
+use App\Http\Resources\V1\Comic\IndexResource;
+use App\Http\Resources\V1\Comic\ShowResource;
 use Exception;
 use Illuminate\Http\Response;
 use InvalidArgumentException;
