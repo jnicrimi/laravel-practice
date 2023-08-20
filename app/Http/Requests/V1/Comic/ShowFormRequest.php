@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\V1\Comic;
 
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Requests\ApiRequest;
 use Illuminate\Support\Facades\Route;
 
-class ShowFormRequest extends FormRequest
+class ShowFormRequest extends ApiRequest
 {
     /**
      * @return bool
@@ -40,17 +38,5 @@ class ShowFormRequest extends FormRequest
         return array_merge($this->request->all(), [
             'comic_id' => Route::input('comicId'),
         ]);
-    }
-
-    /**
-     * @param Validator $validator
-     *
-     * @throw HttpResponseException
-     */
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(
-            response()->json([], 422)
-        );
     }
 }
