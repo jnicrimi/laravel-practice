@@ -12,6 +12,7 @@ use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicStatus;
+use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
 use Tests\TestCase;
 use TypeError;
 
@@ -20,9 +21,9 @@ class ComicTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @var Comic
+     * @var ComicEntityFactory
      */
-    private $comic;
+    private $entityFactory;
 
     /**
      * @var array
@@ -42,7 +43,7 @@ class ComicTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->comic = $this->createEntity(self::$defaultAttributes);
+        $this->entityFactory = new ComicEntityFactory();
     }
 
     /**
@@ -90,7 +91,8 @@ class ComicTest extends TestCase
      */
     public function testGetId()
     {
-        $this->assertInstanceOf(ComicId::class, $this->comic->getId());
+        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $this->assertInstanceOf(ComicId::class, $comic->getId());
     }
 
     /**
@@ -98,7 +100,8 @@ class ComicTest extends TestCase
      */
     public function testGetKey()
     {
-        $this->assertInstanceOf(ComicKey::class, $this->comic->getKey());
+        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $this->assertInstanceOf(ComicKey::class, $comic->getKey());
     }
 
     /**
@@ -106,7 +109,8 @@ class ComicTest extends TestCase
      */
     public function testGetName()
     {
-        $this->assertInstanceOf(ComicName::class, $this->comic->getName());
+        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $this->assertInstanceOf(ComicName::class, $comic->getName());
     }
 
     /**
@@ -114,7 +118,8 @@ class ComicTest extends TestCase
      */
     public function testGetStatus()
     {
-        $this->assertInstanceOf(ComicStatus::class, $this->comic->getStatus());
+        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $this->assertInstanceOf(ComicStatus::class, $comic->getStatus());
     }
 
     /**
@@ -122,8 +127,8 @@ class ComicTest extends TestCase
      */
     public function testGetCreatedAt()
     {
-        $createdAt = $this->comic->getCreatedAt();
-        $this->assertInstanceOf(Carbon::class, $createdAt);
+        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $this->assertInstanceOf(Carbon::class, $comic->getCreatedAt());
     }
 
     /**
@@ -131,8 +136,8 @@ class ComicTest extends TestCase
      */
     public function testGetUpdatedAt()
     {
-        $updatedAt = $this->comic->getUpdatedAt();
-        $this->assertInstanceOf(Carbon::class, $updatedAt);
+        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $this->assertInstanceOf(Carbon::class, $comic->getUpdatedAt());
     }
 
     /**
@@ -140,10 +145,8 @@ class ComicTest extends TestCase
      */
     public function testToArray()
     {
-        $this->assertSame(
-            array_keys(self::$defaultAttributes),
-            array_keys($this->comic->toArray())
-        );
+        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $this->assertSame(self::$defaultAttributes, $comic->toArray());
     }
 
     /**
@@ -187,22 +190,5 @@ class ComicTest extends TestCase
             [array_merge($default, ['key' => null])],
             [array_merge($default, ['status' => null])],
         ];
-    }
-
-    /**
-     * @param array $attributes
-     *
-     * @return Comic
-     */
-    private function createEntity(array $attributes): Comic
-    {
-        return new Comic(
-            Arr::get($attributes, 'id') ? new ComicId(Arr::get($attributes, 'id')) : null,
-            new ComicKey(Arr::get($attributes, 'key')),
-            new ComicName(Arr::get($attributes, 'name')),
-            ComicStatus::from(Arr::get($attributes, 'status')),
-            Arr::get($attributes, 'created_at') ? Carbon::parse(Arr::get($attributes, 'created_at')) : null,
-            Arr::get($attributes, 'updated_at') ? Carbon::parse(Arr::get($attributes, 'updated_at')) : null
-        );
     }
 }

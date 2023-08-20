@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace Tests\Unit\Packages\Infrastructure\Repository\Comic;
 
 use App\Models\Comic as ComicModel;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Arr;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
-use Packages\Domain\Comic\ComicKey;
-use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\Comics;
 use Packages\Domain\Comic\ComicStatus;
+use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
 use Packages\Infrastructure\Repository\Comic\ComicRepository;
 use Tests\TestCase;
 
@@ -27,6 +24,11 @@ class ComicRepositoryTest extends TestCase
     private $repository;
 
     /**
+     * @var ComicEntityFactory
+     */
+    private $entityFactory;
+
+    /**
      * @var bool
      */
     protected $seed = true;
@@ -38,6 +40,7 @@ class ComicRepositoryTest extends TestCase
     {
         parent::setUp();
         $this->repository = $this->app->make(ComicRepository::class);
+        $this->entityFactory = $this->app->make(ComicEntityFactory::class);
     }
 
     /**
@@ -78,7 +81,8 @@ class ComicRepositoryTest extends TestCase
      */
     public function testSave($attributes): void
     {
-        $comic = $this->repository->save($this->createEntity($attributes));
+        $entity = $this->entityFactory->create($attributes);
+        $comic = $this->repository->save($entity);
         $this->assertInstanceOf(Comic::class, $comic);
     }
 
@@ -119,22 +123,5 @@ class ComicRepositoryTest extends TestCase
                 ],
             ],
         ];
-    }
-
-    /**
-     * @param array $attributes
-     *
-     * @return Comic
-     */
-    private function createEntity(array $attributes): Comic
-    {
-        return new Comic(
-            Arr::get($attributes, 'id') ? new ComicId(Arr::get($attributes, 'id')) : null,
-            new ComicKey(Arr::get($attributes, 'key')),
-            new ComicName(Arr::get($attributes, 'name')),
-            ComicStatus::from(Arr::get($attributes, 'status')),
-            Arr::get($attributes, 'created_at') ? Carbon::parse(Arr::get($attributes, 'created_at')) : null,
-            Arr::get($attributes, 'updated_at') ? Carbon::parse(Arr::get($attributes, 'updated_at')) : null
-        );
     }
 }
