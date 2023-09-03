@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\V1\Comic;
 
-use App\Http\Requests\ApiRequest;
+use App\Http\Requests\ApiFormRequest;
 use Illuminate\Support\Facades\Route;
 
-class ShowFormRequest extends ApiRequest
+class ShowFormRequest extends ApiFormRequest
 {
     /**
      * @return bool
