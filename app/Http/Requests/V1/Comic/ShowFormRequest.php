@@ -35,7 +35,7 @@ class ShowFormRequest extends ApiRequest
      */
     public function validationData()
     {
-        return array_merge($this->request->all(), [
+        return array_merge($this->all(), [
             'comic_id' => Route::input('comicId'),
         ]);
     }
