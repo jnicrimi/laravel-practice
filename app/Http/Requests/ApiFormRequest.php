@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Http\Errors\ValidationError;
 use App\Http\Resources\ErrorResource;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -13,19 +14,12 @@ use Illuminate\Http\Response;
 class ApiFormRequest extends FormRequest
 {
     /**
-     * @var string
-     */
-    public const CODE = 'failed-request-validation';
-
-    public const MESSAGE = 'Failed request validation.';
-
-    /**
      * @param Validator $validator
      */
     protected function failedValidation(Validator $validator): ErrorResource
     {
-        $response['code'] = self::CODE;
-        $response['message'] = self::MESSAGE;
+        $response['code'] = ValidationError::FailedRequestValidation->code();
+        $response['message'] = ValidationError::FailedRequestValidation->message();
         $response['errors'] = $validator->errors()->toArray();
 
         throw new HttpResponseException(
