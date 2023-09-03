@@ -10,7 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
-class ApiRequest extends FormRequest
+class ApiFormRequest extends FormRequest
 {
     /**
      * @var string
