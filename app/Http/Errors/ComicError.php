@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Errors;
 
-enum ComicError implements ErrorInterface
+enum ComicError: string implements ErrorInterface
 {
-    case ComicNotFound;
+    case ComicNotFound = 'comic-not-found';
 
     /**
      * @return string
      */
     public function code(): string
     {
-        return match ($this) {
-            self::ComicNotFound => 'comic-not-found',
-        };
+        return $this->value;
     }
 
     /**
