@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Tests\Unit\Packages\Application\Comic;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use InvalidArgumentException;
 use Packages\Application\Comic\ComicShowInteractor;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
 use Packages\UseCase\Comic\Show\ComicShowRequest;
 use Packages\UseCase\Comic\Show\ComicShowResponse;
 use Tests\TestCase;
+use TypeError;
 
 class ComicShowInteractorTest extends TestCase
 {
@@ -46,13 +48,51 @@ class ComicShowInteractorTest extends TestCase
     }
 
     /**
+     * @dataProvider provideHandleFailure
+     *
+     * @param mixed $comicId
+     * @param array $expected
+     *
      * @return void
      */
-    public function testHandleFailure(): void
+    public function testHandleFailure(mixed $comicId, array $expected): void
     {
-        $this->expectException(ComicNotFoundException::class);
+        $this->expectException($expected['exception']);
         $request = new ComicShowRequest();
-        $request->setComicId(PHP_INT_MAX);
+        $request->setComicId($comicId);
         $response = $this->interactor->handle($request);
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideHandleFailure(): array
+    {
+        return [
+            [
+                'comicId' => PHP_INT_MAX,
+                'expected' => [
+                    'exception' => ComicNotFoundException::class,
+                ],
+            ],
+            [
+                'comicId' => 0,
+                'expected' => [
+                    'exception' => InvalidArgumentException::class,
+                ],
+            ],
+            [
+                'comicId' => -1,
+                'expected' => [
+                    'exception' => InvalidArgumentException::class,
+                ],
+            ],
+            [
+                'comicId' => 'a',
+                'expected' => [
+                    'exception' => TypeError::class,
+                ],
+            ],
+        ];
     }
 }
