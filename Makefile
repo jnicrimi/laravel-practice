@@ -24,11 +24,11 @@ phpstan:
 
 .PHONY: cs
 cs:
-	PHP_CS_FIXER_IGNORE_ENV=1 tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
+	tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
 
 .PHONY: cs-fix
 cs-fix:
-	PHP_CS_FIXER_IGNORE_ENV=1 tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
+	tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
 
 .PHONY: clear-cache
 clear-cache:
