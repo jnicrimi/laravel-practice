@@ -19,6 +19,11 @@ class ComicKey extends AbstractValueObject
     public const MAX_LENGTH = 255;
 
     /**
+     * @var string
+     */
+    public const REGEX_PATTERN = '/^[0-9a-z\-]+$/';
+
+    /**
      * @return bool
      */
     protected function validate(): bool
@@ -41,6 +46,6 @@ class ComicKey extends AbstractValueObject
      */
     private function isValidCharacters(): bool
     {
-        return preg_match('/^[0-9a-z\-]+$/', $this->value) ? true : false;
+        return preg_match(self::REGEX_PATTERN, $this->value) ? true : false;
     }
 }

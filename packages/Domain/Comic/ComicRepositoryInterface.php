@@ -14,6 +14,13 @@ interface ComicRepositoryInterface
     public function find(ComicId $comicId): ?Comic;
 
     /**
+     * @param ComicKey $comicKey
+     *
+     * @return Comic|null
+     */
+    public function findByKey(ComicKey $comicKey): ?Comic;
+
+    /**
      * @param int $perPage
      *
      * @return Comics

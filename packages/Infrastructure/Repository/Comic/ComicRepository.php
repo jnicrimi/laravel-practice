@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
+use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Domain\Comic\Comics;
 use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
@@ -24,6 +25,21 @@ class ComicRepository extends AbstractEloquentRepository implements ComicReposit
     public function find(ComicId $comicId): ?Comic
     {
         $comicModel = ComicModel::find($comicId->getValue());
+        if ($comicModel === null) {
+            return null;
+        }
+
+        return $this->modelToEntity($comicModel);
+    }
+
+    /**
+     * @param ComicKey $comicKey
+     *
+     * @return Comic|null
+     */
+    public function findByKey(ComicKey $comicKey): ?Comic
+    {
+        $comicModel = ComicModel::where('key', $comicKey->getValue())->first();
         if ($comicModel === null) {
             return null;
         }

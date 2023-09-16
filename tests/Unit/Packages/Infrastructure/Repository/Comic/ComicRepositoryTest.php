@@ -8,6 +8,7 @@ use App\Models\Comic as ComicModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
+use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\Comics;
 use Packages\Domain\Comic\ComicStatus;
 use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
@@ -60,6 +61,28 @@ class ComicRepositoryTest extends TestCase
     {
         $comicId = new ComicId(PHP_INT_MAX);
         $comic = $this->repository->find($comicId);
+        $this->assertNull($comic);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindByKeySuccess(): void
+    {
+        $comicId = new ComicId(1);
+        $registeredComic = $this->repository->find($comicId);
+        $comicKey = new ComicKey($registeredComic->getKey()->getValue());
+        $comic = $this->repository->findByKey($comicKey);
+        $this->assertInstanceOf(Comic::class, $comic);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindByKeyFailure(): void
+    {
+        $comicKey = new ComicKey('dummy');
+        $comic = $this->repository->findByKey($comicKey);
         $this->assertNull($comic);
     }
 

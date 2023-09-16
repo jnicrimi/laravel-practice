@@ -7,10 +7,12 @@ namespace App\Providers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
+use Packages\Application\Comic\ComicCreateInteractor;
 use Packages\Application\Comic\ComicIndexInteractor;
 use Packages\Application\Comic\ComicShowInteractor;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Infrastructure\Repository\Comic\ComicRepository;
+use Packages\UseCase\Comic\Create\ComicCreateUseCaseInterface;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
 use Packages\UseCase\Comic\Show\ComicShowUseCaseInterface;
 
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(ComicRepositoryInterface::class, ComicRepository::class);
+        $this->app->bind(ComicCreateUseCaseInterface::class, ComicCreateInteractor::class);
         $this->app->bind(ComicIndexUseCaseInterface::class, ComicIndexInteractor::class);
         $this->app->bind(ComicShowUseCaseInterface::class, ComicShowInteractor::class);
     }
