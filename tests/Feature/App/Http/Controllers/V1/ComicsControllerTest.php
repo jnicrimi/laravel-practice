@@ -89,13 +89,13 @@ class ComicsControllerTest extends TestCase
     public static function provideShow(): array
     {
         return [
-            '存在する comicId を指定した場合は 200 を返す' => [
+            '存在する comicId を指定' => [
                 'comicId' => 1,
                 'expected' => [
                     'status' => Response::HTTP_OK,
                 ],
             ],
-            '存在しない comicId を指定した場合は 404 を返す' => [
+            '存在しない comicId を指定' => [
                 'comicId' => PHP_INT_MAX,
                 'expected' => [
                     'status' => Response::HTTP_NOT_FOUND,
@@ -103,7 +103,7 @@ class ComicsControllerTest extends TestCase
                     'message' => ComicError::ComicNotFound->message(),
                 ],
             ],
-            'comicId に 0 を指定した場合は 422 を返す' => [
+            'comicId に 0 を指定' => [
                 'comicId' => 0,
                 'expected' => [
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
@@ -111,7 +111,7 @@ class ComicsControllerTest extends TestCase
                     'message' => CommonError::InvalidArgument->message(),
                 ],
             ],
-            'comicId に負の値を指定した場合は 422 を返す' => [
+            'comicId に負の値を指定' => [
                 'comicId' => -1,
                 'expected' => [
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
@@ -119,7 +119,7 @@ class ComicsControllerTest extends TestCase
                     'message' => CommonError::InvalidArgument->message(),
                 ],
             ],
-            'comicId に文字列を指定した場合は 422 を返す' => [
+            'comicId に文字列を指定' => [
                 'comicId' => 'a',
                 'expected' => [
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
