@@ -5,22 +5,17 @@ declare(strict_types=1);
 namespace Packages\Domain\Comic;
 
 use Illuminate\Support\Facades\Lang;
+use Packages\Domain\EnumArrayable;
+use Packages\Domain\EnumMatchable;
 
 enum ComicStatus: string
 {
+    use EnumArrayable;
+    use EnumMatchable;
+
     case PUBLISHED = 'published';
     case DRAFT = 'draft';
     case CLOSED = 'closed';
-
-    /**
-     * @param self $enum
-     *
-     * @return bool
-     */
-    public function equals(self $enum): bool
-    {
-        return $this->value === $enum->value && static::class === $enum::class;
-    }
 
     /**
      * @return string
