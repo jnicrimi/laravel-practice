@@ -25,16 +25,10 @@ class ComicFactory extends Factory
      */
     public function definition()
     {
-        $comicStatusCases = [
-            ComicStatus::PUBLISHED->value,
-            ComicStatus::DRAFT->value,
-            ComicStatus::CLOSED->value,
-        ];
-
         return [
             'key' => $this->faker->uuid(),
             'name' => $this->faker->md5(),
-            'status' => current($this->faker->shuffle($comicStatusCases)),
+            'status' => current($this->faker->shuffle(ComicStatus::values())),
         ];
     }
 }
