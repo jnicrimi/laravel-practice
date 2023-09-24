@@ -54,6 +54,19 @@ class ComicCreateInteractorTest extends TestCase
             ->setStatus(ComicStatus::CLOSED->value);
         $response = $this->interactor->handle($request);
         $this->assertInstanceOf(ComicCreateResponse::class, $response);
+        $expected = [
+            'comic' => [
+                'id' => $response->build()['comic']['id'],
+                'key' => 'test-key-1',
+                'name' => 'test_name_1',
+                'status' => [
+                    'value' => 'closed',
+                    'description' => '非公開',
+                ],
+            ],
+        ];
+        $actual = $response->build();
+        $this->assertSame($expected, $actual);
     }
 
     /**
