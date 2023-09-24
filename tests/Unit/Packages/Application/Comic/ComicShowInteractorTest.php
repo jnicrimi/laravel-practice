@@ -43,6 +43,19 @@ class ComicShowInteractorTest extends TestCase
         $request->setComicId(1);
         $response = $this->interactor->handle($request);
         $this->assertInstanceOf(ComicShowResponse::class, $response);
+        $expected = [
+            'comic' => [
+                'id' => 1,
+                'key' => 'default-key-1',
+                'name' => 'default_name_1',
+                'status' => [
+                    'value' => 'published',
+                    'description' => '公開',
+                ],
+            ],
+        ];
+        $actual = $response->build();
+        $this->assertSame($expected, $actual);
     }
 
     /**
