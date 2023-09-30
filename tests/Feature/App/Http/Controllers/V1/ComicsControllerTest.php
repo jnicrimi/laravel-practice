@@ -35,12 +35,17 @@ class ComicsControllerTest extends TestCase
     }
 
     /**
+     * @dataProvider provideIndex
+     *
+     * @param array $params
+     * @param array $expected
+     *
      * @return void
      */
-    public function testIndex()
+    public function testIndex(array $params, array $expected)
     {
-        $response = $this->get(route('api.v1.comics.index'));
-        $response->assertStatus(Response::HTTP_OK);
+        $response = $this->get(route('api.v1.comics.index', $params));
+        $response->assertStatus($expected['status']);
         $response->assertJsonStructure([
             'data' => [
                 'comics' => [
@@ -156,6 +161,55 @@ class ComicsControllerTest extends TestCase
             'code' => ComicError::ComicDuplicate->code(),
             'message' => ComicError::ComicDuplicate->message(),
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideIndex(): array
+    {
+        return [
+            '指定なし' => [
+                'params' => [],
+                'expected' => [
+                    'status' => Response::HTTP_OK,
+                ],
+            ],
+            'key を指定' => [
+                'params' => [
+                    'key' => 'default-key-1',
+                ],
+                'expected' => [
+                    'status' => Response::HTTP_OK,
+                ],
+            ],
+            'name を指定' => [
+                'params' => [
+                    'name' => 'default_name_1',
+                ],
+                'expected' => [
+                    'status' => Response::HTTP_OK,
+                ],
+            ],
+            'status を指定' => [
+                'params' => [
+                    'status' => [ComicStatus::PUBLISHED->value],
+                ],
+                'expected' => [
+                    'status' => Response::HTTP_OK,
+                ],
+            ],
+            '全てのパラメータを指定' => [
+                'params' => [
+                    'key' => 'default-key-1',
+                    'name' => 'default_name_1',
+                    'status' => [ComicStatus::PUBLISHED->value],
+                ],
+                'expected' => [
+                    'status' => Response::HTTP_OK,
+                ],
+            ],
+        ];
     }
 
     /**

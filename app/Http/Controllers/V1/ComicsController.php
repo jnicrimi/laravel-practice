@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Errors\ComicError;
 use App\Http\Errors\CommonError;
 use App\Http\Requests\V1\Comic\CreateFormRequest;
+use App\Http\Requests\V1\Comic\IndexFormRequest;
 use App\Http\Requests\V1\Comic\ShowFormRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\V1\Comic\CreateResource;
@@ -21,6 +22,7 @@ use Packages\UseCase\Comic\Create\ComicCreateRequest;
 use Packages\UseCase\Comic\Create\ComicCreateUseCaseInterface;
 use Packages\UseCase\Comic\Exception\ComicDuplicateException;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
+use Packages\UseCase\Comic\Index\ComicIndexRequest;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
 use Packages\UseCase\Comic\Show\ComicShowRequest;
 use Packages\UseCase\Comic\Show\ComicShowUseCaseInterface;
@@ -30,12 +32,19 @@ class ComicsController extends Controller
 {
     /**
      * @param ComicIndexUseCaseInterface $interactor
+     * @param IndexFormRequest $formRequest
      *
      * @return IndexResource
      */
-    public function index(ComicIndexUseCaseInterface $interactor): IndexResource
-    {
-        $response = $interactor->handle();
+    public function index(
+        ComicIndexUseCaseInterface $interactor,
+        IndexFormRequest $formRequest
+    ): IndexResource {
+        $request = new ComicIndexRequest();
+        $request->setKey($formRequest->input('key'))
+            ->setName($formRequest->input('name'))
+            ->setStatus($formRequest->input('status'));
+        $response = $interactor->handle($request);
 
         return new IndexResource($response->build());
     }
