@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1', 'as' => 'v1.'], function () {
     Route::group(['prefix' => 'comics', 'as' => 'comics.'], function () {
         Route::get('/', [ComicsController::class, 'index'])->name('index');
-        Route::get('/show/{comicId}', [ComicsController::class, 'show'])->name('show');
-        Route::post('/create', [ComicsController::class, 'create'])->name('create');
+        Route::get('/{comicId}', [ComicsController::class, 'show'])->name('show');
+        Route::post('/', [ComicsController::class, 'create'])->name('create');
     });
 });
