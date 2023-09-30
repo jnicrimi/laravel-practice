@@ -12,6 +12,7 @@ use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\Comics;
 use Packages\Domain\Comic\ComicStatus;
 use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
+use Packages\Infrastructure\QueryBuilder\Comic\Index\ComicSearchQueryBuilder;
 use Packages\Infrastructure\Repository\Comic\ComicRepository;
 use Tests\TestCase;
 
@@ -91,7 +92,12 @@ class ComicRepositoryTest extends TestCase
      */
     public function testPaginate(): void
     {
-        $comics = $this->repository->paginate(5);
+        $queryBuilder = new ComicSearchQueryBuilder();
+        $queryBuilder->setKey('default-key-1');
+        $queryBuilder->setName('default_name_1');
+        $queryBuilder->setStatus(['published']);
+        $query = $queryBuilder->build();
+        $comics = $this->repository->paginate($query, 5);
         $this->assertInstanceOf(Comics::class, $comics);
     }
 

@@ -6,6 +6,7 @@ namespace Packages\Infrastructure\Repository\Comic;
 
 use App\Models\Comic as ComicModel;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
@@ -48,13 +49,14 @@ class ComicRepository extends AbstractEloquentRepository implements ComicReposit
     }
 
     /**
+     * @param Builder $query
      * @param int $perPage
      *
      * @return Comics
      */
-    public function paginate(int $perPage): Comics
+    public function paginate(Builder $query, int $perPage): Comics
     {
-        $comicModels = ComicModel::paginate($perPage);
+        $comicModels = $query->paginate($perPage);
         $comics = new Comics();
         foreach ($comicModels as $comicModel) {
             $comics[] = $this->modelToEntity($comicModel);

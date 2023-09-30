@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Packages\Application\Comic;
 
 use Packages\Domain\Comic\ComicRepositoryInterface;
+use Packages\Infrastructure\QueryBuilder\Comic\Index\ComicSearchQueryBuilder;
+use Packages\UseCase\Comic\Index\ComicIndexRequest;
 use Packages\UseCase\Comic\Index\ComicIndexResponse;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
 
@@ -31,11 +33,18 @@ class ComicIndexInteractor implements ComicIndexUseCaseInterface
     }
 
     /**
+     * @param ComicIndexRequest $request
+     *
      * @return ComicIndexResponse
      */
-    public function handle(): ComicIndexResponse
+    public function handle(ComicIndexRequest $request): ComicIndexResponse
     {
-        $comicEntities = $this->comicRepository->paginate(self::PER_PAGE);
+        $queryBuilder = new ComicSearchQueryBuilder();
+        $queryBuilder->setKey($request->getKey())
+            ->setName($request->getName())
+            ->setStatus($request->getStatus());
+        $query = $queryBuilder->build();
+        $comicEntities = $this->comicRepository->paginate($query, self::PER_PAGE);
         $response = new ComicIndexResponse();
         $response->setComics($comicEntities);
 
