@@ -63,7 +63,7 @@ class ComicsController extends Controller
     ): ShowResource|JsonResponse {
         try {
             $request = new ComicShowRequest();
-            $request->setComicId((int) $comicId);
+            $request->setId((int) $comicId);
             $response = $interactor->handle($request);
         } catch (ComicNotFoundException $ex) {
             $errorResource = new ErrorResource([

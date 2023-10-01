@@ -40,7 +40,7 @@ class ComicShowInteractorTest extends TestCase
     public function testHandleSuccess(): void
     {
         $request = new ComicShowRequest();
-        $request->setComicId(1);
+        $request->setId(1);
         $response = $this->interactor->handle($request);
         $this->assertInstanceOf(ComicShowResponse::class, $response);
         $expected = [
@@ -65,7 +65,7 @@ class ComicShowInteractorTest extends TestCase
     {
         $this->expectException(ComicNotFoundException::class);
         $request = new ComicShowRequest();
-        $request->setComicId(PHP_INT_MAX);
+        $request->setId(PHP_INT_MAX);
         $this->interactor->handle($request);
     }
 }
