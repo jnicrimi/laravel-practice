@@ -11,7 +11,7 @@ class ComicShowRequest implements RequestInterface
     /**
      * @var int
      */
-    private $comicId;
+    private $id;
 
     /**
      * Constructor
@@ -21,13 +21,13 @@ class ComicShowRequest implements RequestInterface
     }
 
     /**
-     * @param int $comicId
+     * @param int $id
      *
      * @return self
      */
-    public function setComicId(int $comicId): self
+    public function setId(int $id): self
     {
-        $this->comicId = $comicId;
+        $this->id = $id;
 
         return $this;
     }
@@ -35,8 +35,8 @@ class ComicShowRequest implements RequestInterface
     /**
      * @return int
      */
-    public function getComicId(): int
+    public function getId(): int
     {
-        return $this->comicId;
+        return $this->id;
     }
 }
