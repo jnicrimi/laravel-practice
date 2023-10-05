@@ -9,9 +9,7 @@ use App\Http\Errors\CommonError;
 use App\Http\Errors\ValidationError;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicStatus;
-use Packages\Infrastructure\Repository\Comic\ComicRepository;
 use Tests\TestCase;
 
 class ComicsControllerTest extends TestCase
@@ -22,17 +20,6 @@ class ComicsControllerTest extends TestCase
      * @var bool
      */
     protected $seed = true;
-
-    /**
-     * @var ComicRepository
-     */
-    private $comicRepository;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->comicRepository = $this->app->make(ComicRepository::class);
-    }
 
     /**
      * @dataProvider provideIndex
@@ -140,30 +127,6 @@ class ComicsControllerTest extends TestCase
     }
 
     /**
-     * @return void
-     */
-    public function testCreateFailureByDuplicate()
-    {
-        $comicId = new ComicId(1);
-        $registeredComic = $this->comicRepository->find($comicId);
-        $formData = [
-            'key' => $registeredComic->getKey()->getValue(),
-            'name' => 'test_name_1',
-            'status' => ComicStatus::DRAFT->value,
-        ];
-        $response = $this->post(route('api.v1.comics.create'), $formData);
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
-        $response->assertJsonStructure([
-            'code',
-            'message',
-        ]);
-        $response->assertJson([
-            'code' => ComicError::ComicDuplicate->code(),
-            'message' => ComicError::ComicDuplicate->message(),
-        ]);
-    }
-
-    /**
      * @return array
      */
     public static function provideIndex(): array
@@ -267,8 +230,8 @@ class ComicsControllerTest extends TestCase
         return [
             '正常系' => [
                 'formData' => [
-                    'name' => 'test_name_1',
                     'key' => 'test-key-1',
+                    'name' => 'test_name_1',
                     'status' => ComicStatus::PUBLISHED->value,
                 ],
                 'expected' => [
@@ -288,8 +251,8 @@ class ComicsControllerTest extends TestCase
             ],
             'key に null を指定' => [
                 'formData' => [
-                    'name' => 'test_name_1',
                     'key' => null,
+                    'name' => 'test_name_1',
                     'status' => ComicStatus::PUBLISHED->value,
                 ],
                 'expected' => [
@@ -300,8 +263,8 @@ class ComicsControllerTest extends TestCase
             ],
             'key に空文字を指定' => [
                 'formData' => [
-                    'name' => 'test_name_1',
                     'key' => '',
+                    'name' => 'test_name_1',
                     'status' => ComicStatus::PUBLISHED->value,
                 ],
                 'expected' => [
@@ -312,8 +275,8 @@ class ComicsControllerTest extends TestCase
             ],
             'key の文字数が最大値を超えている' => [
                 'formData' => [
-                    'name' => 'test_name_1',
                     'key' => str_repeat('a', 256),
+                    'name' => 'test_name_1',
                     'status' => ComicStatus::PUBLISHED->value,
                 ],
                 'expected' => [
@@ -324,8 +287,8 @@ class ComicsControllerTest extends TestCase
             ],
             'key の書式が不正' => [
                 'formData' => [
-                    'name' => 'test_name_1',
                     'key' => 'test_key_1',
+                    'name' => 'test_name_1',
                     'status' => ComicStatus::PUBLISHED->value,
                 ],
                 'expected' => [
@@ -347,8 +310,8 @@ class ComicsControllerTest extends TestCase
             ],
             'name に null を指定' => [
                 'formData' => [
-                    'name' => null,
                     'key' => 'test-key-1',
+                    'name' => null,
                     'status' => ComicStatus::PUBLISHED->value,
                 ],
                 'expected' => [
@@ -359,8 +322,8 @@ class ComicsControllerTest extends TestCase
             ],
             'name に空文字を指定' => [
                 'formData' => [
-                    'name' => '',
                     'key' => 'test-key-1',
+                    'name' => '',
                     'status' => ComicStatus::PUBLISHED->value,
                 ],
                 'expected' => [
@@ -371,8 +334,8 @@ class ComicsControllerTest extends TestCase
             ],
             'name の文字数が最大値を超えている' => [
                 'formData' => [
-                    'name' => str_repeat('a', 256),
                     'key' => 'test-key-1',
+                    'name' => str_repeat('a', 256),
                     'status' => ComicStatus::PUBLISHED->value,
                 ],
                 'expected' => [
@@ -383,8 +346,8 @@ class ComicsControllerTest extends TestCase
             ],
             'status が未設定' => [
                 'formData' => [
-                    'name' => 'test_name_1',
                     'key' => 'test-key-1',
+                    'name' => 'test_name_1',
                 ],
                 'expected' => [
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
@@ -394,8 +357,8 @@ class ComicsControllerTest extends TestCase
             ],
             'status に null を指定' => [
                 'formData' => [
-                    'name' => 'test_name_1',
                     'key' => 'test-key-1',
+                    'name' => 'test_name_1',
                     'status' => null,
                 ],
                 'expected' => [
@@ -406,14 +369,26 @@ class ComicsControllerTest extends TestCase
             ],
             'status に不正な値を指定' => [
                 'formData' => [
-                    'name' => 'test_name_1',
                     'key' => 'test-key-1',
+                    'name' => 'test_name_1',
                     'status' => 'invalid',
                 ],
                 'expected' => [
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
                     'code' => ValidationError::FailedRequestValidation->code(),
                     'message' => ValidationError::FailedRequestValidation->message(),
+                ],
+            ],
+            'key が重複' => [
+                'formData' => [
+                    'key' => 'default-key-1',
+                    'name' => 'test_name_1',
+                    'status' => 'draft',
+                ],
+                'expected' => [
+                    'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                    'code' => ComicError::ComicDuplicate->code(),
+                    'message' => ComicError::ComicDuplicate->message(),
                 ],
             ],
         ];
