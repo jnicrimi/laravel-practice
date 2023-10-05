@@ -17,10 +17,11 @@ interface ComicRepositoryInterface
 
     /**
      * @param ComicKey $comicKey
+     * @param ComicId|null $ignoreComicId
      *
      * @return Comic|null
      */
-    public function findByKey(ComicKey $comicKey): ?Comic;
+    public function findByKey(ComicKey $comicKey, ?ComicId $ignoreComicId = null): ?Comic;
 
     /**
      * @param Builder $query

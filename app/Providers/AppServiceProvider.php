@@ -10,11 +10,13 @@ use Illuminate\Support\ServiceProvider;
 use Packages\Application\Comic\ComicCreateInteractor;
 use Packages\Application\Comic\ComicIndexInteractor;
 use Packages\Application\Comic\ComicShowInteractor;
+use Packages\Application\Comic\ComicUpdateInteractor;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Infrastructure\Repository\Comic\ComicRepository;
 use Packages\UseCase\Comic\Create\ComicCreateUseCaseInterface;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
 use Packages\UseCase\Comic\Show\ComicShowUseCaseInterface;
+use Packages\UseCase\Comic\Update\ComicUpdateUseCaseInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ComicCreateUseCaseInterface::class, ComicCreateInteractor::class);
         $this->app->bind(ComicIndexUseCaseInterface::class, ComicIndexInteractor::class);
         $this->app->bind(ComicShowUseCaseInterface::class, ComicShowInteractor::class);
+        $this->app->bind(ComicUpdateUseCaseInterface::class, ComicUpdateInteractor::class);
     }
 
     /**

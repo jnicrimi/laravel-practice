@@ -70,20 +70,26 @@ class ComicRepositoryTest extends TestCase
      */
     public function testFindByKeySuccess(): void
     {
-        $comicId = new ComicId(1);
-        $registeredComic = $this->repository->find($comicId);
-        $comicKey = new ComicKey($registeredComic->getKey()->getValue());
+        $comicKey = new ComicKey('default-key-1');
         $comic = $this->repository->findByKey($comicKey);
         $this->assertInstanceOf(Comic::class, $comic);
     }
 
     /**
+     * @dataProvider provideFindByKeyFailure
+     *
+     * @param string $comicKey
+     * @param int|null $ignoreComicId
+     *
      * @return void
      */
-    public function testFindByKeyFailure(): void
+    public function testFindByKeyFailure(string $comicKey, ?int $ignoreComicId): void
     {
-        $comicKey = new ComicKey('dummy');
-        $comic = $this->repository->findByKey($comicKey);
+        $comicKey = new ComicKey($comicKey);
+        if ($ignoreComicId !== null) {
+            $ignoreComicId = new ComicId($ignoreComicId);
+        }
+        $comic = $this->repository->findByKey($comicKey, $ignoreComicId);
         $this->assertNull($comic);
     }
 
@@ -123,6 +129,23 @@ class ComicRepositoryTest extends TestCase
         $comicModel = ComicModel::find(1);
         $comic = $this->repository->modelToEntity($comicModel);
         $this->assertInstanceOf(Comic::class, $comic);
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideFindByKeyFailure(): array
+    {
+        return [
+            [
+                'comicKey' => 'dummy',
+                'ignoreComicId' => null,
+            ],
+            [
+                'comicKey' => 'default-key-1',
+                'ignoreComicId' => 1,
+            ],
+        ];
     }
 
     /**
