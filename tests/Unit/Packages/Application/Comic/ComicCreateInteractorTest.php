@@ -6,9 +6,7 @@ namespace Tests\Unit\Packages\Application\Comic;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Application\Comic\ComicCreateInteractor;
-use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicStatus;
-use Packages\Infrastructure\Repository\Comic\ComicRepository;
 use Packages\UseCase\Comic\Create\ComicCreateRequest;
 use Packages\UseCase\Comic\Create\ComicCreateResponse;
 use Packages\UseCase\Comic\Exception\ComicDuplicateException;
@@ -29,18 +27,12 @@ class ComicCreateInteractorTest extends TestCase
     private $interactor;
 
     /**
-     * @var ComicRepository
-     */
-    private $comicRepository;
-
-    /**
      * @return void
      */
     public function setUp(): void
     {
         parent::setUp();
         $this->interactor = $this->app->make(ComicCreateInteractor::class);
-        $this->comicRepository = $this->app->make(ComicRepository::class);
     }
 
     /**
@@ -72,13 +64,11 @@ class ComicCreateInteractorTest extends TestCase
     /**
      * @return void
      */
-    public function testHandleFailureByDuplicate(): void
+    public function testHandleFailureByDuplicateKey(): void
     {
         $this->expectException(ComicDuplicateException::class);
-        $comicId = new ComicId(1);
-        $registeredComic = $this->comicRepository->find($comicId);
         $request = new ComicCreateRequest();
-        $request->setKey($registeredComic->getKey()->getValue())
+        $request->setKey('default-key-1')
             ->setName('test_name_1')
             ->setStatus(ComicStatus::CLOSED->value);
         $this->interactor->handle($request);

@@ -297,6 +297,18 @@ class ComicsControllerTest extends TestCase
                     'message' => ValidationError::FailedRequestValidation->message(),
                 ],
             ],
+            'key が重複' => [
+                'formData' => [
+                    'key' => 'default-key-1',
+                    'name' => 'test_name_1',
+                    'status' => 'draft',
+                ],
+                'expected' => [
+                    'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                    'code' => ComicError::ComicDuplicate->code(),
+                    'message' => ComicError::ComicDuplicate->message(),
+                ],
+            ],
             'name が未設定' => [
                 'formData' => [
                     'key' => 'test-key-1',
@@ -377,18 +389,6 @@ class ComicsControllerTest extends TestCase
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
                     'code' => ValidationError::FailedRequestValidation->code(),
                     'message' => ValidationError::FailedRequestValidation->message(),
-                ],
-            ],
-            'key が重複' => [
-                'formData' => [
-                    'key' => 'default-key-1',
-                    'name' => 'test_name_1',
-                    'status' => 'draft',
-                ],
-                'expected' => [
-                    'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                    'code' => ComicError::ComicDuplicate->code(),
-                    'message' => ComicError::ComicDuplicate->message(),
                 ],
             ],
         ];
