@@ -35,12 +35,17 @@ class ComicRepository extends AbstractEloquentRepository implements ComicReposit
 
     /**
      * @param ComicKey $comicKey
+     * @param ComicId|null $ignoreComicId
      *
      * @return Comic|null
      */
-    public function findByKey(ComicKey $comicKey): ?Comic
+    public function findByKey(ComicKey $comicKey, ?ComicId $ignoreComicId = null): ?Comic
     {
-        $comicModel = ComicModel::where('key', $comicKey->getValue())->first();
+        $query = ComicModel::where('key', $comicKey->getValue());
+        if ($ignoreComicId !== null) {
+            $query->where('id', '!=', $ignoreComicId->getValue());
+        }
+        $comicModel = $query->first();
         if ($comicModel === null) {
             return null;
         }
