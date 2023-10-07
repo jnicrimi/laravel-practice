@@ -89,16 +89,16 @@ class ComicsControllerTest extends TestCase
     }
 
     /**
-     * @dataProvider provideCreate
+     * @dataProvider provideStore
      *
      * @param array $formData
      * @param array $expected
      *
      * @return void
      */
-    public function testCreate(array $formData, array $expected)
+    public function testStore(array $formData, array $expected)
     {
-        $response = $this->post(route('api.v1.comics.create'), $formData);
+        $response = $this->post(route('api.v1.comics.store'), $formData);
         $response->assertStatus($expected['status']);
         if ($expected['status'] === Response::HTTP_OK) {
             $response->assertJsonStructure([
@@ -264,7 +264,7 @@ class ComicsControllerTest extends TestCase
     /**
      * @return array
      */
-    public static function provideCreate(): array
+    public static function provideStore(): array
     {
         return [
             '正常系' => [

@@ -7,27 +7,27 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Errors\ComicError;
 use App\Http\Errors\CommonError;
-use App\Http\Requests\V1\Comic\CreateFormRequest;
 use App\Http\Requests\V1\Comic\IndexFormRequest;
 use App\Http\Requests\V1\Comic\ShowFormRequest;
+use App\Http\Requests\V1\Comic\StoreFormRequest;
 use App\Http\Requests\V1\Comic\UpdateFormRequest;
 use App\Http\Resources\ErrorResource;
-use App\Http\Resources\V1\Comic\CreateResource;
 use App\Http\Resources\V1\Comic\IndexResource;
 use App\Http\Resources\V1\Comic\ShowResource;
+use App\Http\Resources\V1\Comic\StoreResource;
 use App\Http\Resources\V1\Comic\UpdateResource;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use InvalidArgumentException;
-use Packages\UseCase\Comic\Create\ComicCreateRequest;
-use Packages\UseCase\Comic\Create\ComicCreateUseCaseInterface;
 use Packages\UseCase\Comic\Exception\ComicDuplicateException;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
 use Packages\UseCase\Comic\Index\ComicIndexRequest;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
 use Packages\UseCase\Comic\Show\ComicShowRequest;
 use Packages\UseCase\Comic\Show\ComicShowUseCaseInterface;
+use Packages\UseCase\Comic\Store\ComicStoreRequest;
+use Packages\UseCase\Comic\Store\ComicStoreUseCaseInterface;
 use Packages\UseCase\Comic\Update\ComicUpdateRequest;
 use Packages\UseCase\Comic\Update\ComicUpdateUseCaseInterface;
 use TypeError;
@@ -107,17 +107,17 @@ class ComicsController extends Controller
     }
 
     /**
-     * @param ComicCreateUseCaseInterface $interactor
-     * @param CreateFormRequest $formRequest
+     * @param ComicStoreUseCaseInterface $interactor
+     * @param StoreFormRequest $formRequest
      *
-     * @return CreateResource|JsonResponse
+     * @return StoreResource|JsonResponse
      */
-    public function create(
-        ComicCreateUseCaseInterface $interactor,
-        CreateFormRequest $formRequest
-    ): CreateResource|JsonResponse {
+    public function store(
+        ComicStoreUseCaseInterface $interactor,
+        StoreFormRequest $formRequest
+    ): StoreResource|JsonResponse {
         try {
-            $request = new ComicCreateRequest();
+            $request = new ComicStoreRequest();
             $request->setKey($formRequest->input('key'))
                 ->setName($formRequest->input('name'))
                 ->setStatus($formRequest->input('status'));
@@ -156,7 +156,7 @@ class ComicsController extends Controller
             return $errorResource->response()->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return new CreateResource($response->build());
+        return new StoreResource($response->build());
     }
 
     /**

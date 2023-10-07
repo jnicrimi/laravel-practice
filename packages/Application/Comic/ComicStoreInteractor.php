@@ -8,12 +8,12 @@ use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
-use Packages\UseCase\Comic\Create\ComicCreateRequest;
-use Packages\UseCase\Comic\Create\ComicCreateResponse;
-use Packages\UseCase\Comic\Create\ComicCreateUseCaseInterface;
 use Packages\UseCase\Comic\Exception\ComicDuplicateException;
+use Packages\UseCase\Comic\Store\ComicStoreRequest;
+use Packages\UseCase\Comic\Store\ComicStoreResponse;
+use Packages\UseCase\Comic\Store\ComicStoreUseCaseInterface;
 
-class ComicCreateInteractor implements ComicCreateUseCaseInterface
+class ComicStoreInteractor implements ComicStoreUseCaseInterface
 {
     /**
      * @var ComicRepositoryInterface
@@ -31,30 +31,30 @@ class ComicCreateInteractor implements ComicCreateUseCaseInterface
     }
 
     /**
-     * @param ComicCreateRequest $request
+     * @param ComicStoreRequest $request
      *
      * @throws ComicDuplicateException
      *
-     * @return ComicCreateResponse
+     * @return ComicStoreResponse
      */
-    public function handle(ComicCreateRequest $request): ComicCreateResponse
+    public function handle(ComicStoreRequest $request): ComicStoreResponse
     {
         if ($this->doesComicExist($request)) {
             throw new ComicDuplicateException('Comic already exists');
         }
         $comic = $this->saveComic($request);
-        $response = new ComicCreateResponse();
+        $response = new ComicStoreResponse();
         $response->setComic($comic);
 
         return $response;
     }
 
     /**
-     * @param ComicCreateRequest $request
+     * @param ComicStoreRequest $request
      *
      * @return bool
      */
-    private function doesComicExist(ComicCreateRequest $request): bool
+    private function doesComicExist(ComicStoreRequest $request): bool
     {
         $comicKey = new ComicKey($request->getKey());
         $comic = $this->comicRepository->findByKey($comicKey);
@@ -66,11 +66,11 @@ class ComicCreateInteractor implements ComicCreateUseCaseInterface
     }
 
     /**
-     * @param ComicCreateRequest $request
+     * @param ComicStoreRequest $request
      *
      * @return Comic
      */
-    private function saveComic(ComicCreateRequest $request): Comic
+    private function saveComic(ComicStoreRequest $request): Comic
     {
         $entityFactory = new ComicEntityFactory();
         $entity = $entityFactory->create([

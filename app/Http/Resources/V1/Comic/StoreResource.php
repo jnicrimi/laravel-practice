@@ -7,7 +7,7 @@ namespace App\Http\Resources\V1\Comic;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CreateResource extends JsonResource
+class StoreResource extends JsonResource
 {
     /**
      * @param Request $request
