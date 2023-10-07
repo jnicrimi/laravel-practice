@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Packages\UseCase\Comic\Create;
+namespace Packages\UseCase\Comic\Store;
 
 use Packages\Domain\Comic\Comic;
 use Packages\UseCase\ResponseInterface;
 
-class ComicCreateResponse implements ResponseInterface
+class ComicStoreResponse implements ResponseInterface
 {
     /**
      * @var Comic

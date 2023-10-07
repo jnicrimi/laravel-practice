@@ -11,7 +11,7 @@ use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicStatus;
 
-class CreateFormRequest extends ApiFormRequest
+class StoreFormRequest extends ApiFormRequest
 {
     /**
      * @return bool

@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Tests\Unit\Packages\Application\Comic;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Packages\Application\Comic\ComicCreateInteractor;
+use Packages\Application\Comic\ComicStoreInteractor;
 use Packages\Domain\Comic\ComicStatus;
-use Packages\UseCase\Comic\Create\ComicCreateRequest;
-use Packages\UseCase\Comic\Create\ComicCreateResponse;
 use Packages\UseCase\Comic\Exception\ComicDuplicateException;
+use Packages\UseCase\Comic\Store\ComicStoreRequest;
+use Packages\UseCase\Comic\Store\ComicStoreResponse;
 use Tests\TestCase;
 
-class ComicCreateInteractorTest extends TestCase
+class ComicStoreInteractorTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -22,7 +22,7 @@ class ComicCreateInteractorTest extends TestCase
     protected $seed = true;
 
     /**
-     * @var ComicCreateInteractor
+     * @var ComicStoreInteractor
      */
     private $interactor;
 
@@ -32,7 +32,7 @@ class ComicCreateInteractorTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->interactor = $this->app->make(ComicCreateInteractor::class);
+        $this->interactor = $this->app->make(ComicStoreInteractor::class);
     }
 
     /**
@@ -40,12 +40,12 @@ class ComicCreateInteractorTest extends TestCase
      */
     public function testHandleSuccess(): void
     {
-        $request = new ComicCreateRequest();
+        $request = new ComicStoreRequest();
         $request->setKey('test-key-1')
             ->setName('test_name_1')
             ->setStatus(ComicStatus::CLOSED->value);
         $response = $this->interactor->handle($request);
-        $this->assertInstanceOf(ComicCreateResponse::class, $response);
+        $this->assertInstanceOf(ComicStoreResponse::class, $response);
         $expected = [
             'comic' => [
                 'id' => $response->build()['comic']['id'],
@@ -67,7 +67,7 @@ class ComicCreateInteractorTest extends TestCase
     public function testHandleFailureByDuplicateKey(): void
     {
         $this->expectException(ComicDuplicateException::class);
-        $request = new ComicCreateRequest();
+        $request = new ComicStoreRequest();
         $request->setKey('default-key-1')
             ->setName('test_name_1')
             ->setStatus(ComicStatus::CLOSED->value);

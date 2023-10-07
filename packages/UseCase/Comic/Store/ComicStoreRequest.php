@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Packages\UseCase\Comic\Create;
+namespace Packages\UseCase\Comic\Store;
 
 use Packages\UseCase\RequestInterface;
 
-class ComicCreateRequest implements RequestInterface
+class ComicStoreRequest implements RequestInterface
 {
     /**
      * @var string
