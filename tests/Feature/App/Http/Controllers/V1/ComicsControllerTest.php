@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Feature\App\Http\Controllers\V1;
 
 use App\Http\Errors\ComicError;
-use App\Http\Errors\CommonError;
 use App\Http\Errors\ValidationError;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
@@ -238,16 +237,16 @@ class ComicsControllerTest extends TestCase
                 'comicId' => 0,
                 'expected' => [
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                    'code' => CommonError::InvalidArgument->code(),
-                    'message' => CommonError::InvalidArgument->message(),
+                    'code' => ValidationError::FailedRequestValidation->code(),
+                    'message' => ValidationError::FailedRequestValidation->message(),
                 ],
             ],
             'comicId に負の値を指定' => [
                 'comicId' => -1,
                 'expected' => [
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                    'code' => CommonError::InvalidArgument->code(),
-                    'message' => CommonError::InvalidArgument->message(),
+                    'code' => ValidationError::FailedRequestValidation->code(),
+                    'message' => ValidationError::FailedRequestValidation->message(),
                 ],
             ],
             'comicId に文字列を指定' => [
@@ -472,8 +471,8 @@ class ComicsControllerTest extends TestCase
                 ],
                 'expected' => [
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                    'code' => CommonError::InvalidArgument->code(),
-                    'message' => CommonError::InvalidArgument->message(),
+                    'code' => ValidationError::FailedRequestValidation->code(),
+                    'message' => ValidationError::FailedRequestValidation->message(),
                 ],
             ],
             'comicId に負の値を指定' => [
@@ -485,8 +484,8 @@ class ComicsControllerTest extends TestCase
                 ],
                 'expected' => [
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                    'code' => CommonError::InvalidArgument->code(),
-                    'message' => CommonError::InvalidArgument->message(),
+                    'code' => ValidationError::FailedRequestValidation->code(),
+                    'message' => ValidationError::FailedRequestValidation->message(),
                 ],
             ],
             'comicId に文字列を指定' => [

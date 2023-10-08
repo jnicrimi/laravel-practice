@@ -7,7 +7,6 @@ namespace App\Http\Errors;
 enum CommonError: string implements ErrorInterface
 {
     case InternalServerError = 'internal-server-error';
-    case InvalidArgument = 'invalid-argument';
 
     /**
      * @return string
@@ -24,7 +23,6 @@ enum CommonError: string implements ErrorInterface
     {
         return match ($this) {
             self::InternalServerError => 'Internal server error.',
-            self::InvalidArgument => 'Invalid argument.',
         };
     }
 }

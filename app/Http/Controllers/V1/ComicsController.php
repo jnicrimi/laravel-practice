@@ -19,7 +19,6 @@ use App\Http\Resources\V1\Comic\UpdateResource;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use InvalidArgumentException;
 use Packages\UseCase\Comic\Exception\ComicDuplicateException;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
 use Packages\UseCase\Comic\Index\ComicIndexRequest;
@@ -30,7 +29,6 @@ use Packages\UseCase\Comic\Store\ComicStoreRequest;
 use Packages\UseCase\Comic\Store\ComicStoreUseCaseInterface;
 use Packages\UseCase\Comic\Update\ComicUpdateRequest;
 use Packages\UseCase\Comic\Update\ComicUpdateUseCaseInterface;
-use TypeError;
 
 class ComicsController extends Controller
 {
@@ -77,22 +75,6 @@ class ComicsController extends Controller
             ]);
 
             return $errorResource->response()->setStatusCode(Response::HTTP_NOT_FOUND);
-        } catch (TypeError $ex) {
-            $errorResource = new ErrorResource([
-                'code' => CommonError::InvalidArgument->code(),
-                'message' => CommonError::InvalidArgument->message(),
-                'errors' => [],
-            ]);
-
-            return $errorResource->response()->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
-        } catch (InvalidArgumentException $ex) {
-            $errorResource = new ErrorResource([
-                'code' => CommonError::InvalidArgument->code(),
-                'message' => CommonError::InvalidArgument->message(),
-                'errors' => [],
-            ]);
-
-            return $errorResource->response()->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (Exception $ex) {
             $errorResource = new ErrorResource([
                 'code' => CommonError::InternalServerError->code(),
@@ -126,22 +108,6 @@ class ComicsController extends Controller
             $errorResource = new ErrorResource([
                 'code' => ComicError::ComicDuplicate->code(),
                 'message' => ComicError::ComicDuplicate->message(),
-                'errors' => [],
-            ]);
-
-            return $errorResource->response()->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
-        } catch (TypeError $ex) {
-            $errorResource = new ErrorResource([
-                'code' => CommonError::InvalidArgument->code(),
-                'message' => CommonError::InvalidArgument->message(),
-                'errors' => [],
-            ]);
-
-            return $errorResource->response()->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
-        } catch (InvalidArgumentException $ex) {
-            $errorResource = new ErrorResource([
-                'code' => CommonError::InvalidArgument->code(),
-                'message' => CommonError::InvalidArgument->message(),
                 'errors' => [],
             ]);
 
@@ -190,22 +156,6 @@ class ComicsController extends Controller
             $errorResource = new ErrorResource([
                 'code' => ComicError::ComicDuplicate->code(),
                 'message' => ComicError::ComicDuplicate->message(),
-                'errors' => [],
-            ]);
-
-            return $errorResource->response()->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
-        } catch (TypeError $ex) {
-            $errorResource = new ErrorResource([
-                'code' => CommonError::InvalidArgument->code(),
-                'message' => CommonError::InvalidArgument->message(),
-                'errors' => [],
-            ]);
-
-            return $errorResource->response()->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
-        } catch (InvalidArgumentException $ex) {
-            $errorResource = new ErrorResource([
-                'code' => CommonError::InvalidArgument->code(),
-                'message' => CommonError::InvalidArgument->message(),
                 'errors' => [],
             ]);
 
