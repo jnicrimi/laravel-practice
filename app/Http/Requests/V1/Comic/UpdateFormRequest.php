@@ -31,6 +31,7 @@ class UpdateFormRequest extends ApiFormRequest
             'comic_id' => [
                 'required',
                 'integer',
+                'gt:0',
             ],
             'key' => [
                 'required',

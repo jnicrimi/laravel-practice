@@ -26,6 +26,7 @@ class ShowFormRequest extends ApiFormRequest
             'comic_id' => [
                 'required',
                 'integer',
+                'gt:0',
             ],
         ];
     }
