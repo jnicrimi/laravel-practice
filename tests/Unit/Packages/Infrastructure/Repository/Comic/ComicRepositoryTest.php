@@ -124,6 +124,21 @@ class ComicRepositoryTest extends TestCase
     /**
      * @return void
      */
+    public function testDelete(): void
+    {
+        $comicModel = ComicModel::find(3);
+        $comic = $this->repository->modelToEntity($comicModel);
+        if ($comic->canDelete() === false) {
+            $this->fail('comic cannot be deleted.');
+        }
+        $this->repository->delete($comic);
+        $deletedComicModel = ComicModel::find(3);
+        $this->assertNull($deletedComicModel);
+    }
+
+    /**
+     * @return void
+     */
     public function testModelToEntity(): void
     {
         $comicModel = ComicModel::find(1);
