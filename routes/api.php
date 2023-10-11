@@ -27,5 +27,6 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.'], function () {
         Route::get('/{comicId}', [ComicsController::class, 'show'])->name('show');
         Route::post('/', [ComicsController::class, 'store'])->name('store');
         Route::put('{comicId}', [ComicsController::class, 'update'])->name('update');
+        Route::delete('{comicId}', [ComicsController::class, 'destroy'])->name('destroy');
     });
 });

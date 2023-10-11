@@ -115,6 +115,14 @@ class Comic extends AbstractEntity implements EntityInterface
     }
 
     /**
+     * @return bool
+     */
+    public function canDelete(): bool
+    {
+        return $this->getStatus()->equals(ComicStatus::CLOSED);
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
