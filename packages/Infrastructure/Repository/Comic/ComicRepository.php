@@ -100,6 +100,17 @@ class ComicRepository extends AbstractEloquentRepository implements ComicReposit
     }
 
     /**
+     * @param Comic $comic
+     *
+     * @return void
+     */
+    public function delete(Comic $comic): void
+    {
+        $comicModel = ComicModel::findOrFail($comic->getId()->getValue());
+        $comicModel->delete();
+    }
+
+    /**
      * @param Model $model
      *
      * @return Comic

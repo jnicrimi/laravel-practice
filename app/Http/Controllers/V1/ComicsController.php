@@ -7,11 +7,13 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Errors\ComicError;
 use App\Http\Errors\CommonError;
+use App\Http\Requests\V1\Comic\DestroyFormRequest;
 use App\Http\Requests\V1\Comic\IndexFormRequest;
 use App\Http\Requests\V1\Comic\ShowFormRequest;
 use App\Http\Requests\V1\Comic\StoreFormRequest;
 use App\Http\Requests\V1\Comic\UpdateFormRequest;
 use App\Http\Resources\ErrorResource;
+use App\Http\Resources\V1\Comic\DestroyResource;
 use App\Http\Resources\V1\Comic\IndexResource;
 use App\Http\Resources\V1\Comic\ShowResource;
 use App\Http\Resources\V1\Comic\StoreResource;
@@ -19,8 +21,11 @@ use App\Http\Resources\V1\Comic\UpdateResource;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Packages\UseCase\Comic\Destroy\ComicDestroyRequest;
+use Packages\UseCase\Comic\Destroy\ComicDestroyUseCaseInterface;
 use Packages\UseCase\Comic\Exception\ComicDuplicateException;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
+use Packages\UseCase\Comic\Exception\ComicUndeleteException;
 use Packages\UseCase\Comic\Index\ComicIndexRequest;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
 use Packages\UseCase\Comic\Show\ComicShowRequest;
@@ -171,5 +176,50 @@ class ComicsController extends Controller
         }
 
         return new UpdateResource($response->build());
+    }
+
+    /**
+     * @param ComicDestroyUseCaseInterface $interactor
+     * @param DestroyFormRequest $formRequest
+     * @param mixed $comicId
+     *
+     * @return DestroyResource
+     */
+    public function destroy(
+        ComicDestroyUseCaseInterface $interactor,
+        DestroyFormRequest $formRequest,
+        mixed $comicId
+    ): DestroyResource|JsonResponse {
+        try {
+            $request = new ComicDestroyRequest();
+            $request->setId((int) $comicId);
+            $response = $interactor->handle($request);
+        } catch (ComicNotFoundException $ex) {
+            $errorResource = new ErrorResource([
+                'code' => ComicError::ComicNotFound->code(),
+                'message' => ComicError::ComicNotFound->message(),
+                'errors' => [],
+            ]);
+
+            return $errorResource->response()->setStatusCode(Response::HTTP_NOT_FOUND);
+        } catch (ComicUndeleteException $ex) {
+            $errorResource = new ErrorResource([
+                'code' => ComicError::ComicUndelete->code(),
+                'message' => ComicError::ComicUndelete->message(),
+                'errors' => [],
+            ]);
+
+            return $errorResource->response()->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+        } catch (Exception $ex) {
+            $errorResource = new ErrorResource([
+                'code' => CommonError::InternalServerError->code(),
+                'message' => CommonError::InternalServerError->message(),
+                'errors' => [],
+            ]);
+
+            return $errorResource->response()->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return new DestroyResource($response->build());
     }
 }

@@ -37,4 +37,11 @@ interface ComicRepositoryInterface
      * @return Comic
      */
     public function save(Comic $comic): Comic;
+
+    /**
+     * @param Comic $comic
+     *
+     * @return void
+     */
+    public function delete(Comic $comic): void;
 }

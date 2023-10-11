@@ -141,6 +141,20 @@ class ComicTest extends TestCase
     }
 
     /**
+     * @dataProvider provideCanDelete
+     *
+     * @param array $attributes
+     * @param bool $expected
+     *
+     * @return void
+     */
+    public function testCanDelete(array $attributes, bool $expected): void
+    {
+        $comic = $this->entityFactory->create($attributes);
+        $this->assertSame($expected, $comic->canDelete());
+    }
+
+    /**
      * @return void
      */
     public function testToArray()
@@ -189,6 +203,27 @@ class ComicTest extends TestCase
             [array_merge($default, ['name' => null])],
             [array_merge($default, ['key' => null])],
             [array_merge($default, ['status' => null])],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideCanDelete(): array
+    {
+        return [
+            [
+                array_merge(self::$defaultAttributes, ['status' => 'published']),
+                false,
+            ],
+            [
+                array_merge(self::$defaultAttributes, ['status' => 'draft']),
+                false,
+            ],
+            [
+                array_merge(self::$defaultAttributes, ['status' => 'closed']),
+                true,
+            ],
         ];
     }
 }
