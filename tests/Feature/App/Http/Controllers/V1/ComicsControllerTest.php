@@ -165,6 +165,44 @@ class ComicsControllerTest extends TestCase
     }
 
     /**
+     * @dataProvider provideDestroy
+     *
+     * @param mixed $comicId
+     * @param array $expected
+     *
+     * @return void
+     */
+    public function testDestroy(mixed $comicId, array $expected)
+    {
+        $response = $this->delete(route('api.v1.comics.destroy', ['comicId' => $comicId]));
+        $response->assertStatus($expected['status']);
+        if ($expected['status'] === Response::HTTP_OK) {
+            $response->assertJsonStructure([
+                'data' => [
+                    'comic' => [
+                        'id',
+                        'key',
+                        'name',
+                        'status' => [
+                            'value',
+                            'description',
+                        ],
+                    ],
+                ],
+            ]);
+        } else {
+            $response->assertJsonStructure([
+                'code',
+                'message',
+            ]);
+            $response->assertJson([
+                'code' => $expected['code'],
+                'message' => $expected['message'],
+            ]);
+        }
+    }
+
+    /**
      * @return array
      */
     public static function provideIndex(): array
@@ -652,6 +690,61 @@ class ComicsControllerTest extends TestCase
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
                     'code' => ValidationError::FailedRequestValidation->code(),
                     'message' => ValidationError::FailedRequestValidation->message(),
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideDestroy(): array
+    {
+        return [
+            '正常系' => [
+                'comicId' => 3,
+                'expected' => [
+                    'status' => Response::HTTP_OK,
+                ],
+            ],
+            '存在しない comicId を指定' => [
+                'comicId' => PHP_INT_MAX,
+                'expected' => [
+                    'status' => Response::HTTP_NOT_FOUND,
+                    'code' => ComicError::ComicNotFound->code(),
+                    'message' => ComicError::ComicNotFound->message(),
+                ],
+            ],
+            'comicId に 0 を指定' => [
+                'comicId' => 0,
+                'expected' => [
+                    'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                    'code' => ValidationError::FailedRequestValidation->code(),
+                    'message' => ValidationError::FailedRequestValidation->message(),
+                ],
+            ],
+            'comicId に負の値を指定' => [
+                'comicId' => -1,
+                'expected' => [
+                    'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                    'code' => ValidationError::FailedRequestValidation->code(),
+                    'message' => ValidationError::FailedRequestValidation->message(),
+                ],
+            ],
+            'comicId に文字列を指定' => [
+                'comicId' => 'a',
+                'expected' => [
+                    'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                    'code' => ValidationError::FailedRequestValidation->code(),
+                    'message' => ValidationError::FailedRequestValidation->message(),
+                ],
+            ],
+            'ステータスが closed 以外の場合は削除不可' => [
+                'comicId' => 1,
+                'expected' => [
+                    'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                    'code' => ComicError::ComicUndelete->code(),
+                    'message' => ComicError::ComicUndelete->message(),
                 ],
             ],
         ];
