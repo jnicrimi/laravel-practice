@@ -4,3 +4,4 @@
 npx lint-staged
 vendor/bin/phpstan analyse --configuration phpstan.neon --memory-limit=-1
 tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff
+git secrets --scan
