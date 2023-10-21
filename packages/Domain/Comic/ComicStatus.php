@@ -23,9 +23,9 @@ enum ComicStatus: string
     public function description(): string
     {
         return match ($this) {
-            self::PUBLISHED => Lang::get('company/status.description.published'),
-            self::DRAFT => Lang::get('company/status.description.draft'),
-            self::CLOSED => Lang::get('company/status.description.closed'),
+            self::PUBLISHED => Lang::get('comic/status.description.published'),
+            self::DRAFT => Lang::get('comic/status.description.draft'),
+            self::CLOSED => Lang::get('comic/status.description.closed'),
         };
     }
 }
