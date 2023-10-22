@@ -23,7 +23,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Packages\UseCase\Comic\Destroy\ComicDestroyRequest;
 use Packages\UseCase\Comic\Destroy\ComicDestroyUseCaseInterface;
-use Packages\UseCase\Comic\Exception\ComicDuplicateException;
+use Packages\UseCase\Comic\Exception\ComicAlreadyExistsException;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
 use Packages\UseCase\Comic\Exception\ComicUndeleteException;
 use Packages\UseCase\Comic\Index\ComicIndexRequest;
@@ -109,10 +109,10 @@ class ComicsController extends Controller
                 ->setName($formRequest->input('name'))
                 ->setStatus($formRequest->input('status'));
             $response = $interactor->handle($request);
-        } catch (ComicDuplicateException $ex) {
+        } catch (ComicAlreadyExistsException $ex) {
             $errorResource = new ErrorResource([
-                'code' => ComicError::ComicDuplicate->code(),
-                'message' => ComicError::ComicDuplicate->message(),
+                'code' => ComicError::ComicAlreadyExists->code(),
+                'message' => ComicError::ComicAlreadyExists->message(),
                 'errors' => [],
             ]);
 
@@ -157,10 +157,10 @@ class ComicsController extends Controller
             ]);
 
             return $errorResource->response()->setStatusCode(Response::HTTP_NOT_FOUND);
-        } catch (ComicDuplicateException $ex) {
+        } catch (ComicAlreadyExistsException $ex) {
             $errorResource = new ErrorResource([
-                'code' => ComicError::ComicDuplicate->code(),
-                'message' => ComicError::ComicDuplicate->message(),
+                'code' => ComicError::ComicAlreadyExists->code(),
+                'message' => ComicError::ComicAlreadyExists->message(),
                 'errors' => [],
             ]);
 

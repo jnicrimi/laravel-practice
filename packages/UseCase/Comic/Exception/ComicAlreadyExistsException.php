@@ -6,6 +6,6 @@ namespace Packages\UseCase\Comic\Exception;
 
 use Exception;
 
-class ComicDuplicateException extends Exception
+class ComicAlreadyExistsException extends Exception
 {
 }
