@@ -9,8 +9,8 @@ use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\UseCase\Comic\Destroy\ComicDestroyRequest;
 use Packages\UseCase\Comic\Destroy\ComicDestroyResponse;
 use Packages\UseCase\Comic\Destroy\ComicDestroyUseCaseInterface;
+use Packages\UseCase\Comic\Exception\ComicCannotBeDeletedException;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
-use Packages\UseCase\Comic\Exception\ComicUndeleteException;
 
 class ComicDestroyInteractor implements ComicDestroyUseCaseInterface
 {
@@ -33,7 +33,7 @@ class ComicDestroyInteractor implements ComicDestroyUseCaseInterface
      * @param ComicDestroyRequest $request
      *
      * @throws ComicNotFoundException
-     * @throws ComicUndeleteException
+     * @throws ComicCannotBeDeletedException
      *
      * @return ComicDestroyResponse
      */
@@ -45,7 +45,7 @@ class ComicDestroyInteractor implements ComicDestroyUseCaseInterface
             throw new ComicNotFoundException('Comic not found');
         }
         if (! $comicEntity->canDelete()) {
-            throw new ComicUndeleteException('Comic cannot delete');
+            throw new ComicCannotBeDeletedException('Comic cannot be deleted');
         }
         $this->comicRepository->delete($comicEntity);
         $response = new ComicDestroyResponse();

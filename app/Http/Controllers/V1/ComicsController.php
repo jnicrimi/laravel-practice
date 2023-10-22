@@ -24,8 +24,8 @@ use Illuminate\Http\Response;
 use Packages\UseCase\Comic\Destroy\ComicDestroyRequest;
 use Packages\UseCase\Comic\Destroy\ComicDestroyUseCaseInterface;
 use Packages\UseCase\Comic\Exception\ComicAlreadyExistsException;
+use Packages\UseCase\Comic\Exception\ComicCannotBeDeletedException;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
-use Packages\UseCase\Comic\Exception\ComicUndeleteException;
 use Packages\UseCase\Comic\Index\ComicIndexRequest;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
 use Packages\UseCase\Comic\Show\ComicShowRequest;
@@ -202,10 +202,10 @@ class ComicsController extends Controller
             ]);
 
             return $errorResource->response()->setStatusCode(Response::HTTP_NOT_FOUND);
-        } catch (ComicUndeleteException $ex) {
+        } catch (ComicCannotBeDeletedException $ex) {
             $errorResource = new ErrorResource([
-                'code' => ComicError::ComicUndelete->code(),
-                'message' => ComicError::ComicUndelete->message(),
+                'code' => ComicError::ComicCannotBeDeleted->code(),
+                'message' => ComicError::ComicCannotBeDeleted->message(),
                 'errors' => [],
             ]);
 

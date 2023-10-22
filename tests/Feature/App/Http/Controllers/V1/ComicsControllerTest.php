@@ -743,8 +743,8 @@ class ComicsControllerTest extends TestCase
                 'comicId' => 1,
                 'expected' => [
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                    'code' => ComicError::ComicUndelete->code(),
-                    'message' => ComicError::ComicUndelete->message(),
+                    'code' => ComicError::ComicCannotBeDeleted->code(),
+                    'message' => ComicError::ComicCannotBeDeleted->message(),
                 ],
             ],
         ];

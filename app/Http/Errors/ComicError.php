@@ -8,7 +8,7 @@ enum ComicError: string implements ErrorInterface
 {
     case ComicNotFound = 'comic-not-found';
     case ComicAlreadyExists = 'comic-already-exists';
-    case ComicUndelete = 'comic-undelete';
+    case ComicCannotBeDeleted = 'comic-cannot-be-deleted';
 
     /**
      * @return string
@@ -26,7 +26,7 @@ enum ComicError: string implements ErrorInterface
         return match ($this) {
             self::ComicNotFound => 'Comic not found.',
             self::ComicAlreadyExists => 'Comic already exists.',
-            self::ComicUndelete => 'Comic cannot be deleted.',
+            self::ComicCannotBeDeleted => 'Comic cannot be deleted.',
         };
     }
 }

@@ -8,8 +8,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Application\Comic\ComicDestroyInteractor;
 use Packages\UseCase\Comic\Destroy\ComicDestroyRequest;
 use Packages\UseCase\Comic\Destroy\ComicDestroyResponse;
+use Packages\UseCase\Comic\Exception\ComicCannotBeDeletedException;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
-use Packages\UseCase\Comic\Exception\ComicUndeleteException;
 use Tests\TestCase;
 
 class ComicDestroyInteractorTest extends TestCase
@@ -73,9 +73,9 @@ class ComicDestroyInteractorTest extends TestCase
     /**
      * @return void
      */
-    public function testHandleFailureByUndelete(): void
+    public function testHandleFailureByNotClosedStatus(): void
     {
-        $this->expectException(ComicUndeleteException::class);
+        $this->expectException(ComicCannotBeDeletedException::class);
         $request = new ComicDestroyRequest();
         $request->setId(1);
         $this->interactor->handle($request);
