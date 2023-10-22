@@ -6,6 +6,6 @@ namespace Packages\UseCase\Comic\Exception;
 
 use Exception;
 
-class ComicUndeleteException extends Exception
+class ComicCannotBeDeletedException extends Exception
 {
 }
