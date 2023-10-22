@@ -381,8 +381,8 @@ class ComicsControllerTest extends TestCase
                 ],
                 'expected' => [
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                    'code' => ComicError::ComicDuplicate->code(),
-                    'message' => ComicError::ComicDuplicate->message(),
+                    'code' => ComicError::ComicAlreadyExists->code(),
+                    'message' => ComicError::ComicAlreadyExists->message(),
                 ],
             ],
             'name が未設定' => [
@@ -599,8 +599,8 @@ class ComicsControllerTest extends TestCase
                 ],
                 'expected' => [
                     'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                    'code' => ComicError::ComicDuplicate->code(),
-                    'message' => ComicError::ComicDuplicate->message(),
+                    'code' => ComicError::ComicAlreadyExists->code(),
+                    'message' => ComicError::ComicAlreadyExists->message(),
                 ],
             ],
             'name が未設定' => [

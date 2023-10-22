@@ -7,7 +7,7 @@ namespace Tests\Unit\Packages\Application\Comic;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Application\Comic\ComicStoreInteractor;
 use Packages\Domain\Comic\ComicStatus;
-use Packages\UseCase\Comic\Exception\ComicDuplicateException;
+use Packages\UseCase\Comic\Exception\ComicAlreadyExistsException;
 use Packages\UseCase\Comic\Store\ComicStoreRequest;
 use Packages\UseCase\Comic\Store\ComicStoreResponse;
 use Tests\TestCase;
@@ -66,7 +66,7 @@ class ComicStoreInteractorTest extends TestCase
      */
     public function testHandleFailureByDuplicateKey(): void
     {
-        $this->expectException(ComicDuplicateException::class);
+        $this->expectException(ComicAlreadyExistsException::class);
         $request = new ComicStoreRequest();
         $request->setKey('default-key-1')
             ->setName('test_name_1')

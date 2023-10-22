@@ -7,7 +7,7 @@ namespace App\Http\Errors;
 enum ComicError: string implements ErrorInterface
 {
     case ComicNotFound = 'comic-not-found';
-    case ComicDuplicate = 'comic-duplicate';
+    case ComicAlreadyExists = 'comic-already-exists';
     case ComicUndelete = 'comic-undelete';
 
     /**
@@ -25,7 +25,7 @@ enum ComicError: string implements ErrorInterface
     {
         return match ($this) {
             self::ComicNotFound => 'Comic not found.',
-            self::ComicDuplicate => 'Comic already exists.',
+            self::ComicAlreadyExists => 'Comic already exists.',
             self::ComicUndelete => 'Comic cannot be deleted.',
         };
     }

@@ -8,7 +8,7 @@ use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
-use Packages\UseCase\Comic\Exception\ComicDuplicateException;
+use Packages\UseCase\Comic\Exception\ComicAlreadyExistsException;
 use Packages\UseCase\Comic\Store\ComicStoreRequest;
 use Packages\UseCase\Comic\Store\ComicStoreResponse;
 use Packages\UseCase\Comic\Store\ComicStoreUseCaseInterface;
@@ -33,14 +33,14 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
     /**
      * @param ComicStoreRequest $request
      *
-     * @throws ComicDuplicateException
+     * @throws ComicAlreadyExistsException
      *
      * @return ComicStoreResponse
      */
     public function handle(ComicStoreRequest $request): ComicStoreResponse
     {
         if ($this->doesComicExist($request)) {
-            throw new ComicDuplicateException('Comic already exists');
+            throw new ComicAlreadyExistsException('Comic already exists');
         }
         $comic = $this->saveComic($request);
         $response = new ComicStoreResponse();

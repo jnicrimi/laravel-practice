@@ -9,7 +9,7 @@ use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
-use Packages\UseCase\Comic\Exception\ComicDuplicateException;
+use Packages\UseCase\Comic\Exception\ComicAlreadyExistsException;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
 use Packages\UseCase\Comic\Update\ComicUpdateRequest;
 use Packages\UseCase\Comic\Update\ComicUpdateResponse;
@@ -36,7 +36,7 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
      * @param ComicUpdateRequest $request
      *
      * @throws ComicNotFoundException
-     * @throws ComicDuplicateException
+     * @throws ComicAlreadyExistsException
      *
      * @return ComicUpdateResponse
      */
@@ -46,7 +46,7 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
             throw new ComicNotFoundException('Comic not found');
         }
         if ($this->isDuplicateKey($request) === true) {
-            throw new ComicDuplicateException('Duplicate key');
+            throw new ComicAlreadyExistsException('Duplicate key');
         }
         $comic = $this->saveComic($request);
         $response = new ComicUpdateResponse();
