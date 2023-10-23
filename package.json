@@ -6,6 +6,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "@apidevtools/swagger-cli": "^4.0.4",
     "@commitlint/cli": "^18.0.0",
     "@commitlint/config-conventional": "^18.0.0",
     "axios": "^1.5",
