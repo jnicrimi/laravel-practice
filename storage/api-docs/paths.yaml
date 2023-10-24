@@ -1,0 +1,6 @@
+---
+
+/api/v1/comics:
+  $ref: 'paths/comics.yaml'
+/api/v1/comics/{comicId}:
+  $ref: 'paths/comics.comic-id.yaml'

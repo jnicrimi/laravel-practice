@@ -1,0 +1,18 @@
+---
+
+openapi: 3.1.0
+info:
+  title: API
+  description: laravel-practice
+  version: 1.0.0
+servers:
+  - url: http://localhost
+    description: Local
+tags:
+  - name: comics
+    description: 書籍
+paths:
+  $ref: 'paths.yaml'
+components:
+  schemas:
+    $ref: 'components/schemas.yaml'
