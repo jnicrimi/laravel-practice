@@ -20,6 +20,7 @@
   },
   "lint-staged": {
     "**/*.md": "markdownlint --ignore README.md --ignore node_modules --ignore tools --ignore vendor .",
-    "**/*.{yaml,yml,yamllint}": "yamllint --strict ."
+    "**/*.{yaml,yml,yamllint}": "yamllint --strict .",
+    "storage/api-docs/**/*.yaml": "npm run bundle-api-docs"
   }
 }
