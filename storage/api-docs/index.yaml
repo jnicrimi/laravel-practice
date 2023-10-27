@@ -12,7 +12,10 @@ tags:
   - name: comics
     description: 書籍
 paths:
-  $ref: 'paths.yaml'
+  /api/v1/comics:
+    $ref: 'paths/comics.yaml'
+  /api/v1/comics/{comicId}:
+    $ref: 'paths/comics.comic-id.yaml'
 components:
   schemas:
     $ref: 'components/schemas.yaml'
