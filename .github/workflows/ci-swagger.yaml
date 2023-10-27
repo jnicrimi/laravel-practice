@@ -41,7 +41,7 @@ jobs:
         with:
           payload: |
             {
-              "text": ":white_check_mark: *Success*\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "text": ":white_check_mark: *Success*\n\n${{ github.event.pull_request.html_url }}",
               "blocks": [
                 {
                   "type": "section",
@@ -54,7 +54,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":white_check_mark: *Success*\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    "text": ":white_check_mark: *Success*\n\n${{ github.event.pull_request.html_url }}"
                   }
                 },
                 {
@@ -82,7 +82,7 @@ jobs:
         with:
           payload: |
             {
-              "text": ":no_entry: *Failure*\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "text": ":no_entry: *Failure*\n\n${{ github.event.pull_request.html_url }}",
               "blocks": [
                 {
                   "type": "section",
@@ -95,7 +95,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":no_entry: *Failure*\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    "text": ":no_entry: *Failure*\n\n${{ github.event.pull_request.html_url }}"
                   }
                 },
                 {
