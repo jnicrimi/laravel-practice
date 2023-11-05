@@ -2,10 +2,11 @@
 
 extends: default
 
+ignore:
+  - node_modules
+  - vendor
+  - storage/api-docs/api-docs.yaml
+
 rules:
   line-length: disable
   truthy: disable
-ignore: |
-  node_modules
-  vendor
-  storage/api-docs/api-docs.yaml
