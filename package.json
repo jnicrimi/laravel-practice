@@ -9,7 +9,7 @@
   "devDependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
     "@commitlint/cli": "^18.0.0",
-    "@commitlint/config-conventional": "^18.0.0",
+    "@commitlint/config-conventional": "^18.4.0",
     "axios": "^1.5",
     "husky": "^8.0.3",
     "laravel-vite-plugin": "^0.8.1",
