@@ -5,7 +5,6 @@ declare(strict_types=1);
 $finder = PhpCsFixer\Finder::create()
     ->in([
         'app',
-        'bootstrap',
         'config',
         'database',
         'lang',
@@ -13,7 +12,6 @@ $finder = PhpCsFixer\Finder::create()
         'routes',
         'tests',
     ])
-    ->notPath('bootstrap/cache')
     ->name('*.php')
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
