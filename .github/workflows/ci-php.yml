@@ -125,7 +125,7 @@ jobs:
     needs: [phpstan, php-cs-fixer, phpunit]
     if: ${{ success() }}
     steps:
-      - name: Slack Notification
+      - name: Slack notification
         uses: slackapi/slack-github-action@v1.24.0
         with:
           payload: |
@@ -166,7 +166,7 @@ jobs:
     needs: [phpstan, php-cs-fixer, phpunit]
     if: ${{ failure() }}
     steps:
-      - name: Slack Notification
+      - name: Slack notification
         uses: slackapi/slack-github-action@v1.24.0
         with:
           payload: |
