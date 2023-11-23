@@ -4,6 +4,7 @@ extends: default
 
 ignore:
   - node_modules
+  - tools
   - vendor
   - storage/api-docs/api-docs.yaml
 
