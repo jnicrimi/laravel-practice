@@ -6537,16 +6537,16 @@
         },
         {
             "name": "laravel/envoy",
-            "version": "v2.8.6",
+            "version": "v2.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/envoy.git",
-                "reference": "24d2405dc785649684ccf531fddd2ac1f58ec861"
+                "reference": "dd7635009d8d22a34a9f9c2a4e282d23ee234a07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/envoy/zipball/24d2405dc785649684ccf531fddd2ac1f58ec861",
-                "reference": "24d2405dc785649684ccf531fddd2ac1f58ec861",
+                "url": "https://api.github.com/repos/laravel/envoy/zipball/dd7635009d8d22a34a9f9c2a4e282d23ee234a07",
+                "reference": "dd7635009d8d22a34a9f9c2a4e282d23ee234a07",
                 "shasum": ""
             },
             "require": {
@@ -6557,6 +6557,7 @@
                 "symfony/process": "^4.3|^5.0|^6.0"
             },
             "require-dev": {
+                "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^8.0|^9.0"
             },
             "suggest": {
@@ -6593,9 +6594,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/envoy/issues",
-                "source": "https://github.com/laravel/envoy/tree/v2.8.6"
+                "source": "https://github.com/laravel/envoy/tree/v2.8.7"
             },
-            "time": "2023-01-10T19:27:26+00:00"
+            "time": "2024-01-09T17:59:31+00:00"
         },
         {
             "name": "laravel/pint",
