@@ -16,18 +16,12 @@ use Packages\UseCase\Comic\Store\ComicStoreUseCaseInterface;
 class ComicStoreInteractor implements ComicStoreUseCaseInterface
 {
     /**
-     * @var ComicRepositoryInterface
-     */
-    private $comicRepository;
-
-    /**
      * Constructor
      *
      * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(ComicRepositoryInterface $comicRepository)
+    public function __construct(private ComicRepositoryInterface $comicRepository)
     {
-        $this->comicRepository = $comicRepository;
     }
 
     /**

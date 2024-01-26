@@ -7,36 +7,6 @@ namespace Packages\Domain;
 class Pagination
 {
     /**
-     * @var int
-     */
-    private $perPage;
-
-    /**
-     * @var int
-     */
-    private $currentPage;
-
-    /**
-     * @var int
-     */
-    private $lastPage;
-
-    /**
-     * @var int
-     */
-    private $total;
-
-    /**
-     * @var int
-     */
-    private $firstItem;
-
-    /**
-     * @var int
-     */
-    private $lastItem;
-
-    /**
      * Constructor
      *
      * @param int $perPage
@@ -47,19 +17,13 @@ class Pagination
      * @param int $lastItem
      */
     public function __construct(
-        int $perPage,
-        int $currentPage,
-        int $lastPage,
-        int $total,
-        int $firstItem,
-        int $lastItem
+        private int $perPage,
+        private int $currentPage,
+        private int $lastPage,
+        private int $total,
+        private int $firstItem,
+        private int $lastItem
     ) {
-        $this->perPage = $perPage;
-        $this->currentPage = $currentPage;
-        $this->lastPage = $lastPage;
-        $this->total = $total;
-        $this->firstItem = $firstItem;
-        $this->lastItem = $lastItem;
     }
 
     /**

@@ -18,18 +18,12 @@ use Packages\UseCase\Comic\Update\ComicUpdateUseCaseInterface;
 class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
 {
     /**
-     * @var ComicRepositoryInterface
-     */
-    private $comicRepository;
-
-    /**
      * Constructor
      *
      * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(ComicRepositoryInterface $comicRepository)
+    public function __construct(private ComicRepositoryInterface $comicRepository)
     {
-        $this->comicRepository = $comicRepository;
     }
 
     /**
