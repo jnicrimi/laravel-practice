@@ -40,6 +40,11 @@ class Pagination
      * Constructor
      *
      * @param int $perPage
+     * @param int $currentPage
+     * @param int $lastPage
+     * @param int $total
+     * @param int $firstItem
+     * @param int $lastItem
      */
     public function __construct(
         int $perPage,
