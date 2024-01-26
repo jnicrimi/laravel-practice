@@ -14,18 +14,12 @@ use Packages\UseCase\Comic\Show\ComicShowUseCaseInterface;
 class ComicShowInteractor implements ComicShowUseCaseInterface
 {
     /**
-     * @var ComicRepositoryInterface
-     */
-    private $comicRepository;
-
-    /**
      * Constructor
      *
      * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(ComicRepositoryInterface $comicRepository)
+    public function __construct(private ComicRepositoryInterface $comicRepository)
     {
-        $this->comicRepository = $comicRepository;
     }
 
     /**

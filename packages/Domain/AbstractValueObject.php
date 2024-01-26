@@ -9,20 +9,14 @@ use InvalidArgumentException;
 abstract class AbstractValueObject implements ValueObjectInterface
 {
     /**
-     * @var mixed
-     */
-    protected $value;
-
-    /**
      * Constructor
      *
      * @param mixed $value
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(mixed $value)
+    public function __construct(protected mixed $value)
     {
-        $this->value = $value;
         if (! $this->validate()) {
             throw new InvalidArgumentException('Invalid argument');
         }

@@ -18,18 +18,12 @@ class ComicIndexInteractor implements ComicIndexUseCaseInterface
     private const PER_PAGE = 5;
 
     /**
-     * @var ComicRepositoryInterface
-     */
-    private $comicRepository;
-
-    /**
      * Constructor
      *
      * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(ComicRepositoryInterface $comicRepository)
+    public function __construct(private ComicRepositoryInterface $comicRepository)
     {
-        $this->comicRepository = $comicRepository;
     }
 
     /**

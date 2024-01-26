@@ -11,36 +11,6 @@ use Packages\Domain\EntityInterface;
 class Comic extends AbstractEntity implements EntityInterface
 {
     /**
-     * @var ComicId|null
-     */
-    private $id;
-
-    /**
-     * @var ComicKey
-     */
-    private $key;
-
-    /**
-     * @var ComicName
-     */
-    private $name;
-
-    /**
-     * @var ComicStatus
-     */
-    private $status;
-
-    /**
-     * @var Carbon|null
-     */
-    private $createdAt;
-
-    /**
-     * @var Carbon|null
-     */
-    private $updatedAt;
-
-    /**
      * Constructor
      *
      * @param ComicId|null $id
@@ -51,19 +21,13 @@ class Comic extends AbstractEntity implements EntityInterface
      * @param Carbon|null $updatedAt
      */
     public function __construct(
-        ?ComicId $id,
-        ComicKey $key,
-        ComicName $name,
-        ComicStatus $status,
-        ?Carbon $createdAt,
-        ?Carbon $updatedAt
+        private ?ComicId $id,
+        private ComicKey $key,
+        private ComicName $name,
+        private ComicStatus $status,
+        private ?Carbon $createdAt,
+        private ?Carbon $updatedAt
     ) {
-        $this->id = $id;
-        $this->key = $key;
-        $this->name = $name;
-        $this->status = $status;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
     }
 
     /**
