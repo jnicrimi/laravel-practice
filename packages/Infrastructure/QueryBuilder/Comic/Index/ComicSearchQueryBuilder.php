@@ -14,17 +14,17 @@ class ComicSearchQueryBuilder extends AbstractQueryBuilder implements QueryBuild
     /**
      * @var string|null
      */
-    private $key;
+    private ?string $key;
 
     /**
      * @var string|null
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @var array|null
      */
-    private $status;
+    private ?array $status;
 
     /**
      * @param string|null $key

@@ -11,17 +11,17 @@ class ComicStoreRequest implements RequestInterface
     /**
      * @var string
      */
-    private $key;
+    private string $key;
 
     /**
      * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * @var string
      */
-    private $status;
+    private string $status;
 
     /**
      * Constructor
