@@ -92,12 +92,12 @@ class Comic extends AbstractEntity implements EntityInterface
     public function toArray(): array
     {
         return [
-            'id' => $this->getId() ? $this->getId()->getValue() : null,
+            'id' => $this->getId()?->getValue(),
             'key' => $this->getKey()->getValue(),
             'name' => $this->getName()->getValue(),
             'status' => $this->getStatus()->value,
-            'created_at' => $this->getCreatedAt() ? $this->getCreatedAt()->format(self::DATE_FORMAT) : null,
-            'updated_at' => $this->getUpdatedAt() ? $this->getUpdatedAt()->format(self::DATE_FORMAT) : null,
+            'created_at' => $this->getCreatedAt()?->format(self::DATE_FORMAT),
+            'updated_at' => $this->getUpdatedAt()?->format(self::DATE_FORMAT),
         ];
     }
 }
