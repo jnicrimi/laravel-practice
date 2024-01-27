@@ -12,7 +12,7 @@ class ComicIndexResponse implements ResponseInterface
     /**
      * @var Comics
      */
-    private $comics;
+    private Comics $comics;
 
     /**
      * Constructor

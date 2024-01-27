@@ -16,12 +16,12 @@ abstract class AbstractEntities implements ArrayAccess, Countable, IteratorAggre
     /**
      * @var array
      */
-    protected $entities = [];
+    protected array $entities = [];
 
     /**
      * @var Pagination
      */
-    protected $pagination;
+    protected Pagination $pagination;
 
     /**
      * @param mixed $offset

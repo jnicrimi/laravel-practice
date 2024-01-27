@@ -11,7 +11,7 @@ class ComicShowRequest implements RequestInterface
     /**
      * @var int
      */
-    private $id;
+    private int $id;
 
     /**
      * Constructor

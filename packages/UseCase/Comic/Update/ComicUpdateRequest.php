@@ -11,22 +11,22 @@ class ComicUpdateRequest implements RequestInterface
     /**
      * @var int
      */
-    private $id;
+    private int $id;
 
     /**
      * @var string
      */
-    private $key;
+    private string $key;
 
     /**
      * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * @var string
      */
-    private $status;
+    private string $status;
 
     /**
      * Constructor
