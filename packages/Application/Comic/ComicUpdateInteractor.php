@@ -22,7 +22,7 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
      *
      * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(private ComicRepositoryInterface $comicRepository)
+    public function __construct(private readonly ComicRepositoryInterface $comicRepository)
     {
     }
 

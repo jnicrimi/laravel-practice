@@ -15,61 +15,15 @@ class PaginationTest extends TestCase
     /**
      * @return void
      */
-    public function testGetPerPage(): void
+    public function testGetProperties(): void
     {
         $pagination = $this->createPagination();
-        $actual = $pagination->getPerPage();
-        $this->assertSame(5, $actual);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetCurrentPage(): void
-    {
-        $pagination = $this->createPagination();
-        $actual = $pagination->getCurrentPage();
-        $this->assertSame(1, $actual);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetLastPage(): void
-    {
-        $pagination = $this->createPagination();
-        $actual = $pagination->getLastPage();
-        $this->assertSame(2, $actual);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetTotal(): void
-    {
-        $pagination = $this->createPagination();
-        $actual = $pagination->getTotal();
-        $this->assertSame(10, $actual);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetFirstItem(): void
-    {
-        $pagination = $this->createPagination();
-        $actual = $pagination->getFirstItem();
-        $this->assertSame(1, $actual);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetLastItem(): void
-    {
-        $pagination = $this->createPagination();
-        $actual = $pagination->getLastItem();
-        $this->assertSame(5, $actual);
+        $this->assertSame(5, $pagination->perPage);
+        $this->assertSame(1, $pagination->currentPage);
+        $this->assertSame(2, $pagination->lastPage);
+        $this->assertSame(10, $pagination->total);
+        $this->assertSame(1, $pagination->firstItem);
+        $this->assertSame(5, $pagination->lastItem);
     }
 
     /**

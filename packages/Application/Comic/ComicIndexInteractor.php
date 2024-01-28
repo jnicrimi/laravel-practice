@@ -22,7 +22,7 @@ class ComicIndexInteractor implements ComicIndexUseCaseInterface
      *
      * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(private ComicRepositoryInterface $comicRepository)
+    public function __construct(private readonly ComicRepositoryInterface $comicRepository)
     {
     }
 

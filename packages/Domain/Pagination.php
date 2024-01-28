@@ -17,60 +17,12 @@ class Pagination
      * @param int $lastItem
      */
     public function __construct(
-        private int $perPage,
-        private int $currentPage,
-        private int $lastPage,
-        private int $total,
-        private int $firstItem,
-        private int $lastItem
+        public readonly int $perPage,
+        public readonly int $currentPage,
+        public readonly int $lastPage,
+        public readonly int $total,
+        public readonly int $firstItem,
+        public readonly int $lastItem
     ) {
-    }
-
-    /**
-     * @return int
-     */
-    public function getPerPage(): int
-    {
-        return $this->perPage;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCurrentPage(): int
-    {
-        return $this->currentPage;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLastPage(): int
-    {
-        return $this->lastPage;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTotal(): int
-    {
-        return $this->total;
-    }
-
-    /**
-     * @return int
-     */
-    public function getFirstItem(): int
-    {
-        return $this->firstItem;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLastItem(): int
-    {
-        return $this->lastItem;
     }
 }
