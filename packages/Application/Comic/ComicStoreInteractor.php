@@ -20,7 +20,7 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
      *
      * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(private ComicRepositoryInterface $comicRepository)
+    public function __construct(private readonly ComicRepositoryInterface $comicRepository)
     {
     }
 

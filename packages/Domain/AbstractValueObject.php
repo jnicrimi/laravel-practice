@@ -15,7 +15,7 @@ abstract class AbstractValueObject implements ValueObjectInterface
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(protected mixed $value)
+    public function __construct(protected readonly mixed $value)
     {
         if (! $this->validate()) {
             throw new InvalidArgumentException('Invalid argument');
