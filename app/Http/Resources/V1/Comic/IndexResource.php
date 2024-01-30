@@ -20,6 +20,7 @@ class IndexResource extends JsonResource
             'data' => [
                 'comics' => $this->resource['comics'],
             ],
+            'pagination' => $this->resource['pagination'],
         ];
     }
 }

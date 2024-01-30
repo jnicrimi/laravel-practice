@@ -25,4 +25,19 @@ class Pagination
         public readonly int $lastItem
     ) {
     }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'per_page' => $this->perPage,
+            'current_page' => $this->currentPage,
+            'last_page' => $this->lastPage,
+            'total' => $this->total,
+            'first_item' => $this->firstItem,
+            'last_item' => $this->lastItem,
+        ];
+    }
 }

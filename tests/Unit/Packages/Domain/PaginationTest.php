@@ -27,6 +27,22 @@ class PaginationTest extends TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testToArray(): void
+    {
+        $pagination = $this->createPagination();
+        $this->assertSame([
+            'per_page' => 5,
+            'current_page' => 1,
+            'last_page' => 2,
+            'total' => 10,
+            'first_item' => 1,
+            'last_item' => 5,
+        ], $pagination->toArray());
+    }
+
+    /**
      * @return Pagination
      */
     private function createPagination(): Pagination
