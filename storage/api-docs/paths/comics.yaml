@@ -44,6 +44,8 @@ get:
                     type: array
                     items:
                       $ref: '../components/schemas/comic.yaml#/Comic'
+              pagination:
+                $ref: '../components/schemas/pagination.yaml#/Pagination'
 post:
   tags:
     - comics

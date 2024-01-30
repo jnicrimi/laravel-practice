@@ -12,3 +12,5 @@ ComicCannotBeDeleted:
   $ref: 'schemas/errors/comic.yaml#/ComicCannotBeDeleted'
 InternalServerError:
   $ref: 'schemas/errors/common.yaml#/InternalServerError'
+Pagination:
+  $ref: 'schemas/pagination.yaml#/Pagination'
