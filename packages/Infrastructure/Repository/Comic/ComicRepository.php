@@ -79,7 +79,7 @@ class ComicRepository extends AbstractEloquentRepository implements ComicReposit
      *
      * @return Comic
      */
-    public function save(Comic $comic): Comic
+    public function create(Comic $comic): Comic
     {
         $data = [];
         $fillable = (new ComicModel())->getFillable();
@@ -88,12 +88,28 @@ class ComicRepository extends AbstractEloquentRepository implements ComicReposit
                 $data[$key] = $val;
             }
         }
-        if ($comic->getId() === null) {
-            $comicModel = ComicModel::create($data);
-        } else {
-            $comicModel = ComicModel::findOrFail($comic->getId()->getValue());
-            $comicModel->update($data);
+        $comicModel = ComicModel::create($data);
+        $comicModel->refresh();
+
+        return $this->modelToEntity($comicModel);
+    }
+
+    /**
+     * @param Comic $comic
+     *
+     * @return Comic
+     */
+    public function update(Comic $comic): Comic
+    {
+        $data = [];
+        $fillable = (new ComicModel())->getFillable();
+        foreach ($comic->toArray() as $key => $val) {
+            if (in_array($key, $fillable)) {
+                $data[$key] = $val;
+            }
         }
+        $comicModel = ComicModel::findOrFail($comic->getId()->getValue());
+        $comicModel->update($data);
         $comicModel->refresh();
 
         return $this->modelToEntity($comicModel);

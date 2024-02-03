@@ -108,16 +108,30 @@ class ComicRepositoryTest extends TestCase
     }
 
     /**
-     * @dataProvider provideSave
+     * @dataProvider provideCreate
      *
      * @param array $attributes
      *
      * @return void
      */
-    public function testSave($attributes): void
+    public function testCreate($attributes): void
     {
         $entity = $this->entityFactory->create($attributes);
-        $comic = $this->repository->save($entity);
+        $comic = $this->repository->create($entity);
+        $this->assertInstanceOf(Comic::class, $comic);
+    }
+
+    /**
+     * @dataProvider provideUpdate
+     *
+     * @param array $attributes
+     *
+     * @return void
+     */
+    public function testUpdate($attributes): void
+    {
+        $entity = $this->entityFactory->create($attributes);
+        $comic = $this->repository->update($entity);
         $this->assertInstanceOf(Comic::class, $comic);
     }
 
@@ -166,7 +180,7 @@ class ComicRepositoryTest extends TestCase
     /**
      * @return array
      */
-    public static function provideSave(): array
+    public static function provideCreate(): array
     {
         return [
             [
@@ -179,6 +193,15 @@ class ComicRepositoryTest extends TestCase
                     'updated_at' => null,
                 ],
             ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideUpdate(): array
+    {
+        return [
             [
                 [
                     'id' => 1,

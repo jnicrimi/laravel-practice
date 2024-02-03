@@ -42,7 +42,7 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
         if ($this->isDuplicateKey($request) === true) {
             throw new ComicAlreadyExistsException('Duplicate key');
         }
-        $comic = $this->saveComic($request);
+        $comic = $this->updateComic($request);
         $response = new ComicUpdateResponse();
         $response->setComic($comic);
 
@@ -87,7 +87,7 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
      *
      * @return Comic
      */
-    private function saveComic(ComicUpdateRequest $request): Comic
+    private function updateComic(ComicUpdateRequest $request): Comic
     {
         $entityFactory = new ComicEntityFactory();
         $entity = $entityFactory->create([
@@ -96,7 +96,7 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
             'name' => $request->getName(),
             'status' => $request->getStatus(),
         ]);
-        $comic = $this->comicRepository->save($entity);
+        $comic = $this->comicRepository->update($entity);
 
         return $comic;
     }
