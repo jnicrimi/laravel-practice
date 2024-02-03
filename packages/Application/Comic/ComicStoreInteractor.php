@@ -36,7 +36,7 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
         if ($this->doesComicExist($request)) {
             throw new ComicAlreadyExistsException('Comic already exists');
         }
-        $comic = $this->saveComic($request);
+        $comic = $this->createComic($request);
         $response = new ComicStoreResponse();
         $response->setComic($comic);
 
@@ -64,7 +64,7 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
      *
      * @return Comic
      */
-    private function saveComic(ComicStoreRequest $request): Comic
+    private function createComic(ComicStoreRequest $request): Comic
     {
         $entityFactory = new ComicEntityFactory();
         $entity = $entityFactory->create([
@@ -72,7 +72,7 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
             'name' => $request->getName(),
             'status' => $request->getStatus(),
         ]);
-        $comic = $this->comicRepository->save($entity);
+        $comic = $this->comicRepository->create($entity);
 
         return $comic;
     }
