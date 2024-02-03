@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "prepare": "husky install",
+    "prepare": "husky",
     "bundle-api-docs": "npx @apidevtools/swagger-cli bundle -o storage/api-docs/api-docs.yaml -t yaml storage/api-docs/index.yaml"
   },
   "devDependencies": {
