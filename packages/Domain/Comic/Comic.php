@@ -31,10 +31,16 @@ class Comic extends AbstractEntity implements EntityInterface
     }
 
     /**
-     * @return ComicId|null
+     * @throws ComicIdIsNotSetException
+     *
+     * @return ComicId
      */
-    public function getId(): ?ComicId
+    public function getId(): ComicId
     {
+        if ($this->id === null) {
+            throw new ComicIdIsNotSetException();
+        }
+
         return $this->id;
     }
 
@@ -92,7 +98,7 @@ class Comic extends AbstractEntity implements EntityInterface
     public function toArray(): array
     {
         return [
-            'id' => $this->getId()?->getValue(),
+            'id' => $this->getId()->getValue(),
             'key' => $this->getKey()->getValue(),
             'name' => $this->getName()->getValue(),
             'status' => $this->getStatus()->value,
