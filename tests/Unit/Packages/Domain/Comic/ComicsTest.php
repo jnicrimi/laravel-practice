@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Packages\Domain\Comic;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Arr;
+use Packages\Domain\Comic\Comic;
+use Packages\Domain\Comic\ComicId;
+use Packages\Domain\Comic\ComicKey;
+use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\Comics;
-use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
+use Packages\Domain\Comic\ComicStatus;
 use Tests\TestCase;
 use TypeError;
 
 class ComicsTest extends TestCase
 {
     use RefreshDatabase;
-
-    /**
-     * @var ComicEntityFactory
-     */
-    private $entityFactory;
 
     /**
      * @var array
@@ -34,20 +35,11 @@ class ComicsTest extends TestCase
     /**
      * @return void
      */
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->entityFactory = new ComicEntityFactory();
-    }
-
-    /**
-     * @return void
-     */
     public function testCreateInstanceSuccess(): void
     {
         $comics = new Comics();
-        $comics[] = $this->entityFactory->create($this->defaultAttributes);
-        $comics[] = $this->entityFactory->create(array_merge($this->defaultAttributes, ['id' => 2]));
+        $comics[] = $this->createEntity($this->defaultAttributes);
+        $comics[] = $this->createEntity(array_merge($this->defaultAttributes, ['id' => 2]));
         $this->assertInstanceOf(Comics::class, $comics);
     }
 
@@ -58,7 +50,24 @@ class ComicsTest extends TestCase
     {
         $this->expectException(TypeError::class);
         $comics = new Comics();
-        $comics[] = $this->entityFactory->create($this->defaultAttributes);
+        $comics[] = $this->createEntity($this->defaultAttributes);
         $comics[] = null;
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return Comic
+     */
+    private function createEntity(array $attributes): Comic
+    {
+        return new Comic(
+            new ComicId(Arr::get($attributes, 'id')),
+            new ComicKey(Arr::get($attributes, 'key')),
+            new ComicName(Arr::get($attributes, 'name')),
+            ComicStatus::from(Arr::get($attributes, 'status')),
+            Carbon::parse(Arr::get($attributes, 'created_at')),
+            Carbon::parse(Arr::get($attributes, 'updated_at'))
+        );
     }
 }
