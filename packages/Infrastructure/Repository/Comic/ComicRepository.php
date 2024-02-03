@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Packages\Infrastructure\Repository\Comic;
 
 use App\Models\Comic as ComicModel;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
+use Packages\Domain\Comic\ComicIdIsNotSetException;
 use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicRepositoryInterface;
@@ -77,17 +79,26 @@ class ComicRepository extends AbstractEloquentRepository implements ComicReposit
     /**
      * @param Comic $comic
      *
+     * @throws Exception
+     *
      * @return Comic
      */
     public function create(Comic $comic): Comic
     {
-        $data = [];
-        $fillable = (new ComicModel())->getFillable();
-        foreach ($comic->toArray() as $key => $val) {
-            if (in_array($key, $fillable)) {
-                $data[$key] = $val;
-            }
+        $comicId = null;
+
+        try {
+            $comicId = $comic->getId();
+        } catch (ComicIdIsNotSetException $e) {
         }
+        if ($comicId !== null) {
+            throw new Exception('ComicId is already set.');
+        }
+        $data = [
+            'key' => $comic->getKey()->getValue(),
+            'name' => $comic->getName()->getValue(),
+            'status' => $comic->getStatus()->value,
+        ];
         $comicModel = ComicModel::create($data);
         $comicModel->refresh();
 
@@ -101,16 +112,17 @@ class ComicRepository extends AbstractEloquentRepository implements ComicReposit
      */
     public function update(Comic $comic): Comic
     {
-        $data = [];
-        $fillable = (new ComicModel())->getFillable();
-        foreach ($comic->toArray() as $key => $val) {
-            if (in_array($key, $fillable)) {
-                $data[$key] = $val;
-            }
-        }
+        $data = [
+            'key' => $comic->getKey()->getValue(),
+            'name' => $comic->getName()->getValue(),
+            'status' => $comic->getStatus()->value,
+        ];
         $comicModel = ComicModel::findOrFail($comic->getId()->getValue());
-        $comicModel->update($data);
-        $comicModel->refresh();
+        $comicModel->fill($data);
+        if ($comicModel->isDirty()) {
+            $comicModel->update();
+            $comicModel->refresh();
+        }
 
         return $this->modelToEntity($comicModel);
     }

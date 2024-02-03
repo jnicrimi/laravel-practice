@@ -6,9 +6,11 @@ namespace Tests\Unit\Packages\Infrastructure\Repository\Comic;
 
 use App\Models\Comic as ComicModel;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
+use Packages\Domain\Comic\ComicIdIsNotSetException;
 use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\Comics;
@@ -103,45 +105,72 @@ class ComicRepositoryTest extends TestCase
     }
 
     /**
-     * @dataProvider provideCreate
-     *
-     * @param array $attributes
-     *
      * @return void
      */
-    public function testCreate($attributes): void
+    public function testCreateSuccess(): void
     {
         $entity = new Comic(
-            $attributes['id'],
-            new ComicKey($attributes['key']),
-            new ComicName($attributes['name']),
-            ComicStatus::from($attributes['status']),
-            Carbon::parse($attributes['created_at']),
-            Carbon::parse($attributes['updated_at'])
+            null,
+            new ComicKey('key'),
+            new ComicName('name'),
+            ComicStatus::from('draft'),
+            null,
+            null
         );
         $comic = $this->repository->create($entity);
         $this->assertInstanceOf(Comic::class, $comic);
     }
 
     /**
-     * @dataProvider provideUpdate
-     *
-     * @param array $attributes
-     *
      * @return void
      */
-    public function testUpdate($attributes): void
+    public function testCreateFailure(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('ComicId is already set.');
+        $entity = new Comic(
+            new ComicId(1),
+            new ComicKey('key'),
+            new ComicName('name'),
+            ComicStatus::from('published'),
+            null,
+            null
+        );
+        $this->repository->create($entity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateSuccess(): void
     {
         $entity = new Comic(
-            new ComicId($attributes['id']),
-            new ComicKey($attributes['key']),
-            new ComicName($attributes['name']),
-            ComicStatus::from($attributes['status']),
-            Carbon::parse($attributes['created_at']),
-            Carbon::parse($attributes['updated_at'])
+            new ComicId(1),
+            new ComicKey('key'),
+            new ComicName('name'),
+            ComicStatus::from('published'),
+            Carbon::parse('2023-01-01 00:00:00'),
+            Carbon::parse('2023-12-31 23:59:59')
         );
         $comic = $this->repository->update($entity);
         $this->assertInstanceOf(Comic::class, $comic);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateFailure(): void
+    {
+        $this->expectException(ComicIdIsNotSetException::class);
+        $entity = new Comic(
+            null,
+            new ComicKey('key'),
+            new ComicName('name'),
+            ComicStatus::from('published'),
+            null,
+            null
+        );
+        $this->repository->update($entity);
     }
 
     /**
@@ -182,44 +211,6 @@ class ComicRepositoryTest extends TestCase
             [
                 'comicKey' => 'default-key-1',
                 'ignoreComicId' => 1,
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public static function provideCreate(): array
-    {
-        return [
-            [
-                [
-                    'id' => null,
-                    'key' => 'key',
-                    'name' => 'name',
-                    'status' => ComicStatus::PUBLISHED->value,
-                    'created_at' => null,
-                    'updated_at' => null,
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public static function provideUpdate(): array
-    {
-        return [
-            [
-                [
-                    'id' => 1,
-                    'key' => 'key',
-                    'name' => 'name',
-                    'status' => ComicStatus::DRAFT->value,
-                    'created_at' => '2023-01-01 00:00:00',
-                    'updated_at' => '2023-12-31 23:59:59',
-                ],
             ],
         ];
     }

@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
+use Packages\Domain\Comic\ComicIdIsNotSetException;
 use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicStatus;
@@ -78,6 +79,16 @@ class ComicTest extends TestCase
     {
         $comic = $this->createEntity(self::$defaultAttributes);
         $this->assertInstanceOf(ComicId::class, $comic->getId());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetIdFailure()
+    {
+        $this->expectException(ComicIdIsNotSetException::class);
+        $comic = $this->createEntity(array_merge(self::$defaultAttributes, ['id' => null]));
+        $comic->getId();
     }
 
     /**
@@ -220,7 +231,7 @@ class ComicTest extends TestCase
     private function createEntity(array $attributes): Comic
     {
         return new Comic(
-            new ComicId(Arr::get($attributes, 'id')),
+            Arr::get($attributes, 'id') ? new ComicId(Arr::get($attributes, 'id')) : null,
             new ComicKey(Arr::get($attributes, 'key')),
             new ComicName(Arr::get($attributes, 'name')),
             ComicStatus::from(Arr::get($attributes, 'status')),
