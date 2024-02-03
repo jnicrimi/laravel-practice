@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Packages\Infrastructure\Repository\Comic;
 
 use App\Models\Comic as ComicModel;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicKey;
+use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Domain\Comic\Comics;
-use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
+use Packages\Domain\Comic\ComicStatus;
 use Packages\Infrastructure\Repository\AbstractEloquentRepository;
 
 class ComicRepository extends AbstractEloquentRepository implements ComicRepositoryInterface
@@ -133,16 +133,13 @@ class ComicRepository extends AbstractEloquentRepository implements ComicReposit
      */
     public function modelToEntity(Model $model): Comic
     {
-        $factory = new ComicEntityFactory();
-        $attributes = [
-            'id' => $model->getAttribute('id'),
-            'key' => $model->getAttribute('key'),
-            'name' => $model->getAttribute('name'),
-            'status' => $model->getAttribute('status'),
-            'created_at' => Carbon::parse($model->getAttribute('created_at'))->format(Comic::DATE_FORMAT),
-            'updated_at' => Carbon::parse($model->getAttribute('updated_at')->format(Comic::DATE_FORMAT)),
-        ];
-
-        return $factory->create($attributes);
+        return new Comic(
+            new ComicId($model->getAttribute('id')),
+            new ComicKey($model->getAttribute('key')),
+            new ComicName($model->getAttribute('name')),
+            ComicStatus::from($model->getAttribute('status')),
+            $model->getAttribute('created_at'),
+            $model->getAttribute('updated_at')
+        );
     }
 }

@@ -6,8 +6,9 @@ namespace Packages\Application\Comic;
 
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicKey;
+use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicRepositoryInterface;
-use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
+use Packages\Domain\Comic\ComicStatus;
 use Packages\UseCase\Comic\Exception\ComicAlreadyExistsException;
 use Packages\UseCase\Comic\Store\ComicStoreRequest;
 use Packages\UseCase\Comic\Store\ComicStoreResponse;
@@ -66,12 +67,14 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
      */
     private function createComic(ComicStoreRequest $request): Comic
     {
-        $entityFactory = new ComicEntityFactory();
-        $entity = $entityFactory->create([
-            'key' => $request->getKey(),
-            'name' => $request->getName(),
-            'status' => $request->getStatus(),
-        ]);
+        $entity = new Comic(
+            null,
+            new ComicKey($request->getKey()),
+            new ComicName($request->getName()),
+            ComicStatus::from($request->getStatus()),
+            null,
+            null
+        );
         $comic = $this->comicRepository->create($entity);
 
         return $comic;

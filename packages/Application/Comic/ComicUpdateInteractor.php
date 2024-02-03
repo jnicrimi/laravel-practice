@@ -7,8 +7,9 @@ namespace Packages\Application\Comic;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicKey;
+use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicRepositoryInterface;
-use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
+use Packages\Domain\Comic\ComicStatus;
 use Packages\UseCase\Comic\Exception\ComicAlreadyExistsException;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
 use Packages\UseCase\Comic\Update\ComicUpdateRequest;
@@ -89,13 +90,14 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
      */
     private function updateComic(ComicUpdateRequest $request): Comic
     {
-        $entityFactory = new ComicEntityFactory();
-        $entity = $entityFactory->create([
-            'id' => $request->getId(),
-            'key' => $request->getKey(),
-            'name' => $request->getName(),
-            'status' => $request->getStatus(),
-        ]);
+        $entity = new Comic(
+            new ComicId($request->getId()),
+            new ComicKey($request->getKey()),
+            new ComicName($request->getName()),
+            ComicStatus::from($request->getStatus()),
+            null,
+            null
+        );
         $comic = $this->comicRepository->update($entity);
 
         return $comic;

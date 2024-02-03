@@ -12,18 +12,12 @@ use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicStatus;
-use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
 use Tests\TestCase;
 use TypeError;
 
 class ComicTest extends TestCase
 {
     use RefreshDatabase;
-
-    /**
-     * @var ComicEntityFactory
-     */
-    private $entityFactory;
 
     /**
      * @var array
@@ -36,15 +30,6 @@ class ComicTest extends TestCase
         'created_at' => '2023-01-01 00:00:00',
         'updated_at' => '2023-12-31 23:59:59',
     ];
-
-    /**
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->entityFactory = new ComicEntityFactory();
-    }
 
     /**
      * @dataProvider provideCreateInstanceSuccess
@@ -91,7 +76,7 @@ class ComicTest extends TestCase
      */
     public function testGetId()
     {
-        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $comic = $this->createEntity(self::$defaultAttributes);
         $this->assertInstanceOf(ComicId::class, $comic->getId());
     }
 
@@ -100,7 +85,7 @@ class ComicTest extends TestCase
      */
     public function testGetKey()
     {
-        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $comic = $this->createEntity(self::$defaultAttributes);
         $this->assertInstanceOf(ComicKey::class, $comic->getKey());
     }
 
@@ -109,7 +94,7 @@ class ComicTest extends TestCase
      */
     public function testGetName()
     {
-        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $comic = $this->createEntity(self::$defaultAttributes);
         $this->assertInstanceOf(ComicName::class, $comic->getName());
     }
 
@@ -118,7 +103,7 @@ class ComicTest extends TestCase
      */
     public function testGetStatus()
     {
-        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $comic = $this->createEntity(self::$defaultAttributes);
         $this->assertInstanceOf(ComicStatus::class, $comic->getStatus());
     }
 
@@ -127,7 +112,7 @@ class ComicTest extends TestCase
      */
     public function testGetCreatedAt()
     {
-        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $comic = $this->createEntity(self::$defaultAttributes);
         $this->assertInstanceOf(Carbon::class, $comic->getCreatedAt());
     }
 
@@ -136,7 +121,7 @@ class ComicTest extends TestCase
      */
     public function testGetUpdatedAt()
     {
-        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $comic = $this->createEntity(self::$defaultAttributes);
         $this->assertInstanceOf(Carbon::class, $comic->getUpdatedAt());
     }
 
@@ -150,7 +135,7 @@ class ComicTest extends TestCase
      */
     public function testCanDelete(array $attributes, bool $expected): void
     {
-        $comic = $this->entityFactory->create($attributes);
+        $comic = $this->createEntity($attributes);
         $this->assertSame($expected, $comic->canDelete());
     }
 
@@ -159,7 +144,7 @@ class ComicTest extends TestCase
      */
     public function testToArray()
     {
-        $comic = $this->entityFactory->create(self::$defaultAttributes);
+        $comic = $this->createEntity(self::$defaultAttributes);
         $this->assertSame(self::$defaultAttributes, $comic->toArray());
     }
 
@@ -225,5 +210,22 @@ class ComicTest extends TestCase
                 true,
             ],
         ];
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return Comic
+     */
+    private function createEntity(array $attributes): Comic
+    {
+        return new Comic(
+            new ComicId(Arr::get($attributes, 'id')),
+            new ComicKey(Arr::get($attributes, 'key')),
+            new ComicName(Arr::get($attributes, 'name')),
+            ComicStatus::from(Arr::get($attributes, 'status')),
+            Carbon::parse(Arr::get($attributes, 'created_at')),
+            Carbon::parse(Arr::get($attributes, 'updated_at'))
+        );
     }
 }

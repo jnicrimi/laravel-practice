@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Tests\Unit\Packages\Infrastructure\Repository\Comic;
 
 use App\Models\Comic as ComicModel;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicKey;
+use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\Comics;
 use Packages\Domain\Comic\ComicStatus;
-use Packages\Infrastructure\EntityFactory\Comic\ComicEntityFactory;
 use Packages\Infrastructure\QueryBuilder\Comic\Index\ComicSearchQueryBuilder;
 use Packages\Infrastructure\Repository\Comic\ComicRepository;
 use Tests\TestCase;
@@ -26,11 +27,6 @@ class ComicRepositoryTest extends TestCase
     private $repository;
 
     /**
-     * @var ComicEntityFactory
-     */
-    private $entityFactory;
-
-    /**
      * @var bool
      */
     protected $seed = true;
@@ -42,7 +38,6 @@ class ComicRepositoryTest extends TestCase
     {
         parent::setUp();
         $this->repository = $this->app->make(ComicRepository::class);
-        $this->entityFactory = $this->app->make(ComicEntityFactory::class);
     }
 
     /**
@@ -116,7 +111,14 @@ class ComicRepositoryTest extends TestCase
      */
     public function testCreate($attributes): void
     {
-        $entity = $this->entityFactory->create($attributes);
+        $entity = new Comic(
+            $attributes['id'],
+            new ComicKey($attributes['key']),
+            new ComicName($attributes['name']),
+            ComicStatus::from($attributes['status']),
+            Carbon::parse($attributes['created_at']),
+            Carbon::parse($attributes['updated_at'])
+        );
         $comic = $this->repository->create($entity);
         $this->assertInstanceOf(Comic::class, $comic);
     }
@@ -130,7 +132,14 @@ class ComicRepositoryTest extends TestCase
      */
     public function testUpdate($attributes): void
     {
-        $entity = $this->entityFactory->create($attributes);
+        $entity = new Comic(
+            new ComicId($attributes['id']),
+            new ComicKey($attributes['key']),
+            new ComicName($attributes['name']),
+            ComicStatus::from($attributes['status']),
+            Carbon::parse($attributes['created_at']),
+            Carbon::parse($attributes['updated_at'])
+        );
         $comic = $this->repository->update($entity);
         $this->assertInstanceOf(Comic::class, $comic);
     }
