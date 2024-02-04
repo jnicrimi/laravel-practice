@@ -85,6 +85,36 @@ class Comic extends AbstractEntity implements EntityInterface
     }
 
     /**
+     * @param ComicKey $key
+     *
+     * @return void
+     */
+    public function changeKey(ComicKey $key): void
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * @param ComicName $name
+     *
+     * @return void
+     */
+    public function changeName(ComicName $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param ComicStatus $status
+     *
+     * @return void
+     */
+    public function changeStatus(ComicStatus $status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
      * @return bool
      */
     public function canDelete(): bool

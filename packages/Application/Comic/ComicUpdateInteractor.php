@@ -37,13 +37,15 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
      */
     public function handle(ComicUpdateRequest $request): ComicUpdateResponse
     {
-        if ($this->existComic($request) === false) {
+        $comicId = new ComicId($request->getId());
+        $entity = $this->comicRepository->find($comicId);
+        if ($entity === null) {
             throw new ComicNotFoundException('Comic not found');
         }
-        if ($this->isDuplicateKey($request) === true) {
+        if ($this->isDuplicateKey($entity, $request) === true) {
             throw new ComicAlreadyExistsException('Duplicate key');
         }
-        $comic = $this->updateComic($request);
+        $comic = $this->updateComic($entity, $request);
         $response = new ComicUpdateResponse();
         $response->setComic($comic);
 
@@ -51,30 +53,15 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
     }
 
     /**
+     * @param Comic $entity
      * @param ComicUpdateRequest $request
      *
      * @return bool
      */
-    private function existComic(ComicUpdateRequest $request): bool
+    private function isDuplicateKey(Comic $entity, ComicUpdateRequest $request): bool
     {
-        $comicId = new ComicId($request->getId());
-        $comicEntity = $this->comicRepository->find($comicId);
-        if ($comicEntity === null) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param ComicUpdateRequest $request
-     *
-     * @return bool
-     */
-    private function isDuplicateKey(ComicUpdateRequest $request): bool
-    {
-        $ignoreComicId = new ComicId($request->getId());
         $comicKey = new ComicKey($request->getKey());
+        $ignoreComicId = $entity->getId();
         $comicEntity = $this->comicRepository->findByKey($comicKey, $ignoreComicId);
         if ($comicEntity === null) {
             return false;
@@ -84,20 +71,16 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
     }
 
     /**
+     * @param Comic $entity
      * @param ComicUpdateRequest $request
      *
      * @return Comic
      */
-    private function updateComic(ComicUpdateRequest $request): Comic
+    private function updateComic(Comic $entity, ComicUpdateRequest $request): Comic
     {
-        $entity = new Comic(
-            new ComicId($request->getId()),
-            new ComicKey($request->getKey()),
-            new ComicName($request->getName()),
-            ComicStatus::from($request->getStatus()),
-            null,
-            null
-        );
+        $entity->changeKey(new ComicKey($request->getKey()));
+        $entity->changeName(new ComicName($request->getName()));
+        $entity->changeStatus(ComicStatus::from($request->getStatus()));
         $comic = $this->comicRepository->update($entity);
 
         return $comic;
