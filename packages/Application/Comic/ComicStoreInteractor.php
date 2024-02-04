@@ -68,12 +68,10 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
     private function createComic(ComicStoreRequest $request): Comic
     {
         $entity = new Comic(
-            null,
-            new ComicKey($request->getKey()),
-            new ComicName($request->getName()),
-            ComicStatus::from($request->getStatus()),
-            null,
-            null
+            id: null,
+            key: new ComicKey($request->getKey()),
+            name: new ComicName($request->getName()),
+            status: ComicStatus::from($request->getStatus())
         );
         $comic = $this->comicRepository->create($entity);
 

@@ -25,8 +25,8 @@ class Comic extends AbstractEntity implements EntityInterface
         private ComicKey $key,
         private ComicName $name,
         private ComicStatus $status,
-        private ?Carbon $createdAt,
-        private ?Carbon $updatedAt
+        private ?Carbon $createdAt = null,
+        private ?Carbon $updatedAt = null
     ) {
     }
 
