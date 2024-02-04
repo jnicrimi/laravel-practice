@@ -137,6 +137,39 @@ class ComicTest extends TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testChangeKey()
+    {
+        $comic = $this->createEntity(self::$defaultAttributes);
+        $newKey = 'new-key';
+        $comic->changeKey(new ComicKey($newKey));
+        $this->assertSame($newKey, $comic->getKey()->getValue());
+    }
+
+    /**
+     * @return void
+     */
+    public function testChangeName()
+    {
+        $comic = $this->createEntity(self::$defaultAttributes);
+        $newName = 'new_name';
+        $comic->changeName(new ComicName($newName));
+        $this->assertSame($newName, $comic->getName()->getValue());
+    }
+
+    /**
+     * @return void
+     */
+    public function testChangeStatus()
+    {
+        $comic = $this->createEntity(self::$defaultAttributes);
+        $newStatus = 'draft';
+        $comic->changeStatus(ComicStatus::from($newStatus));
+        $this->assertSame($newStatus, $comic->getStatus()->value);
+    }
+
+    /**
      * @dataProvider provideCanDelete
      *
      * @param array $attributes
