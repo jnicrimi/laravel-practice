@@ -15,7 +15,7 @@
     "laravel-vite-plugin": "^1.0.1",
     "lint-staged": "^15.2.2",
     "lodash": "^4.17.19",
-    "postcss": "^8.4.33",
+    "postcss": "^8.4.34",
     "vite": "^5.0.12"
   },
   "lint-staged": {
