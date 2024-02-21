@@ -19,12 +19,12 @@ class ComicDestroyInteractorTest extends TestCase
     /**
      * @var bool
      */
-    protected $seed = true;
+    protected bool $seed = true;
 
     /**
      * @var ComicDestroyInteractor
      */
-    private $interactor;
+    private ComicDestroyInteractor $interactor;
 
     /**
      * @return void

@@ -14,7 +14,7 @@ class SlackNotificationServiceTest extends TestCase
     /**
      * @var SlackNotificationService
      */
-    private $service;
+    private SlackNotificationService $service;
 
     /**
      * @return void
