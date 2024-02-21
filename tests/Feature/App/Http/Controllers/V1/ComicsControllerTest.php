@@ -18,7 +18,7 @@ class ComicsControllerTest extends TestCase
     /**
      * @var bool
      */
-    protected $seed = true;
+    protected bool $seed = true;
 
     /**
      * @dataProvider provideIndex

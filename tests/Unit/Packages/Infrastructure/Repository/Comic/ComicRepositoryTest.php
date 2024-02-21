@@ -26,7 +26,7 @@ class ComicRepositoryTest extends TestCase
     /**
      * @var ComicRepository
      */
-    private $repository;
+    private ComicRepository $repository;
 
     /**
      * @var bool

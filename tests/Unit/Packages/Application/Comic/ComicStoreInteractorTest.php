@@ -19,12 +19,12 @@ class ComicStoreInteractorTest extends TestCase
     /**
      * @var bool
      */
-    protected $seed = true;
+    protected bool $seed = true;
 
     /**
      * @var ComicStoreInteractor
      */
-    private $interactor;
+    private ComicStoreInteractor $interactor;
 
     /**
      * @return void

@@ -23,7 +23,7 @@ class ComicTest extends TestCase
     /**
      * @var array
      */
-    private static $defaultAttributes = [
+    private static array $defaultAttributes = [
         'id' => 1,
         'key' => 'key',
         'name' => 'name',
