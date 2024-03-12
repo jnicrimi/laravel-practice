@@ -48,6 +48,7 @@ class ComicNotificationServiceTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        Queue::fake();
         $this->service = $this->app->make(ComicNotificationService::class);
         $this->comic = $this->createEntity(self::$defaultAttributes);
     }
@@ -57,7 +58,6 @@ class ComicNotificationServiceTest extends TestCase
      */
     public function testNotifyStore(): void
     {
-        Queue::fake();
         $this->service->notifyStore($this->comic);
         Queue::assertPushed(ComicStoreNotificationJob::class, function ($job) {
             return $job->comic['id'] === 1;
@@ -69,7 +69,6 @@ class ComicNotificationServiceTest extends TestCase
      */
     public function testNotifyUpdate(): void
     {
-        Queue::fake();
         $this->service->notifyUpdate($this->comic);
         Queue::assertPushed(ComicUpdateNotificationJob::class, function ($job) {
             return $job->comic['id'] === 1;
@@ -81,7 +80,6 @@ class ComicNotificationServiceTest extends TestCase
      */
     public function testNotifyDestroy(): void
     {
-        Queue::fake();
         $this->service->notifyDestroy($this->comic);
         Queue::assertPushed(ComicDestroyNotificationJob::class, function ($job) {
             return $job->comic['id'] === 1;
