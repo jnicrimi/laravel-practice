@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Packages\Application\Comic;
 
-use Exception;
-use Illuminate\Support\Facades\DB;
-use Packages\Domain\Comic\Comic;
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Infrastructure\Service\Notification\ComicNotificationService;
@@ -23,8 +20,10 @@ class ComicDestroyInteractor implements ComicDestroyUseCaseInterface
      *
      * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(private readonly ComicRepositoryInterface $comicRepository)
-    {
+    public function __construct(
+        private readonly ComicRepositoryInterface $comicRepository,
+        private readonly ComicNotificationService $comicNotificationService
+    ) {
     }
 
     /**
@@ -32,7 +31,6 @@ class ComicDestroyInteractor implements ComicDestroyUseCaseInterface
      *
      * @throws ComicNotFoundException
      * @throws ComicCannotBeDeletedException
-     * @throws Exception
      *
      * @return ComicDestroyResponse
      */
@@ -46,31 +44,11 @@ class ComicDestroyInteractor implements ComicDestroyUseCaseInterface
         if (! $comicEntity->canDelete()) {
             throw new ComicCannotBeDeletedException('Comic cannot be deleted');
         }
-
-        try {
-            DB::beginTransaction();
-            $this->notifyComicDestroy($comicEntity);
-            $this->comicRepository->delete($comicEntity);
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            throw $e;
-        }
+        $this->comicRepository->delete($comicEntity);
+        $this->comicNotificationService->notifyDestroy($comicEntity);
         $response = new ComicDestroyResponse();
         $response->setComic($comicEntity);
 
         return $response;
-    }
-
-    /**
-     * @param Comic $comic
-     *
-     * @return void
-     */
-    private function notifyComicDestroy(Comic $comic): void
-    {
-        $service = new ComicNotificationService($this->comicRepository);
-        $service->notifyDestroy($comic);
     }
 }

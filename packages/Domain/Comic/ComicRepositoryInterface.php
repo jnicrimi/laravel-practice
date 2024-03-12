@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Packages\Domain\Comic;
 
-use App\Models\Comic as ComicModel;
 use Illuminate\Database\Eloquent\Builder;
 
 interface ComicRepositoryInterface
@@ -15,13 +14,6 @@ interface ComicRepositoryInterface
      * @return Comic|null
      */
     public function find(ComicId $comicId): ?Comic;
-
-    /**
-     * @param ComicId $comicId
-     *
-     * @return ComicModel|null
-     */
-    public function findModel(ComicId $comicId): ?ComicModel;
 
     /**
      * @param ComicKey $comicKey

@@ -36,16 +36,6 @@ class ComicRepository extends AbstractEloquentRepository implements ComicReposit
     }
 
     /**
-     * @param ComicId $comicId
-     *
-     * @return ComicModel|null
-     */
-    public function findModel(ComicId $comicId): ?ComicModel
-    {
-        return ComicModel::find($comicId->getValue());
-    }
-
-    /**
      * @param ComicKey $comicKey
      * @param ComicId|null $ignoreComicId
      *

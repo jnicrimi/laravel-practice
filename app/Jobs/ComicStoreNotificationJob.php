@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Models\Comic;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -22,21 +21,20 @@ class ComicStoreNotificationJob implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param Comic $comic
+     * @param array $comic
      */
-    public function __construct(public Comic $comic)
+    public function __construct(public array $comic)
     {
     }
 
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(SlackNotificationService $service): void
     {
-        $service = new SlackNotificationService();
         $message = sprintf(
             'Comic has been stored. id:%d',
-            $this->comic->id,
+            $this->comic['id']
         );
         $service->send($message);
     }

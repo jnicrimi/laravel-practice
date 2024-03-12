@@ -24,8 +24,10 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
      *
      * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(private readonly ComicRepositoryInterface $comicRepository)
-    {
+    public function __construct(
+        private readonly ComicRepositoryInterface $comicRepository,
+        private readonly ComicNotificationService $comicNotificationService
+    ) {
     }
 
     /**
@@ -47,7 +49,7 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
             throw new ComicAlreadyExistsException('Duplicate key');
         }
         $comic = $this->updateComic($entity, $request);
-        $this->notifyComicUpdate($comic);
+        $this->comicNotificationService->notifyUpdate($comic);
         $response = new ComicUpdateResponse();
         $response->setComic($comic);
 
@@ -86,16 +88,5 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
         $comic = $this->comicRepository->update($entity);
 
         return $comic;
-    }
-
-    /**
-     * @param Comic $comic
-     *
-     * @return void
-     */
-    private function notifyComicUpdate(Comic $comic): void
-    {
-        $service = new ComicNotificationService($this->comicRepository);
-        $service->notifyUpdate($comic);
     }
 }

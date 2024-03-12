@@ -8,16 +8,13 @@ use App\Jobs\ComicDestroyNotificationJob;
 use App\Jobs\ComicStoreNotificationJob;
 use App\Jobs\ComicUpdateNotificationJob;
 use Packages\Domain\Comic\Comic;
-use Packages\Domain\Comic\ComicRepositoryInterface;
 
 class ComicNotificationService
 {
     /**
      * Constructor
-     *
-     * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(private readonly ComicRepositoryInterface $comicRepository)
+    public function __construct()
     {
     }
 
@@ -28,8 +25,8 @@ class ComicNotificationService
      */
     public function notifyStore(Comic $comic): void
     {
-        $model = $this->comicRepository->findModel($comic->getId());
-        ComicStoreNotificationJob::dispatch($model);
+        $comicAttributes = $comic->toArray();
+        ComicStoreNotificationJob::dispatch($comicAttributes);
     }
 
     /**
@@ -39,8 +36,8 @@ class ComicNotificationService
      */
     public function notifyUpdate(Comic $comic): void
     {
-        $model = $this->comicRepository->findModel($comic->getId());
-        ComicUpdateNotificationJob::dispatch($model);
+        $comicAttributes = $comic->toArray();
+        ComicUpdateNotificationJob::dispatch($comicAttributes);
     }
 
     /**
@@ -50,7 +47,7 @@ class ComicNotificationService
      */
     public function notifyDestroy(Comic $comic): void
     {
-        $model = $this->comicRepository->findModel($comic->getId());
-        ComicDestroyNotificationJob::dispatch($model);
+        $comicAttributes = $comic->toArray();
+        ComicDestroyNotificationJob::dispatch($comicAttributes);
     }
 }

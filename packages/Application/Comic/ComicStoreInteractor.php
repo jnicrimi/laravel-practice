@@ -22,8 +22,10 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
      *
      * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(private readonly ComicRepositoryInterface $comicRepository)
-    {
+    public function __construct(
+        private readonly ComicRepositoryInterface $comicRepository,
+        private readonly ComicNotificationService $comicNotificationService
+    ) {
     }
 
     /**
@@ -39,7 +41,7 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
             throw new ComicAlreadyExistsException('Comic already exists');
         }
         $comic = $this->createComic($request);
-        $this->notifyComicStore($comic);
+        $this->comicNotificationService->notifyStore($comic);
         $response = new ComicStoreResponse();
         $response->setComic($comic);
 
@@ -78,16 +80,5 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
         $comic = $this->comicRepository->create($entity);
 
         return $comic;
-    }
-
-    /**
-     * @param Comic $comic
-     *
-     * @return void
-     */
-    private function notifyComicStore(Comic $comic): void
-    {
-        $service = new ComicNotificationService($this->comicRepository);
-        $service->notifyStore($comic);
     }
 }
