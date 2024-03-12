@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Packages\Infrastructure\Service;
+namespace Packages\Infrastructure\Service\Notification;
 
 use App\Notifications\SlackNotification;
 use Illuminate\Notifications\Notifiable;

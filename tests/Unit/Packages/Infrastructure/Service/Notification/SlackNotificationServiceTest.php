@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Packages\Infrastructure\Service;
+namespace Tests\Unit\Packages\Infrastructure\Service\Notification;
 
 use App\Notifications\SlackNotification;
 use Illuminate\Support\Facades\Notification;
-use Packages\Infrastructure\Service\SlackNotificationService;
+use Packages\Infrastructure\Service\Notification\SlackNotificationService;
 use Tests\TestCase;
 
 class SlackNotificationServiceTest extends TestCase

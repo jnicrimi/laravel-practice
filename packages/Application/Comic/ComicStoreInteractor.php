@@ -9,6 +9,7 @@ use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Domain\Comic\ComicStatus;
+use Packages\Infrastructure\Service\Notification\ComicNotificationService;
 use Packages\UseCase\Comic\Exception\ComicAlreadyExistsException;
 use Packages\UseCase\Comic\Store\ComicStoreRequest;
 use Packages\UseCase\Comic\Store\ComicStoreResponse;
@@ -38,6 +39,7 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
             throw new ComicAlreadyExistsException('Comic already exists');
         }
         $comic = $this->createComic($request);
+        $this->notifyComicStore($comic);
         $response = new ComicStoreResponse();
         $response->setComic($comic);
 
@@ -76,5 +78,16 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
         $comic = $this->comicRepository->create($entity);
 
         return $comic;
+    }
+
+    /**
+     * @param Comic $comic
+     *
+     * @return void
+     */
+    private function notifyComicStore(Comic $comic): void
+    {
+        $service = new ComicNotificationService($this->comicRepository);
+        $service->notifyStore($comic);
     }
 }
