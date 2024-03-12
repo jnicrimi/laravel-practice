@@ -37,12 +37,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ComicShowUseCaseInterface::class, ComicShowInteractor::class);
         $this->app->bind(ComicUpdateUseCaseInterface::class, ComicUpdateInteractor::class);
         $this->app->bind(ComicDestroyUseCaseInterface::class, ComicDestroyInteractor::class);
-        $this->app->bind(SlackNotificationService::class, function () {
-            return new SlackNotificationService();
-        });
-        $this->app->bind(ComicNotificationService::class, function () {
-            return new ComicNotificationService();
-        });
+        $this->app->bind(SlackNotificationService::class, SlackNotificationService::class);
+        $this->app->bind(ComicNotificationService::class, ComicNotificationService::class);
     }
 
     /**
