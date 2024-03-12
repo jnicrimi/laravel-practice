@@ -16,7 +16,7 @@
     "lint-staged": "^15.2.2",
     "lodash": "^4.17.19",
     "postcss": "^8.4.35",
-    "vite": "^5.1.5"
+    "vite": "^5.1.6"
   },
   "lint-staged": {
     "**/*.md": "markdownlint --ignore README.md --ignore node_modules --ignore tools --ignore vendor .",
