@@ -13,8 +13,8 @@ use Packages\Application\Comic\ComicShowInteractor;
 use Packages\Application\Comic\ComicStoreInteractor;
 use Packages\Application\Comic\ComicUpdateInteractor;
 use Packages\Domain\Comic\ComicRepositoryInterface;
+use Packages\Infrastructure\Notifier\ComicNotifier;
 use Packages\Infrastructure\Repository\Comic\ComicRepository;
-use Packages\Infrastructure\Service\Notification\ComicNotificationService;
 use Packages\Infrastructure\Service\Notification\NotificationServiceInterface;
 use Packages\Infrastructure\Service\Notification\SlackNotificationService;
 use Packages\UseCase\Comic\Destroy\ComicDestroyUseCaseInterface;
@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(ComicDestroyUseCaseInterface::class, ComicDestroyInteractor::class);
         $this->app->bind(ComicIndexUseCaseInterface::class, ComicIndexInteractor::class);
-        $this->app->bind(ComicNotificationService::class, ComicNotificationService::class);
+        $this->app->bind(ComicNotifier::class, ComicNotifier::class);
         $this->app->bind(ComicRepositoryInterface::class, ComicRepository::class);
         $this->app->bind(ComicShowUseCaseInterface::class, ComicShowInteractor::class);
         $this->app->bind(ComicStoreUseCaseInterface::class, ComicStoreInteractor::class);
