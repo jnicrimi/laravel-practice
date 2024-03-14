@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Packages\Infrastructure\Service\Notification;
+namespace Tests\Unit\Packages\Infrastructure\Notifier;
 
 use App\Jobs\ComicDestroyNotificationJob;
 use App\Jobs\ComicStoreNotificationJob;
@@ -15,15 +15,15 @@ use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicStatus;
-use Packages\Infrastructure\Service\Notification\ComicNotificationService;
+use Packages\Infrastructure\Notifier\ComicNotifier;
 use Tests\TestCase;
 
-class ComicNotificationServiceTest extends TestCase
+class ComicNotifierTest extends TestCase
 {
     /**
-     * @var ComicNotificationService
+     * @var ComicNotifier
      */
-    private ComicNotificationService $service;
+    private ComicNotifier $notifier;
 
     /**
      * @var Comic
@@ -49,7 +49,7 @@ class ComicNotificationServiceTest extends TestCase
     {
         parent::setUp();
         Queue::fake();
-        $this->service = $this->app->make(ComicNotificationService::class);
+        $this->notifier = $this->app->make(ComicNotifier::class);
         $this->comic = $this->createEntity(self::$defaultAttributes);
     }
 
@@ -58,7 +58,7 @@ class ComicNotificationServiceTest extends TestCase
      */
     public function testNotifyStore(): void
     {
-        $this->service->notifyStore($this->comic);
+        $this->notifier->notifyStore($this->comic);
         Queue::assertPushed(ComicStoreNotificationJob::class, function ($job) {
             return $job->comic['id'] === 1;
         });
@@ -69,7 +69,7 @@ class ComicNotificationServiceTest extends TestCase
      */
     public function testNotifyUpdate(): void
     {
-        $this->service->notifyUpdate($this->comic);
+        $this->notifier->notifyUpdate($this->comic);
         Queue::assertPushed(ComicUpdateNotificationJob::class, function ($job) {
             return $job->comic['id'] === 1;
         });
@@ -80,7 +80,7 @@ class ComicNotificationServiceTest extends TestCase
      */
     public function testNotifyDestroy(): void
     {
-        $this->service->notifyDestroy($this->comic);
+        $this->notifier->notifyDestroy($this->comic);
         Queue::assertPushed(ComicDestroyNotificationJob::class, function ($job) {
             return $job->comic['id'] === 1;
         });

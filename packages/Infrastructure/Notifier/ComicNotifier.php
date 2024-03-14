@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Packages\Infrastructure\Service\Notification;
+namespace Packages\Infrastructure\Notifier;
 
 use App\Jobs\ComicDestroyNotificationJob;
 use App\Jobs\ComicStoreNotificationJob;
 use App\Jobs\ComicUpdateNotificationJob;
 use Packages\Domain\Comic\Comic;
 
-class ComicNotificationService
+class ComicNotifier
 {
     /**
      * Constructor
