@@ -8,6 +8,7 @@ use App\Http\Errors\ComicError;
 use App\Http\Errors\ValidationError;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Queue;
 use Packages\Domain\Comic\ComicStatus;
 use Tests\TestCase;
 
@@ -97,6 +98,7 @@ class ComicsControllerTest extends TestCase
      */
     public function testStore(array $formData, array $expected)
     {
+        Queue::fake();
         $response = $this->post(route('api.v1.comics.store'), $formData);
         $response->assertStatus($expected['status']);
         if ($expected['status'] === Response::HTTP_OK) {
@@ -136,6 +138,7 @@ class ComicsControllerTest extends TestCase
      */
     public function testUpdate(mixed $comicId, array $formData, array $expected)
     {
+        Queue::fake();
         $response = $this->put(route('api.v1.comics.update', ['comicId' => $comicId]), $formData);
         $response->assertStatus($expected['status']);
         if ($expected['status'] === Response::HTTP_OK) {
@@ -174,6 +177,7 @@ class ComicsControllerTest extends TestCase
      */
     public function testDestroy(mixed $comicId, array $expected)
     {
+        Queue::fake();
         $response = $this->delete(route('api.v1.comics.destroy', ['comicId' => $comicId]));
         $response->assertStatus($expected['status']);
         if ($expected['status'] === Response::HTTP_OK) {

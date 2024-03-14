@@ -10,6 +10,7 @@ use Packages\Domain\Comic\ComicKey;
 use Packages\Domain\Comic\ComicName;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Domain\Comic\ComicStatus;
+use Packages\Infrastructure\Service\Notification\ComicNotificationService;
 use Packages\UseCase\Comic\Exception\ComicAlreadyExistsException;
 use Packages\UseCase\Comic\Exception\ComicNotFoundException;
 use Packages\UseCase\Comic\Update\ComicUpdateRequest;
@@ -23,8 +24,10 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
      *
      * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(private readonly ComicRepositoryInterface $comicRepository)
-    {
+    public function __construct(
+        private readonly ComicRepositoryInterface $comicRepository,
+        private readonly ComicNotificationService $comicNotificationService
+    ) {
     }
 
     /**
@@ -46,6 +49,7 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
             throw new ComicAlreadyExistsException('Duplicate key');
         }
         $comic = $this->updateComic($entity, $request);
+        $this->comicNotificationService->notifyUpdate($comic);
         $response = new ComicUpdateResponse();
         $response->setComic($comic);
 

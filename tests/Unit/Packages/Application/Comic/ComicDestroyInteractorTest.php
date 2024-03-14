@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Packages\Application\Comic;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Queue;
 use Packages\Application\Comic\ComicDestroyInteractor;
 use Packages\UseCase\Comic\Destroy\ComicDestroyRequest;
 use Packages\UseCase\Comic\Destroy\ComicDestroyResponse;
@@ -40,6 +41,7 @@ class ComicDestroyInteractorTest extends TestCase
      */
     public function testHandleSuccess(): void
     {
+        Queue::fake();
         $request = new ComicDestroyRequest();
         $request->setId(3);
         $response = $this->interactor->handle($request);

@@ -6,6 +6,7 @@ namespace Packages\Application\Comic;
 
 use Packages\Domain\Comic\ComicId;
 use Packages\Domain\Comic\ComicRepositoryInterface;
+use Packages\Infrastructure\Service\Notification\ComicNotificationService;
 use Packages\UseCase\Comic\Destroy\ComicDestroyRequest;
 use Packages\UseCase\Comic\Destroy\ComicDestroyResponse;
 use Packages\UseCase\Comic\Destroy\ComicDestroyUseCaseInterface;
@@ -19,8 +20,10 @@ class ComicDestroyInteractor implements ComicDestroyUseCaseInterface
      *
      * @param ComicRepositoryInterface $comicRepository
      */
-    public function __construct(private readonly ComicRepositoryInterface $comicRepository)
-    {
+    public function __construct(
+        private readonly ComicRepositoryInterface $comicRepository,
+        private readonly ComicNotificationService $comicNotificationService
+    ) {
     }
 
     /**
@@ -42,6 +45,7 @@ class ComicDestroyInteractor implements ComicDestroyUseCaseInterface
             throw new ComicCannotBeDeletedException('Comic cannot be deleted');
         }
         $this->comicRepository->delete($comicEntity);
+        $this->comicNotificationService->notifyDestroy($comicEntity);
         $response = new ComicDestroyResponse();
         $response->setComic($comicEntity);
 
