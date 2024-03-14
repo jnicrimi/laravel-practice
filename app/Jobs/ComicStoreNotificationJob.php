@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use InvalidArgumentException;
 use Packages\Infrastructure\Service\Notification\NotificationServiceInterface;
 
 class ComicStoreNotificationJob implements ShouldQueue
@@ -33,20 +34,24 @@ class ComicStoreNotificationJob implements ShouldQueue
      * Execute the job.
      *
      * @param NotificationServiceInterface $service
+     *
+     * @throws InvalidArgumentException
      */
     public function handle(NotificationServiceInterface $service): void
     {
-        $message = sprintf(
-            'Comic has been stored. id:%d',
-            $this->comic['id']
-        );
-
         try {
+            if (! isset($this->comic['id'])) {
+                throw new InvalidArgumentException('Comic id is not provided.');
+            }
+            $message = sprintf(
+                'Comic has been stored. id:%d',
+                $this->comic['id']
+            );
             $service->send($message);
         } catch (Exception $e) {
             Log::error('Failed to send notification: ', [
                 'error' => $e->getMessage(),
-                'send' => $message,
+                'params' => json_encode($this->comic),
             ]);
 
             throw $e;
