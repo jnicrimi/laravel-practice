@@ -11,7 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Packages\Infrastructure\Service\Notification\SlackNotificationService;
+use Packages\Infrastructure\Service\Notification\NotificationServiceInterface;
 
 class ComicDestroyNotificationJob implements ShouldQueue
 {
@@ -31,8 +31,10 @@ class ComicDestroyNotificationJob implements ShouldQueue
 
     /**
      * Execute the job.
+     *
+     * @param NotificationServiceInterface $service
      */
-    public function handle(SlackNotificationService $service): void
+    public function handle(NotificationServiceInterface $service): void
     {
         $message = sprintf(
             'Comic has been destroyed. id:%d',

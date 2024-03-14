@@ -15,6 +15,7 @@ use Packages\Application\Comic\ComicUpdateInteractor;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Infrastructure\Repository\Comic\ComicRepository;
 use Packages\Infrastructure\Service\Notification\ComicNotificationService;
+use Packages\Infrastructure\Service\Notification\NotificationServiceInterface;
 use Packages\Infrastructure\Service\Notification\SlackNotificationService;
 use Packages\UseCase\Comic\Destroy\ComicDestroyUseCaseInterface;
 use Packages\UseCase\Comic\Index\ComicIndexUseCaseInterface;
@@ -31,14 +32,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(ComicRepositoryInterface::class, ComicRepository::class);
-        $this->app->bind(ComicStoreUseCaseInterface::class, ComicStoreInteractor::class);
-        $this->app->bind(ComicIndexUseCaseInterface::class, ComicIndexInteractor::class);
-        $this->app->bind(ComicShowUseCaseInterface::class, ComicShowInteractor::class);
-        $this->app->bind(ComicUpdateUseCaseInterface::class, ComicUpdateInteractor::class);
         $this->app->bind(ComicDestroyUseCaseInterface::class, ComicDestroyInteractor::class);
-        $this->app->bind(SlackNotificationService::class, SlackNotificationService::class);
+        $this->app->bind(ComicIndexUseCaseInterface::class, ComicIndexInteractor::class);
         $this->app->bind(ComicNotificationService::class, ComicNotificationService::class);
+        $this->app->bind(ComicRepositoryInterface::class, ComicRepository::class);
+        $this->app->bind(ComicShowUseCaseInterface::class, ComicShowInteractor::class);
+        $this->app->bind(ComicStoreUseCaseInterface::class, ComicStoreInteractor::class);
+        $this->app->bind(ComicUpdateUseCaseInterface::class, ComicUpdateInteractor::class);
+        $this->app->bind(NotificationServiceInterface::class, SlackNotificationService::class);
     }
 
     /**
