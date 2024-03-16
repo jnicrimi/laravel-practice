@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
@@ -15,6 +16,7 @@ use Packages\Application\Comic\ComicUpdateInteractor;
 use Packages\Domain\Comic\ComicRepositoryInterface;
 use Packages\Infrastructure\Notifier\ComicNotifier;
 use Packages\Infrastructure\Repository\Comic\ComicRepository;
+use Packages\Infrastructure\Service\Notification\LogNotificationService;
 use Packages\Infrastructure\Service\Notification\NotificationServiceInterface;
 use Packages\Infrastructure\Service\Notification\SlackNotificationService;
 use Packages\UseCase\Comic\Destroy\ComicDestroyUseCaseInterface;
@@ -28,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      *
+     * @throws Exception
+     *
      * @return void
      */
     public function register()
@@ -39,7 +43,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ComicShowUseCaseInterface::class, ComicShowInteractor::class);
         $this->app->bind(ComicStoreUseCaseInterface::class, ComicStoreInteractor::class);
         $this->app->bind(ComicUpdateUseCaseInterface::class, ComicUpdateInteractor::class);
-        $this->app->bind(NotificationServiceInterface::class, SlackNotificationService::class);
+        $notificationService = config('notification.service');
+        if ($notificationService === 'slack') {
+            $this->app->bind(NotificationServiceInterface::class, SlackNotificationService::class);
+        } elseif ($notificationService === 'log') {
+            $this->app->bind(NotificationServiceInterface::class, LogNotificationService::class);
+        } else {
+            throw new Exception('Invalid notification service');
+        }
     }
 
     /**
