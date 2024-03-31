@@ -29,13 +29,6 @@ class ComicUpdateRequest implements RequestInterface
     private string $status;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * @param int $id
      *
      * @return self

@@ -11,8 +11,6 @@ use Packages\Domain\EntityInterface;
 class Comic extends AbstractEntity implements EntityInterface
 {
     /**
-     * Constructor
-     *
      * @param ComicId|null $id
      * @param ComicKey $key
      * @param ComicName $name

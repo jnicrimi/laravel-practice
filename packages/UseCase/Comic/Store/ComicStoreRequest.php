@@ -24,13 +24,6 @@ class ComicStoreRequest implements RequestInterface
     private string $status;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * @param string $key
      *
      * @return self

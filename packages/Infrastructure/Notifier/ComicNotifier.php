@@ -12,13 +12,6 @@ use Packages\Domain\Comic\Comic;
 class ComicNotifier
 {
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * @param Comic $comic
      *
      * @return void

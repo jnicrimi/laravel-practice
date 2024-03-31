@@ -7,8 +7,6 @@ namespace Packages\Domain;
 class Pagination
 {
     /**
-     * Constructor
-     *
      * @param int $perPage
      * @param int $currentPage
      * @param int $lastPage

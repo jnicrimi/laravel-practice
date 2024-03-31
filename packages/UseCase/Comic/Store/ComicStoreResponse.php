@@ -15,13 +15,6 @@ class ComicStoreResponse implements ResponseInterface
     private Comic $comic;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * @param Comic $comic
      *
      * @return self

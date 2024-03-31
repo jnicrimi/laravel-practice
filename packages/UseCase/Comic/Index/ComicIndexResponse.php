@@ -15,13 +15,6 @@ class ComicIndexResponse implements ResponseInterface
     private Comics $comics;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * @param Comics $comics
      *
      * @return self

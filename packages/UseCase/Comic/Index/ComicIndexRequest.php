@@ -24,13 +24,6 @@ class ComicIndexRequest implements RequestInterface
     private ?array $status;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * @param string|null $key
      *
      * @return self

@@ -20,8 +20,6 @@ use Packages\UseCase\Comic\Update\ComicUpdateUseCaseInterface;
 class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
 {
     /**
-     * Constructor
-     *
      * @param ComicRepositoryInterface $comicRepository
      */
     public function __construct(
