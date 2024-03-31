@@ -9,8 +9,6 @@ use InvalidArgumentException;
 abstract class AbstractValueObject implements ValueObjectInterface
 {
     /**
-     * Constructor
-     *
      * @param mixed $value
      *
      * @throws InvalidArgumentException

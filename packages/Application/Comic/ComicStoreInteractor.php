@@ -18,8 +18,6 @@ use Packages\UseCase\Comic\Store\ComicStoreUseCaseInterface;
 class ComicStoreInteractor implements ComicStoreUseCaseInterface
 {
     /**
-     * Constructor
-     *
      * @param ComicRepositoryInterface $comicRepository
      */
     public function __construct(

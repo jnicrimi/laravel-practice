@@ -14,13 +14,6 @@ class ComicShowRequest implements RequestInterface
     private int $id;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * @param int $id
      *
      * @return self

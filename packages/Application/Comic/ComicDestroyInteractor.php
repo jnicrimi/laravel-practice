@@ -16,8 +16,6 @@ use Packages\UseCase\Comic\Exception\ComicNotFoundException;
 class ComicDestroyInteractor implements ComicDestroyUseCaseInterface
 {
     /**
-     * Constructor
-     *
      * @param ComicRepositoryInterface $comicRepository
      */
     public function __construct(

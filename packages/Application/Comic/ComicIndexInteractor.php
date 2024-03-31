@@ -18,8 +18,6 @@ class ComicIndexInteractor implements ComicIndexUseCaseInterface
     private const PER_PAGE = 5;
 
     /**
-     * Constructor
-     *
      * @param ComicRepositoryInterface $comicRepository
      */
     public function __construct(private readonly ComicRepositoryInterface $comicRepository)
