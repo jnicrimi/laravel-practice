@@ -36,10 +36,8 @@ class ComicIndexInteractor implements ComicIndexUseCaseInterface
             ->setName($request->getName())
             ->setStatus($request->getStatus());
         $query = $queryBuilder->build();
-        $comicEntities = $this->comicRepository->paginate($query, self::PER_PAGE);
-        $response = new ComicIndexResponse();
-        $response->setComics($comicEntities);
+        $comics = $this->comicRepository->paginate($query, self::PER_PAGE);
 
-        return $response;
+        return new ComicIndexResponse($comics);
     }
 }

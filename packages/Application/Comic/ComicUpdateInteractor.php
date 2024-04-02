@@ -48,10 +48,8 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
         }
         $comic = $this->updateComic($entity, $request);
         $this->comicNotifier->notifyUpdate($comic);
-        $response = new ComicUpdateResponse();
-        $response->setComic($comic);
 
-        return $response;
+        return new ComicUpdateResponse($comic);
     }
 
     /**

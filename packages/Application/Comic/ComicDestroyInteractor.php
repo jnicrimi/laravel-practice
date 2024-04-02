@@ -35,18 +35,16 @@ class ComicDestroyInteractor implements ComicDestroyUseCaseInterface
     public function handle(ComicDestroyRequest $request): ComicDestroyResponse
     {
         $comicId = new ComicId($request->getId());
-        $comicEntity = $this->comicRepository->find($comicId);
-        if ($comicEntity === null) {
+        $comic = $this->comicRepository->find($comicId);
+        if ($comic === null) {
             throw new ComicNotFoundException('Comic not found');
         }
-        if (! $comicEntity->canDelete()) {
+        if (! $comic->canDelete()) {
             throw new ComicCannotBeDeletedException('Comic cannot be deleted');
         }
-        $this->comicRepository->delete($comicEntity);
-        $this->comicNotifier->notifyDestroy($comicEntity);
-        $response = new ComicDestroyResponse();
-        $response->setComic($comicEntity);
+        $this->comicRepository->delete($comic);
+        $this->comicNotifier->notifyDestroy($comic);
 
-        return $response;
+        return new ComicDestroyResponse($comic);
     }
 }

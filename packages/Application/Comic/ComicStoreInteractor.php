@@ -40,10 +40,8 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
         }
         $comic = $this->createComic($request);
         $this->comicNotifier->notifyStore($comic);
-        $response = new ComicStoreResponse();
-        $response->setComic($comic);
 
-        return $response;
+        return new ComicStoreResponse($comic);
     }
 
     /**
