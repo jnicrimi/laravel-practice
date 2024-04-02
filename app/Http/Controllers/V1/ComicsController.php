@@ -47,10 +47,11 @@ class ComicsController extends Controller
         ComicIndexUseCaseInterface $interactor,
         IndexFormRequest $formRequest
     ): IndexResource {
-        $request = new ComicIndexRequest();
-        $request->setKey($formRequest->input('key'))
-            ->setName($formRequest->input('name'))
-            ->setStatus($formRequest->input('status'));
+        $request = new ComicIndexRequest(
+            key: $formRequest->input('key'),
+            name: $formRequest->input('name'),
+            status: $formRequest->input('status')
+        );
         $response = $interactor->handle($request);
 
         return new IndexResource($response->build());
@@ -69,8 +70,7 @@ class ComicsController extends Controller
         mixed $comicId
     ): ShowResource|JsonResponse {
         try {
-            $request = new ComicShowRequest();
-            $request->setId((int) $comicId);
+            $request = new ComicShowRequest(id: (int) $comicId);
             $response = $interactor->handle($request);
         } catch (ComicNotFoundException $ex) {
             $errorResource = new ErrorResource([
@@ -104,10 +104,11 @@ class ComicsController extends Controller
         StoreFormRequest $formRequest
     ): StoreResource|JsonResponse {
         try {
-            $request = new ComicStoreRequest();
-            $request->setKey($formRequest->input('key'))
-                ->setName($formRequest->input('name'))
-                ->setStatus($formRequest->input('status'));
+            $request = new ComicStoreRequest(
+                key: $formRequest->input('key'),
+                name: $formRequest->input('name'),
+                status: $formRequest->input('status')
+            );
             $response = $interactor->handle($request);
         } catch (ComicAlreadyExistsException $ex) {
             $errorResource = new ErrorResource([
@@ -143,11 +144,12 @@ class ComicsController extends Controller
         mixed $comicId
     ): UpdateResource|JsonResponse {
         try {
-            $request = new ComicUpdateRequest();
-            $request->setId((int) $comicId)
-                ->setKey($formRequest->input('key'))
-                ->setName($formRequest->input('name'))
-                ->setStatus($formRequest->input('status'));
+            $request = new ComicUpdateRequest(
+                id: (int) $comicId,
+                key: $formRequest->input('key'),
+                name: $formRequest->input('name'),
+                status: $formRequest->input('status')
+            );
             $response = $interactor->handle($request);
         } catch (ComicNotFoundException $ex) {
             $errorResource = new ErrorResource([
@@ -191,8 +193,7 @@ class ComicsController extends Controller
         mixed $comicId
     ): DestroyResource|JsonResponse {
         try {
-            $request = new ComicDestroyRequest();
-            $request->setId((int) $comicId);
+            $request = new ComicDestroyRequest(id: (int) $comicId);
             $response = $interactor->handle($request);
         } catch (ComicNotFoundException $ex) {
             $errorResource = new ErrorResource([

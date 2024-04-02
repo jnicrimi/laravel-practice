@@ -34,7 +34,7 @@ class ComicDestroyInteractor implements ComicDestroyUseCaseInterface
      */
     public function handle(ComicDestroyRequest $request): ComicDestroyResponse
     {
-        $comicId = new ComicId($request->getId());
+        $comicId = new ComicId($request->id);
         $comic = $this->comicRepository->find($comicId);
         if ($comic === null) {
             throw new ComicNotFoundException('Comic not found');
