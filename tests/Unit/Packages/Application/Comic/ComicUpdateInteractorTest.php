@@ -43,11 +43,12 @@ class ComicUpdateInteractorTest extends TestCase
     public function testHandleSuccess(): void
     {
         Queue::fake();
-        $request = new ComicUpdateRequest();
-        $request->setId(1)
-            ->setKey('test-key-1')
-            ->setName('test_name_1')
-            ->setStatus(ComicStatus::CLOSED->value);
+        $request = new ComicUpdateRequest(
+            id: 1,
+            key: 'test-key-1',
+            name: 'test_name_1',
+            status: ComicStatus::CLOSED->value
+        );
         $response = $this->interactor->handle($request);
         $this->assertInstanceOf(ComicUpdateResponse::class, $response);
         $expected = [
@@ -71,11 +72,12 @@ class ComicUpdateInteractorTest extends TestCase
     public function testHandleFailureByNotFound(): void
     {
         $this->expectException(ComicNotFoundException::class);
-        $request = new ComicUpdateRequest();
-        $request->setId(PHP_INT_MAX)
-            ->setKey('test-key-1')
-            ->setName('test_name_1')
-            ->setStatus(ComicStatus::CLOSED->value);
+        $request = new ComicUpdateRequest(
+            id: PHP_INT_MAX,
+            key: 'test-key-1',
+            name: 'test_name_1',
+            status: ComicStatus::CLOSED->value
+        );
         $this->interactor->handle($request);
     }
 
@@ -85,11 +87,12 @@ class ComicUpdateInteractorTest extends TestCase
     public function testHandleFailureByDuplicateKey(): void
     {
         $this->expectException(ComicAlreadyExistsException::class);
-        $request = new ComicUpdateRequest();
-        $request->setId(1)
-            ->setKey('default-key-2')
-            ->setName('test_name_1')
-            ->setStatus(ComicStatus::CLOSED->value);
+        $request = new ComicUpdateRequest(
+            id: 1,
+            key: 'default-key-2',
+            name: 'test_name_1',
+            status: ComicStatus::CLOSED->value
+        );
         $this->interactor->handle($request);
     }
 }

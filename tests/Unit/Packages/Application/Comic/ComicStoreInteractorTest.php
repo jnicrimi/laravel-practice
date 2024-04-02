@@ -42,10 +42,11 @@ class ComicStoreInteractorTest extends TestCase
     public function testHandleSuccess(): void
     {
         Queue::fake();
-        $request = new ComicStoreRequest();
-        $request->setKey('test-key-1')
-            ->setName('test_name_1')
-            ->setStatus(ComicStatus::CLOSED->value);
+        $request = new ComicStoreRequest(
+            key: 'test-key-1',
+            name: 'test_name_1',
+            status: ComicStatus::CLOSED->value
+        );
         $response = $this->interactor->handle($request);
         $this->assertInstanceOf(ComicStoreResponse::class, $response);
         $expected = [
@@ -69,10 +70,11 @@ class ComicStoreInteractorTest extends TestCase
     public function testHandleFailureByDuplicateKey(): void
     {
         $this->expectException(ComicAlreadyExistsException::class);
-        $request = new ComicStoreRequest();
-        $request->setKey('default-key-1')
-            ->setName('test_name_1')
-            ->setStatus(ComicStatus::CLOSED->value);
+        $request = new ComicStoreRequest(
+            key: 'default-key-1',
+            name: 'test_name_1',
+            status: ComicStatus::CLOSED->value
+        );
         $this->interactor->handle($request);
     }
 }

@@ -51,7 +51,7 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
      */
     private function doesComicExist(ComicStoreRequest $request): bool
     {
-        $comicKey = new ComicKey($request->getKey());
+        $comicKey = new ComicKey($request->key);
         $comic = $this->comicRepository->findByKey($comicKey);
         if ($comic === null) {
             return false;
@@ -69,9 +69,9 @@ class ComicStoreInteractor implements ComicStoreUseCaseInterface
     {
         $entity = new Comic(
             id: null,
-            key: new ComicKey($request->getKey()),
-            name: new ComicName($request->getName()),
-            status: ComicStatus::from($request->getStatus())
+            key: new ComicKey($request->key),
+            name: new ComicName($request->name),
+            status: ComicStatus::from($request->status)
         );
         $comic = $this->comicRepository->create($entity);
 

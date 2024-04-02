@@ -46,10 +46,11 @@ class ComicIndexInteractorTest extends TestCase
         $key = Arr::get($params, 'key');
         $name = Arr::get($params, 'name');
         $status = Arr::get($params, 'status');
-        $request = new ComicIndexRequest();
-        $request->setKey($key)
-            ->setName($name)
-            ->setStatus($status);
+        $request = new ComicIndexRequest(
+            key: $key,
+            name: $name,
+            status: $status
+        );
         $response = $this->interactor->handle($request);
         $this->assertInstanceOf(ComicIndexResponse::class, $response);
         $comics = Arr::get($response->build(), 'comics', []);

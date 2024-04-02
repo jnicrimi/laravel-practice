@@ -38,7 +38,7 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
      */
     public function handle(ComicUpdateRequest $request): ComicUpdateResponse
     {
-        $comicId = new ComicId($request->getId());
+        $comicId = new ComicId($request->id);
         $entity = $this->comicRepository->find($comicId);
         if ($entity === null) {
             throw new ComicNotFoundException('Comic not found');
@@ -60,7 +60,7 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
      */
     private function isDuplicateKey(Comic $entity, ComicUpdateRequest $request): bool
     {
-        $comicKey = new ComicKey($request->getKey());
+        $comicKey = new ComicKey($request->key);
         $ignoreComicId = $entity->getId();
         $comicEntity = $this->comicRepository->findByKey($comicKey, $ignoreComicId);
         if ($comicEntity === null) {
@@ -78,9 +78,9 @@ class ComicUpdateInteractor implements ComicUpdateUseCaseInterface
      */
     private function updateComic(Comic $entity, ComicUpdateRequest $request): Comic
     {
-        $entity->changeKey(new ComicKey($request->getKey()));
-        $entity->changeName(new ComicName($request->getName()));
-        $entity->changeStatus(ComicStatus::from($request->getStatus()));
+        $entity->changeKey(new ComicKey($request->key));
+        $entity->changeName(new ComicName($request->name));
+        $entity->changeStatus(ComicStatus::from($request->status));
         $comic = $this->comicRepository->update($entity);
 
         return $comic;

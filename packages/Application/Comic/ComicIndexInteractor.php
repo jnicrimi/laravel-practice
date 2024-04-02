@@ -32,9 +32,9 @@ class ComicIndexInteractor implements ComicIndexUseCaseInterface
     public function handle(ComicIndexRequest $request): ComicIndexResponse
     {
         $queryBuilder = new ComicSearchQueryBuilder();
-        $queryBuilder->setKey($request->getKey())
-            ->setName($request->getName())
-            ->setStatus($request->getStatus());
+        $queryBuilder->setKey($request->key)
+            ->setName($request->name)
+            ->setStatus($request->status);
         $query = $queryBuilder->build();
         $comics = $this->comicRepository->paginate($query, self::PER_PAGE);
 

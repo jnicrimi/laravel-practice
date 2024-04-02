@@ -42,8 +42,7 @@ class ComicDestroyInteractorTest extends TestCase
     public function testHandleSuccess(): void
     {
         Queue::fake();
-        $request = new ComicDestroyRequest();
-        $request->setId(3);
+        $request = new ComicDestroyRequest(id: 3);
         $response = $this->interactor->handle($request);
         $this->assertInstanceOf(ComicDestroyResponse::class, $response);
         $expected = [
@@ -67,8 +66,7 @@ class ComicDestroyInteractorTest extends TestCase
     public function testHandleFailureByNotFound(): void
     {
         $this->expectException(ComicNotFoundException::class);
-        $request = new ComicDestroyRequest();
-        $request->setId(PHP_INT_MAX);
+        $request = new ComicDestroyRequest(id: PHP_INT_MAX);
         $this->interactor->handle($request);
     }
 
@@ -78,8 +76,7 @@ class ComicDestroyInteractorTest extends TestCase
     public function testHandleFailureByNotClosedStatus(): void
     {
         $this->expectException(ComicCannotBeDeletedException::class);
-        $request = new ComicDestroyRequest();
-        $request->setId(1);
+        $request = new ComicDestroyRequest(id: 1);
         $this->interactor->handle($request);
     }
 }
