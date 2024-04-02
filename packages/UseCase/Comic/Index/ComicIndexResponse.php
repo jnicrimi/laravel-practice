@@ -10,20 +10,10 @@ use Packages\UseCase\ResponseInterface;
 class ComicIndexResponse implements ResponseInterface
 {
     /**
-     * @var Comics
-     */
-    private Comics $comics;
-
-    /**
      * @param Comics $comics
-     *
-     * @return self
      */
-    public function setComics(Comics $comics): self
+    public function __construct(private readonly Comics $comics)
     {
-        $this->comics = $comics;
-
-        return $this;
     }
 
     /**
