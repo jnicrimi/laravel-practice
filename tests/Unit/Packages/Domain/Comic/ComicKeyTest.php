@@ -7,33 +7,22 @@ namespace Tests\Unit\Packages\Domain\Comic;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use InvalidArgumentException;
 use Packages\Domain\Comic\ComicKey;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class ComicKeyTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @dataProvider provideCreateInstanceSuccess
-     *
-     * @param string $key
-     *
-     * @return void
-     */
-    public function testCreateInstanceSuccess(string $key)
+    #[DataProvider('provideCreateInstanceSuccess')]
+    public function testCreateInstanceSuccess(string $key): void
     {
         $comicKey = new ComicKey($key);
         $this->assertInstanceOf(ComicKey::class, $comicKey);
     }
 
-    /**
-     * @dataProvider provideCreateInstanceFailure
-     *
-     * @param mixed $key
-     *
-     * @return void
-     */
-    public function testCreateInstanceFailure($key)
+    #[DataProvider('provideCreateInstanceFailure')]
+    public function testCreateInstanceFailure(mixed $key): void
     {
         $this->expectException(InvalidArgumentException::class);
         new ComicKey($key);

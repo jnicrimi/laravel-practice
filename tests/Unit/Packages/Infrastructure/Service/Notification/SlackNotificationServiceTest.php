@@ -16,18 +16,12 @@ class SlackNotificationServiceTest extends TestCase
      */
     private SlackNotificationService $service;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
         $this->service = $this->app->make(SlackNotificationService::class);
     }
 
-    /**
-     * @return void
-     */
     public function testSend(): void
     {
         $expectedMessage = 'test';

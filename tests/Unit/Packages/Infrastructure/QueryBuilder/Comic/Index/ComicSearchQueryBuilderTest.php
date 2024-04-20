@@ -10,9 +10,6 @@ use Tests\TestCase;
 
 class ComicSearchQueryBuilderTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function testBuild(): void
     {
         $queryBuilder = new ComicSearchQueryBuilder();

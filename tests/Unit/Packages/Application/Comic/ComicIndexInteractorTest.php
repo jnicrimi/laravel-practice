@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Packages\Application\Comic\ComicIndexInteractor;
 use Packages\UseCase\Comic\Index\ComicIndexRequest;
 use Packages\UseCase\Comic\Index\ComicIndexResponse;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class ComicIndexInteractorTest extends TestCase
@@ -25,22 +26,13 @@ class ComicIndexInteractorTest extends TestCase
      */
     private ComicIndexInteractor $interactor;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
         $this->interactor = $this->app->make(ComicIndexInteractor::class);
     }
 
-    /**
-     * @dataProvider provideHandleSuccess
-     *
-     * @params array $params
-     *
-     * @return void
-     */
+    #[DataProvider('provideHandleSuccess')]
     public function testHandleSuccess(array $params): void
     {
         $key = Arr::get($params, 'key');

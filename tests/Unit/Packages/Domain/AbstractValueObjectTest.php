@@ -6,6 +6,7 @@ namespace Tests\Unit\Packages\Domain;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Domain\AbstractValueObject;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class AbstractValueObjectTest extends TestCase
@@ -17,10 +18,7 @@ class AbstractValueObjectTest extends TestCase
      */
     public const DEFAULT_VALUE = 'default';
 
-    /**
-     * @return void
-     */
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $valueObject = $this->createValueObject();
         $actual = $valueObject->getValue();
@@ -28,15 +26,8 @@ class AbstractValueObjectTest extends TestCase
         $this->assertSame($actual, $expected);
     }
 
-    /**
-     * @dataProvider provideEquals
-     *
-     * @param mixed $expected
-     * @param mixed $value
-     *
-     * @return void
-     */
-    public function testEquals($expected, $value)
+    #[DataProvider('provideEquals')]
+    public function testEquals(mixed $expected, mixed $value): void
     {
         $valueObjectA = $this->createValueObject();
         $valueObjectB = $this->createValueObject($value);

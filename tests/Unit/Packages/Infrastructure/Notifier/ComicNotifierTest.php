@@ -42,9 +42,6 @@ class ComicNotifierTest extends TestCase
         'updated_at' => '2023-12-31 23:59:59',
     ];
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -53,9 +50,6 @@ class ComicNotifierTest extends TestCase
         $this->comic = $this->createEntity(self::$defaultAttributes);
     }
 
-    /**
-     * @return void
-     */
     public function testNotifyStore(): void
     {
         $this->notifier->notifyStore($this->comic);
@@ -64,9 +58,6 @@ class ComicNotifierTest extends TestCase
         });
     }
 
-    /**
-     * @return void
-     */
     public function testNotifyUpdate(): void
     {
         $this->notifier->notifyUpdate($this->comic);
@@ -75,9 +66,6 @@ class ComicNotifierTest extends TestCase
         });
     }
 
-    /**
-     * @return void
-     */
     public function testNotifyDestroy(): void
     {
         $this->notifier->notifyDestroy($this->comic);

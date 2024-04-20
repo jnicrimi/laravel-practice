@@ -12,9 +12,6 @@ class PaginationTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @return void
-     */
     public function testGetProperties(): void
     {
         $pagination = $this->createPagination();
@@ -26,9 +23,6 @@ class PaginationTest extends TestCase
         $this->assertSame(5, $pagination->lastItem);
     }
 
-    /**
-     * @return void
-     */
     public function testToArray(): void
     {
         $pagination = $this->createPagination();

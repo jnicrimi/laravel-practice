@@ -9,66 +9,40 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use InvalidArgumentException;
 use Packages\Domain\AbstractEntities;
 use Packages\Domain\Pagination;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Tests\TestCase;
 
 class AbstractEntitiesTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @dataProvider provideOffsetExists
-     *
-     * @param mixed $expected
-     * @param mixed $offset
-     *
-     * @return void
-     */
-    public function testOffsetExists($expected, $offset)
+    #[DataProvider('provideOffsetExists')]
+    public function testOffsetExists(mixed $expected, mixed $offset): void
     {
         $entities = $this->createEntities();
         $actual = $entities->offsetExists($offset);
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @dataProvider provideOffsetGet
-     *
-     * @param mixed $expected
-     * @param mixed $offset
-     *
-     * @return void
-     */
-    public function testOffsetGet($expected, $offset)
+    #[DataProvider('provideOffsetGet')]
+    public function testOffsetGet(mixed $expected, mixed $offset): void
     {
         $entities = $this->createEntities();
         $actual = $entities->offsetGet($offset);
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @dataProvider provideOffsetSet
-     *
-     * @param mixed $offset
-     * @param mixed $value
-     *
-     * @return void
-     */
-    public function testOffsetSet($offset, $value)
+    #[DataProvider('provideOffsetSet')]
+    public function testOffsetSet(mixed $offset, mixed $value): void
     {
         $this->expectException(InvalidArgumentException::class);
         $entities = $this->createEntities();
         $entities->offsetSet($offset, $value);
     }
 
-    /**
-     * @dataProvider provideOffsetUnset
-     *
-     * @param mixed $expected
-     * @param mixed $offset
-     *
-     * @return void
-     */
-    public function testOffsetUnset($expected, $offset)
+    #[DataProvider('provideOffsetUnset')]
+    public function testOffsetUnset(mixed $expected, mixed $offset): void
     {
         $entities = $this->createEntities();
         $entities->offsetUnset($offset);
@@ -76,10 +50,7 @@ class AbstractEntitiesTest extends TestCase
         $this->assertSame($actual, $expected);
     }
 
-    /**
-     * @return void
-     */
-    public function testCount()
+    public function testCount(): void
     {
         $entities = $this->createEntities();
         $actual = $entities->count();
@@ -87,22 +58,15 @@ class AbstractEntitiesTest extends TestCase
         $this->assertSame($actual, $expected);
     }
 
-    /**
-     * @doesNotPerformAssertions
-     *
-     * @return void
-     */
-    public function testSetPagination()
+    #[DoesNotPerformAssertions]
+    public function testSetPagination(): void
     {
         $pagination = $this->createPagination();
         $entities = $this->createEntities();
         $entities->setPagination($pagination);
     }
 
-    /**
-     * @return void
-     */
-    public function testGetPagination()
+    public function testGetPagination(): void
     {
         $pagination = $this->createPagination();
         $entities = $this->createEntities();
@@ -111,10 +75,7 @@ class AbstractEntitiesTest extends TestCase
         $this->assertInstanceOf(Pagination::class, $pagination);
     }
 
-    /**
-     * @return void
-     */
-    public function testGetIterator()
+    public function testGetIterator(): void
     {
         $entities = $this->createEntities();
         $iterator = $entities->getIterator();
