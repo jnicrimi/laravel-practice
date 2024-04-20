@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Queue;
 use Packages\Domain\Comic\ComicStatus;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class ComicsControllerTest extends TestCase
@@ -21,15 +22,8 @@ class ComicsControllerTest extends TestCase
      */
     protected bool $seed = true;
 
-    /**
-     * @dataProvider provideIndex
-     *
-     * @param array $params
-     * @param array $expected
-     *
-     * @return void
-     */
-    public function testIndex(array $params, array $expected)
+    #[DataProvider('provideIndex')]
+    public function testIndex(array $params, array $expected): void
     {
         $response = $this->get(route('api.v1.comics.index', $params));
         $response->assertStatus($expected['status']);
@@ -50,15 +44,8 @@ class ComicsControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @dataProvider provideShow
-     *
-     * @param mixed $comicId
-     * @param array $expected
-     *
-     * @return void
-     */
-    public function testShow(mixed $comicId, array $expected)
+    #[DataProvider('provideShow')]
+    public function testShow(mixed $comicId, array $expected): void
     {
         $response = $this->get(route('api.v1.comics.show', ['comicId' => $comicId]));
         $response->assertStatus($expected['status']);
@@ -88,15 +75,8 @@ class ComicsControllerTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider provideStore
-     *
-     * @param array $formData
-     * @param array $expected
-     *
-     * @return void
-     */
-    public function testStore(array $formData, array $expected)
+    #[DataProvider('provideStore')]
+    public function testStore(array $formData, array $expected): void
     {
         Queue::fake();
         $response = $this->post(route('api.v1.comics.store'), $formData);
@@ -127,16 +107,8 @@ class ComicsControllerTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider provideUpdate
-     *
-     * @param mixed $comicId
-     * @param array $formData
-     * @param array $expected
-     *
-     * @return void
-     */
-    public function testUpdate(mixed $comicId, array $formData, array $expected)
+    #[DataProvider('provideUpdate')]
+    public function testUpdate(mixed $comicId, array $formData, array $expected): void
     {
         Queue::fake();
         $response = $this->put(route('api.v1.comics.update', ['comicId' => $comicId]), $formData);
@@ -167,15 +139,8 @@ class ComicsControllerTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider provideDestroy
-     *
-     * @param mixed $comicId
-     * @param array $expected
-     *
-     * @return void
-     */
-    public function testDestroy(mixed $comicId, array $expected)
+    #[DataProvider('provideDestroy')]
+    public function testDestroy(mixed $comicId, array $expected): void
     {
         Queue::fake();
         $response = $this->delete(route('api.v1.comics.destroy', ['comicId' => $comicId]));

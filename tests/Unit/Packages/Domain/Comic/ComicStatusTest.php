@@ -6,6 +6,7 @@ namespace Tests\Unit\Packages\Domain\Comic;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Packages\Domain\Comic\ComicStatus;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class ComicStatusTest extends TestCase
@@ -17,62 +18,31 @@ class ComicStatusTest extends TestCase
      */
     public const CASE_COUNT = 3;
 
-    /**
-     * @return void
-     */
     public function testCases(): void
     {
         $this->assertCount(self::CASE_COUNT, ComicStatus::cases());
     }
 
-    /**
-     * @dataProvider provideEqualsSuccess
-     *
-     * @param ComicStatus $comicStatus
-     * @param ComicStatus $expected
-     *
-     * @return void
-     */
-    public function testEqualsSuccess(ComicStatus $comicStatus, $expected)
+    #[DataProvider('provideEqualsSuccess')]
+    public function testEqualsSuccess(ComicStatus $comicStatus, ComicStatus $expected): void
     {
         $this->assertTrue($comicStatus->equals($expected));
     }
 
-    /**
-     * @dataProvider provideEqualsFailure
-     *
-     * @param ComicStatus $comicStatus
-     * @param ComicStatus $expected
-     *
-     * @return void
-     */
-    public function testEqualsFailure(ComicStatus $comicStatus, $expected)
+    #[DataProvider('provideEqualsFailure')]
+    public function testEqualsFailure(ComicStatus $comicStatus, ComicStatus $expected): void
     {
         $this->assertFalse($comicStatus->equals($expected));
     }
 
-    /**
-     * @dataProvider provideDescriptionSuccess
-     *
-     * @param ComicStatus $comicStatus
-     * @param string $expected
-     *
-     * @return void
-     */
-    public function testDescriptionSuccess(ComicStatus $comicStatus, string $expected)
+    #[DataProvider('provideDescriptionSuccess')]
+    public function testDescriptionSuccess(ComicStatus $comicStatus, string $expected): void
     {
         $this->assertEquals($expected, $comicStatus->description());
     }
 
-    /**
-     * @dataProvider provideDescriptionFailure
-     *
-     * @param ComicStatus $comicStatus
-     * @param string $expected
-     *
-     * @return void
-     */
-    public function testDescriptionFailure(ComicStatus $comicStatus, string $expected)
+    #[DataProvider('provideDescriptionFailure')]
+    public function testDescriptionFailure(ComicStatus $comicStatus, string $expected): void
     {
         $this->assertNotEquals($expected, $comicStatus->description());
     }

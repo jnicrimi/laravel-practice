@@ -7,33 +7,22 @@ namespace Tests\Unit\Packages\Domain\Comic;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use InvalidArgumentException;
 use Packages\Domain\Comic\ComicId;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class ComicIdTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @dataProvider provideCreateInstanceSuccess
-     *
-     * @param int $id
-     *
-     * @return void
-     */
-    public function testCreateInstanceSuccess(int $id)
+    #[DataProvider('provideCreateInstanceSuccess')]
+    public function testCreateInstanceSuccess(int $id): void
     {
         $comicId = new ComicId($id);
         $this->assertInstanceOf(ComicId::class, $comicId);
     }
 
-    /**
-     * @dataProvider provideCreateInstanceFailure
-     *
-     * @param mixed $id
-     *
-     * @return void
-     */
-    public function testCreateInstanceFailure($id)
+    #[DataProvider('provideCreateInstanceFailure')]
+    public function testCreateInstanceFailure(mixed $id): void
     {
         $this->expectException(InvalidArgumentException::class);
         new ComicId($id);

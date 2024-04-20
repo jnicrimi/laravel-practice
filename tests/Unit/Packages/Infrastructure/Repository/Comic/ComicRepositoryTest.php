@@ -17,6 +17,7 @@ use Packages\Domain\Comic\Comics;
 use Packages\Domain\Comic\ComicStatus;
 use Packages\Infrastructure\QueryBuilder\Comic\Index\ComicSearchQueryBuilder;
 use Packages\Infrastructure\Repository\Comic\ComicRepository;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class ComicRepositoryTest extends TestCase
@@ -33,18 +34,12 @@ class ComicRepositoryTest extends TestCase
      */
     protected $seed = true;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
         $this->repository = $this->app->make(ComicRepository::class);
     }
 
-    /**
-     * @return void
-     */
     public function testFindSuccess(): void
     {
         $comicId = new ComicId(1);
@@ -52,9 +47,6 @@ class ComicRepositoryTest extends TestCase
         $this->assertInstanceOf(Comic::class, $comic);
     }
 
-    /**
-     * @return void
-     */
     public function testFindFailure(): void
     {
         $comicId = new ComicId(PHP_INT_MAX);
@@ -62,9 +54,6 @@ class ComicRepositoryTest extends TestCase
         $this->assertNull($comic);
     }
 
-    /**
-     * @return void
-     */
     public function testFindByKeySuccess(): void
     {
         $comicKey = new ComicKey('default-key-1');
@@ -72,14 +61,7 @@ class ComicRepositoryTest extends TestCase
         $this->assertInstanceOf(Comic::class, $comic);
     }
 
-    /**
-     * @dataProvider provideFindByKeyFailure
-     *
-     * @param string $comicKey
-     * @param int|null $ignoreComicId
-     *
-     * @return void
-     */
+    #[DataProvider('provideFindByKeyFailure')]
     public function testFindByKeyFailure(string $comicKey, ?int $ignoreComicId): void
     {
         $comicKey = new ComicKey($comicKey);
@@ -90,9 +72,6 @@ class ComicRepositoryTest extends TestCase
         $this->assertNull($comic);
     }
 
-    /**
-     * @return void
-     */
     public function testPaginate(): void
     {
         $queryBuilder = new ComicSearchQueryBuilder();
@@ -104,9 +83,6 @@ class ComicRepositoryTest extends TestCase
         $this->assertInstanceOf(Comics::class, $comics);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateSuccess(): void
     {
         $entity = new Comic(
@@ -121,9 +97,6 @@ class ComicRepositoryTest extends TestCase
         $this->assertInstanceOf(Comic::class, $comic);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateFailure(): void
     {
         $this->expectException(Exception::class);
@@ -139,9 +112,6 @@ class ComicRepositoryTest extends TestCase
         $this->repository->create($entity);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateSuccess(): void
     {
         $entity = new Comic(
@@ -156,9 +126,6 @@ class ComicRepositoryTest extends TestCase
         $this->assertInstanceOf(Comic::class, $comic);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateFailure(): void
     {
         $this->expectException(ComicIdIsNotSetException::class);
@@ -173,9 +140,6 @@ class ComicRepositoryTest extends TestCase
         $this->repository->update($entity);
     }
 
-    /**
-     * @return void
-     */
     public function testDelete(): void
     {
         $comicModel = ComicModel::find(3);
@@ -188,9 +152,6 @@ class ComicRepositoryTest extends TestCase
         $this->assertNull($deletedComicModel);
     }
 
-    /**
-     * @return void
-     */
     public function testModelToEntity(): void
     {
         $comicModel = ComicModel::find(1);
@@ -198,9 +159,6 @@ class ComicRepositoryTest extends TestCase
         $this->assertInstanceOf(Comic::class, $comic);
     }
 
-    /**
-     * @return array
-     */
     public static function provideFindByKeyFailure(): array
     {
         return [

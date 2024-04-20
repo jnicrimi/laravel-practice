@@ -25,18 +25,12 @@ class ComicShowInteractorTest extends TestCase
      */
     private ComicShowInteractor $interactor;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
         $this->interactor = $this->app->make(ComicShowInteractor::class);
     }
 
-    /**
-     * @return void
-     */
     public function testHandleSuccess(): void
     {
         $request = new ComicShowRequest(id: 1);
@@ -57,9 +51,6 @@ class ComicShowInteractorTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @return void
-     */
     public function testHandleFailureByNotFound(): void
     {
         $this->expectException(ComicNotFoundException::class);

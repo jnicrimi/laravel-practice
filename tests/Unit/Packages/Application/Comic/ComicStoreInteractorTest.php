@@ -27,18 +27,12 @@ class ComicStoreInteractorTest extends TestCase
      */
     private ComicStoreInteractor $interactor;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
         $this->interactor = $this->app->make(ComicStoreInteractor::class);
     }
 
-    /**
-     * @return void
-     */
     public function testHandleSuccess(): void
     {
         Queue::fake();
@@ -64,9 +58,6 @@ class ComicStoreInteractorTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @return void
-     */
     public function testHandleFailureByDuplicateKey(): void
     {
         $this->expectException(ComicAlreadyExistsException::class);
