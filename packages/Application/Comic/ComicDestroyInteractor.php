@@ -17,6 +17,7 @@ class ComicDestroyInteractor implements ComicDestroyUseCaseInterface
 {
     /**
      * @param ComicRepositoryInterface $comicRepository
+     * @param ComicNotifier $comicNotifier
      */
     public function __construct(
         private readonly ComicRepositoryInterface $comicRepository,
