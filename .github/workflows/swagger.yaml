@@ -1,6 +1,6 @@
 ---
 
-name: ci-swagger
+name: swagger
 on:
   pull_request:
     types: [opened, reopened, synchronize]
