@@ -1,5 +1,0 @@
-npx lint-staged
-git secrets --scan
-vendor/bin/phpstan analyse --configuration phpstan.neon --memory-limit=-1
-tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff
-npx @apidevtools/swagger-cli validate -d storage/api-docs/api-docs.yaml --type yaml --format 3

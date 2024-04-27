@@ -1,0 +1,37 @@
+---
+
+commit-msg:
+  commands:
+    commitlint:
+      run: npx commitlint --edit $1
+
+pre-commit:
+  commands:
+    scan-git-secrets:
+      run: git secrets --scan
+    markdownlint:
+      glob: "*.md"
+      exclude: '^README.md$'
+      run: markdownlint {staged_files}
+    yamllint:
+      glob: "*.{yml,yaml}"
+      run: yamllint --strict {staged_files}
+    phpstan:
+      glob: "*.php"
+      run: vendor/bin/phpstan analyse --configuration phpstan.neon --memory-limit=-1 {staged_files}
+    php-cs-fixer:
+      glob: "*.php"
+      run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff
+    swagger-bundle:
+      priority: 1
+      glob: "storage/api-docs/**/*.yaml"
+      run: npm run swagger-bundle
+    swagger-validate:
+      priority: 2
+      glob: "storage/api-docs/**/*.yaml"
+      run: npm run swagger-validate
+
+pre-push:
+  commands:
+    sail-test:
+      run: vendor/bin/sail test
