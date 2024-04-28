@@ -13,29 +13,30 @@ concurrency:
 permissions:
   contents: read
 jobs:
-  swagger-validate:
+  lint-api-docs:
     runs-on: ubuntu-latest
     if: ${{ github.actor != 'dependabot[bot]' }}
     outputs:
       done: ${{ steps.set-output.outputs.message }}
     steps:
       - uses: actions/checkout@v4
-      - name: Install swagger-cli
-        run: |
-          npm install -g swagger-cli
+        with:
+          sparse-checkout: storage/api-docs .
+          sparse-checkout-cone-mode: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
       - name: Bundle api-docs.yaml
-        run: |
-          swagger-cli bundle -o storage/api-docs/api-docs.yaml -t yaml storage/api-docs/index.yaml
-      - name: Validate api-docs.yaml
-        run: |
-          swagger-cli validate -d storage/api-docs/api-docs.yaml --type yaml --format 3
+        run: npx @redocly/cli bundle storage/api-docs/index.yaml > storage/api-docs/api-docs.yaml
+      - name: Lint api-docs.yaml
+        run: npx @redocly/cli lint storage/api-docs/api-docs.yaml
       - name: Set output
         id: set-output
         if: ${{ always() }}
-        run: echo "message=${{ (job.status == 'success' && ':white_check_mark:') || ':no_entry:' }} Swagger Validate" >> $GITHUB_OUTPUT
+        run: echo "message=${{ (job.status == 'success' && ':white_check_mark:') || ':no_entry:' }} Lint api-docs.yaml" >> $GITHUB_OUTPUT
   notification-success:
     runs-on: ubuntu-latest
-    needs: [swagger-validate]
+    needs: [lint-api-docs]
     if: ${{ success() }}
     steps:
       - name: Slack Notification
@@ -66,7 +67,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Workflow*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.workflow }} (${{ github.ref_name }}) #${{ github.run_number }}>\n\n${{ needs.swagger-validate.outputs.done }}"
+                    "text": "*Workflow*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.workflow }} (${{ github.ref_name }}) #${{ github.run_number }}>\n\n${{ needs.lint-api-docs.outputs.done }}"
                   }
                 }
               ]
