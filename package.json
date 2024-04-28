@@ -4,7 +4,7 @@
     "dev": "vite",
     "build": "vite build",
     "redocly-lint": "npx @redocly/cli lint storage/api-docs/api-docs.yaml",
-    "redocly-bundle": "npx @redocly/cli bundle storage/api-docs/index.yaml > storage/api-docs/api-docs.yaml"
+    "redocly-bundle": "npx @redocly/cli bundle storage/api-docs/index.yaml -o storage/api-docs/api-docs.yaml"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
