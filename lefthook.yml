@@ -21,7 +21,7 @@ pre-commit:
       run: vendor/bin/phpstan analyse --configuration phpstan.neon --memory-limit=-1 {staged_files}
     php-cs-fixer:
       glob: "*.php"
-      run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff
+      run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff {staged_files}
     redocly-bundle:
       priority: 1
       glob: "storage/api-docs/**/*.yaml"
