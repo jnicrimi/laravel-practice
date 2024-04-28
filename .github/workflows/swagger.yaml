@@ -13,29 +13,26 @@ concurrency:
 permissions:
   contents: read
 jobs:
-  swagger-validate:
+  lint-swagger:
     runs-on: ubuntu-latest
     if: ${{ github.actor != 'dependabot[bot]' }}
     outputs:
       done: ${{ steps.set-output.outputs.message }}
     steps:
       - uses: actions/checkout@v4
-      - name: Install swagger-cli
-        run: |
-          npm install -g swagger-cli
-      - name: Bundle api-docs.yaml
-        run: |
-          swagger-cli bundle -o storage/api-docs/api-docs.yaml -t yaml storage/api-docs/index.yaml
-      - name: Validate api-docs.yaml
-        run: |
-          swagger-cli validate -d storage/api-docs/api-docs.yaml --type yaml --format 3
+      - name: Install redocly-cli
+        run: npm install -g @redocly/cli
+      - name: Bundle
+        run: redocly bundle storage/api-docs/index.yaml -o storage/api-docs/api-docs.yaml
+      - name: Lint
+        run: redocly lint storage/api-docs/api-docs.yaml
       - name: Set output
         id: set-output
         if: ${{ always() }}
-        run: echo "message=${{ (job.status == 'success' && ':white_check_mark:') || ':no_entry:' }} Swagger Validate" >> $GITHUB_OUTPUT
+        run: echo "message=${{ (job.status == 'success' && ':white_check_mark:') || ':no_entry:' }} Lint swagger" >> $GITHUB_OUTPUT
   notification-success:
     runs-on: ubuntu-latest
-    needs: [swagger-validate]
+    needs: [lint-swagger]
     if: ${{ success() }}
     steps:
       - name: Slack Notification
@@ -66,7 +63,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Workflow*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.workflow }} (${{ github.ref_name }}) #${{ github.run_number }}>\n\n${{ needs.swagger-validate.outputs.done }}"
+                    "text": "*Workflow*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.workflow }} (${{ github.ref_name }}) #${{ github.run_number }}>\n\n${{ needs.lint-swagger.outputs.done }}"
                   }
                 }
               ]
@@ -76,7 +73,7 @@ jobs:
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
   notification-failure:
     runs-on: ubuntu-latest
-    needs: [swagger-validate]
+    needs: [lint-swagger]
     if: ${{ failure() }}
     steps:
       - name: Slack Notification
@@ -107,7 +104,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Workflow*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.workflow }} (${{ github.ref_name }}) #${{ github.run_number }}>\n\n${{ needs.swagger-validate.outputs.done }}"
+                    "text": "*Workflow*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.workflow }} (${{ github.ref_name }}) #${{ github.run_number }}>\n\n${{ needs.lint-swagger.outputs.done }}"
                   }
                 }
               ]
